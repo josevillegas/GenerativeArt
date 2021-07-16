@@ -42,7 +42,7 @@ class IndexViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = .white
+    view.backgroundColor = .systemBackground
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     navigationController?.setToolbarHidden(false, animated: false)
   }

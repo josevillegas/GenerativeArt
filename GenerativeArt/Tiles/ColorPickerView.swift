@@ -11,7 +11,7 @@ final class ColorPickerView: UIView {
     super.init(frame: .zero)
 
     clipsToBounds = true
-    backgroundColor = .white
+    backgroundColor = .systemBackground
     layer.borderWidth = 1 / UIScreen.main.scale
     layer.borderColor = UIColor.lightGray.cgColor
     layer.cornerRadius = 24

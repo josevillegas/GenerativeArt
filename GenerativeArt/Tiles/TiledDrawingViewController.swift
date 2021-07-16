@@ -11,6 +11,10 @@ final class TiledDrawingViewController: UIViewController {
   private let perform: (Action) -> ()
   private var timer: Timer?
 
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    .darkContent
+  }
+
   init(viewModel: TiledDrawingViewModel, animated: Bool, perform: @escaping (Action) -> ()) {
     self.viewModel = viewModel
     self.perform = perform

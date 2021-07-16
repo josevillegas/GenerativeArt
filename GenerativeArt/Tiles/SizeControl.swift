@@ -13,7 +13,7 @@ final class SizeControl: UIView {
   init() {
     super.init(frame: .zero)
 
-    backgroundColor = .white
+    backgroundColor = .systemBackground
     layer.borderWidth = 1 / UIScreen.main.scale
     layer.borderColor = UIColor.lightGray.cgColor
     layer.cornerRadius = 12

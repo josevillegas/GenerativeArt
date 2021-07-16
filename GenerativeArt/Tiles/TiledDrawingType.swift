@@ -27,7 +27,7 @@ enum TiledDrawingType {
   }
 
   var defaultBackgroundColor: Color {
-    return .white
+    .white
   }
 
   var backgroundColor: Color {

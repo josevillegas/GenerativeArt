@@ -42,7 +42,6 @@ final class MondrianView: UIView {
     backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     addSubview(drawingView)
-
     drawingView.addEdgeConstraints(to: safeAreaLayoutGuide, margin: 24)
   }
 
@@ -60,7 +59,6 @@ final class MondrianDrawingView: UIView {
 
   init() {
     super.init(frame: .zero)
-
     backgroundColor = .white
   }
 

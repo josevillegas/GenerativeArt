@@ -86,7 +86,7 @@ final class MainView: UIView {
   init() {
     super.init(frame: .zero)
 
-    backgroundColor = .white
+    backgroundColor = .systemBackground
 
     let separatorView = UIView()
     separatorView.backgroundColor = .lightGray
