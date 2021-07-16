@@ -14,7 +14,7 @@ final class TiledDrawingViewToolbarController {
 
   init() {
     toolbarItems = [
-      UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(dismiss)),
+      UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
       UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
       UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(updateVariations)),
       UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
