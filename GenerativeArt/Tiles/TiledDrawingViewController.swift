@@ -1,6 +1,6 @@
 import UIKit
 
-final class TiledDrawingViewController: UIViewController {
+final class TiledDrawingViewController: UIViewController, ToolbarController {
   enum Action {
     case dismiss
   }

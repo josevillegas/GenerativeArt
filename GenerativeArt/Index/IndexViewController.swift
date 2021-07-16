@@ -44,7 +44,6 @@ class IndexViewController: UITableViewController {
 
     view.backgroundColor = .systemBackground
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    navigationController?.setToolbarHidden(false, animated: false)
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

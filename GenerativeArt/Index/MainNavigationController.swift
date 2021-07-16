@@ -1,10 +1,12 @@
 import UIKit
 
-final class MainNavigationController: UINavigationController {
+final class MainNavigationController: UINavigationController, UINavigationControllerDelegate {
   override init(rootViewController: UIViewController) {
     super.init(rootViewController: rootViewController)
 
+    delegate = self
     isNavigationBarHidden = true
+    isToolbarHidden = false
     updateToolbarColor()
   }
 
@@ -25,4 +27,14 @@ final class MainNavigationController: UINavigationController {
       toolbar.isTranslucent = true
     }
   }
+
+  func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    if viewController is ToolbarController {
+      isToolbarHidden = false
+    } else {
+      isToolbarHidden = true
+    }
+  }
 }
+
+protocol ToolbarController {}

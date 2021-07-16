@@ -1,6 +1,6 @@
 import UIKit
 
-final class MondrianViewController: UIViewController {
+final class MondrianViewController: UIViewController, ToolbarController {
   enum Action {
     case dismiss
   }
