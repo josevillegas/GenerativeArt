@@ -1,0 +1,4 @@
+// Add a "User.xcconfig" file and override the following settings.
+PRODUCT_BUNDLE_IDENTIFIER = com.example.GenerativeArt;
+DEVELOPMENT_TEAM = "";
+#include? "User.xcconfig"
