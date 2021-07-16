@@ -24,8 +24,6 @@ final class MainViewController: UIViewController {
     addChild(indexViewController)
     mainView.indexView = indexViewController.view
     indexViewController.didMove(toParent: self)
-
-    navigationController?.isNavigationBarHidden = true
   }
 
   private func update(_ action: IndexViewController.Action) {

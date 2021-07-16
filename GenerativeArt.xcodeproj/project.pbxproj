@@ -16,6 +16,7 @@
 		8239DD2D2338552A00652A46 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* Color.swift */; };
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
 		824570012335929500229D00 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824570002335929500229D00 /* Random.swift */; };
+		825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CA26A2290B007727F6 /* MainNavigationController.swift */; };
 		826309D122E3AB88003E3F29 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* Path.swift */; };
 		826309D322E3ABA5003E3F29 /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D222E3ABA5003E3F29 /* Draw.swift */; };
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
@@ -46,6 +47,7 @@
 		8239DD2C2338552A00652A46 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
 		824570002335929500229D00 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		825B64CA26A2290B007727F6 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		826309D222E3ABA5003E3F29 /* Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				829035F022E559810075041B /* MainViewController.swift */,
+				825B64CA26A2290B007727F6 /* MainNavigationController.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 			);
 			path = Index;
@@ -239,6 +242,7 @@
 				829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */,
 				829035F122E559810075041B /* MainViewController.swift in Sources */,
 				826309D122E3AB88003E3F29 /* Path.swift in Sources */,
+				825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */,
 				826EE33A22EAA15200901EFF /* TiledDrawingView.swift in Sources */,
 				82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */,
 				826309D322E3ABA5003E3F29 /* Draw.swift in Sources */,
