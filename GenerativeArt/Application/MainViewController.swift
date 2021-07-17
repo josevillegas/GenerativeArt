@@ -6,10 +6,10 @@ final class MainViewController: UIViewController {
   }
 
   private let controlsView = MainControlsView()
-  private let perform: (IndexViewController.Action) -> ()
+  private let send: (Message) -> ()
 
-  init(perform: @escaping (IndexViewController.Action) -> ()) {
-    self.perform = perform
+  init(send: @escaping (Message) -> ()) {
+    self.send = send
     super.init(nibName: nil, bundle: nil)
     title = "Generative Art"
     navigationItem.largeTitleDisplayMode = .always
@@ -24,7 +24,7 @@ final class MainViewController: UIViewController {
 
     view.backgroundColor = .systemBackground
 
-    let indexViewController = IndexViewController(perform: perform)
+    let indexViewController = IndexViewController(send: send)
     let tableView = indexViewController.tableView!
     addChild(indexViewController)
     view.addSubview(tableView)

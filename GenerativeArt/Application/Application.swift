@@ -1,5 +1,10 @@
 import UIKit
 
+enum Message {
+  case showTiledDrawing(TiledDrawingType)
+  case showMondrian
+}
+
 final class Application {
   var rootViewController: UIViewController {
     navigationController
@@ -13,8 +18,8 @@ final class Application {
     MainViewController { [weak self] in self?.update($0) }
   }()
 
-  private func update(_ action: IndexViewController.Action) {
-    switch action {
+  private func update(_ message: Message) {
+    switch message {
     case let .showTiledDrawing(variation):
       let viewModel = TiledDrawingViewModel(
         variation: variation,

@@ -1,11 +1,6 @@
 import UIKit
 
 class IndexViewController: UITableViewController {
-  enum Action {
-    case showTiledDrawing(TiledDrawingType)
-    case showMondrian
-  }
-
   struct Section {
     let title: String
     let rows: [Row]
@@ -23,7 +18,7 @@ class IndexViewController: UITableViewController {
     }
   }
 
-  private let perform: (Action) -> ()
+  private let send: (Message) -> ()
 
   private let sections: [Section] = [
     Section(title: "Lines", rows: [
@@ -41,8 +36,8 @@ class IndexViewController: UITableViewController {
     ])
   ]
 
-  init(perform: @escaping (Action) -> ()) {
-    self.perform = perform
+  init(send: @escaping (Message) -> ()) {
+    self.send = send
     super.init(style: .insetGrouped)
   }
 
@@ -79,8 +74,8 @@ class IndexViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let rows = sections[indexPath.section].rows
     switch rows[indexPath.row] {
-    case let .tiledDrawing(type): perform(.showTiledDrawing(type))
-    case .mondrian: perform(.showMondrian)
+    case let .tiledDrawing(type): send(.showTiledDrawing(type))
+    case .mondrian: send(.showMondrian)
     }
   }
 }
