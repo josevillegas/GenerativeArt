@@ -97,12 +97,24 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		8218A38E26A35A4300457FBE /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				826309D222E3ABA5003E3F29 /* Draw.swift */,
+				826309D022E3AB88003E3F29 /* Path.swift */,
+				826309DC22E3CE2A003E3F29 /* Paths.swift */,
+				826309D822E3BC61003E3F29 /* Variations.swift */,
+				824570002335929500229D00 /* Random.swift */,
+				8239DD2C2338552A00652A46 /* Color.swift */,
+			);
+			path = Drawing;
+			sourceTree = "<group>";
+		};
 		823928E722D2751700F8B1B2 = {
 			isa = PBXGroup;
 			children = (
 				823928F222D2751700F8B1B2 /* GenerativeArt */,
 				823928F122D2751700F8B1B2 /* Products */,
-				826EE33322EA9E2F00901EFF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,14 +132,8 @@
 				8218A38926A3394000457FBE /* Application */,
 				82E0238E230CD68F00F32857 /* Tiles */,
 				82E0238F230CD7A200F32857 /* Mondrian */,
+				8218A38E26A35A4300457FBE /* Drawing */,
 				829CA41122D5AA9500453DA7 /* Extensions */,
-				826309D022E3AB88003E3F29 /* Path.swift */,
-				826309DC22E3CE2A003E3F29 /* Paths.swift */,
-				826309D222E3ABA5003E3F29 /* Draw.swift */,
-				826309D822E3BC61003E3F29 /* Variations.swift */,
-				824570002335929500229D00 /* Random.swift */,
-				8239DD2C2338552A00652A46 /* Color.swift */,
-				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 				823928FA22D2751800F8B1B2 /* Assets.xcassets */,
 				823928FC22D2751800F8B1B2 /* LaunchScreen.storyboard */,
 				823928FF22D2751800F8B1B2 /* Info.plist */,
@@ -136,19 +142,13 @@
 			path = GenerativeArt;
 			sourceTree = "<group>";
 		};
-		826EE33322EA9E2F00901EFF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		829CA41122D5AA9500453DA7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				829CA41222D5AADA00453DA7 /* UIColor.swift */,
 				825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */,
 				825B64CC26A2304D007727F6 /* UIImage.swift */,
+				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
