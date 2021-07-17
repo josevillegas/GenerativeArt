@@ -1,23 +1,19 @@
 import UIKit
 
 final class TiledDrawingViewController: UIViewController, ToolbarController {
-  enum Action {
-    case dismiss
-  }
-
   private let viewModel: TiledDrawingViewModel
   private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
   private let toolbarController = TiledDrawingViewToolbarController()
-  private let perform: (Action) -> ()
+  private let send: (DrawingMessage) -> ()
   private var timer: Timer?
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
   }
 
-  init(viewModel: TiledDrawingViewModel, animated: Bool, perform: @escaping (Action) -> ()) {
+  init(viewModel: TiledDrawingViewModel, animated: Bool, send: @escaping (DrawingMessage) -> ()) {
     self.viewModel = viewModel
-    self.perform = perform
+    self.send = send
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
@@ -54,7 +50,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   private func update(_ action: TiledDrawingViewToolbarController.Action) {
     switch action {
-    case .dismiss:  perform(.dismiss)
+    case .dismiss:  send(.dismiss)
     case .updateVariations: drawingView.updateVariations()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()

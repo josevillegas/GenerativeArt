@@ -5,6 +5,10 @@ enum Message {
   case showMondrian
 }
 
+enum DrawingMessage {
+  case dismiss
+}
+
 final class Application {
   var rootViewController: UIViewController {
     navigationController
@@ -31,19 +35,12 @@ final class Application {
       }
       push(viewController)
     case .showMondrian:
-      let viewController = MondrianViewController { [weak self] in self?.update($0) }
-      push(viewController)
+      push(MondrianViewController { [weak self] in self?.update($0) })
     }
   }
 
-  private func update(_ action: TiledDrawingViewController.Action) {
-    switch action {
-    case .dismiss: pop()
-    }
-  }
-
-  private func update(_ action: MondrianViewController.Action) {
-    switch action {
+  private func update(_ message: DrawingMessage) {
+    switch message {
     case .dismiss: pop()
     }
   }

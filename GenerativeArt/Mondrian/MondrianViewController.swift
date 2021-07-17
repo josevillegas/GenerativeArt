@@ -1,16 +1,12 @@
 import UIKit
 
 final class MondrianViewController: UIViewController, ToolbarController {
-  enum Action {
-    case dismiss
-  }
-
   private let toolbarController = MondrianViewToolbarController()
   private let mondrianView = MondrianView()
-  private let perform: (Action) -> ()
+  private let send: (DrawingMessage) -> ()
 
-  init(perform: @escaping (Action) -> ()) {
-    self.perform = perform
+  init(send: @escaping (DrawingMessage) -> ()) {
+    self.send = send
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
@@ -27,7 +23,7 @@ final class MondrianViewController: UIViewController, ToolbarController {
 
   private func update(_ action: MondrianViewToolbarController.Action) {
     switch action {
-    case .dismiss: perform(.dismiss)
+    case .dismiss: send(.dismiss)
     case .redraw: mondrianView.redraw()
     }
   }
