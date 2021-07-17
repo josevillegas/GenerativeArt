@@ -11,10 +11,10 @@ final class ColorPickerView: UIView {
     super.init(frame: .zero)
 
     clipsToBounds = true
-    backgroundColor = .systemBackground
+    backgroundColor = .tertiarySystemBackground
     layer.borderWidth = 1 / UIScreen.main.scale
-    layer.borderColor = UIColor.lightGray.cgColor
-    layer.cornerRadius = 24
+    layer.borderColor = UIColor.opaqueSeparator.cgColor
+    layer.cornerRadius = 12
 
     let stackView = UIStackView(arrangedSubviews: colorItems)
     stackView.isLayoutMarginsRelativeArrangement = true
@@ -30,6 +30,7 @@ final class ColorPickerView: UIView {
     }
 
     let scrollView = UIScrollView()
+    scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
 
     addSubview(scrollView)
     scrollView.addSubview(stackView)
@@ -87,7 +88,7 @@ final class ColorPickerItem: UIControl {
 
     if color == .white {
       colorLayer.borderWidth = 1 / UIScreen.main.scale
-      colorLayer.borderColor = UIColor.lightGray.cgColor
+      colorLayer.borderColor = UIColor.opaqueSeparator.cgColor
     }
     addTarget(self, action: #selector(didTouch), for: .touchUpInside)
   }

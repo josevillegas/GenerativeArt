@@ -18,9 +18,9 @@ final class SizeControl: UIView {
     slider.minimumValue = 0
     slider.maximumValue = 1
 
-    backgroundColor = .systemBackground
+    backgroundColor = .tertiarySystemBackground
     layer.borderWidth = 1 / UIScreen.main.scale
-    layer.borderColor = UIColor.lightGray.cgColor
+    layer.borderColor = UIColor.opaqueSeparator.cgColor
     layer.cornerRadius = 12
 
     slider.setContentCompressionResistancePriority(.required, for: .vertical)
