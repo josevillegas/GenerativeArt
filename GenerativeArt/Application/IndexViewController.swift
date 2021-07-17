@@ -68,8 +68,8 @@ class IndexViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch index.sections[indexPath.section].rows[indexPath.row] {
-    case let .tiledDrawing(type): send(.showTiledDrawing(type))
-    case .mondrian: send(.showMondrian)
+    case let .tiledDrawing(type): send(.showDrawing(.tile(type)))
+    case .mondrian: send(.showDrawing(.paintingStyle(.mondrian)))
     }
   }
 }

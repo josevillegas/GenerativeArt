@@ -1,8 +1,7 @@
 import UIKit
 
 enum Message {
-  case showTiledDrawing(TiledDrawingType)
-  case showMondrian
+  case showDrawing(DrawingType)
 }
 
 enum DrawingMessage {
@@ -32,18 +31,21 @@ final class Application {
 
   private func update(_ message: Message) {
     switch message {
-    case let .showTiledDrawing(variation):
-      let viewModel = TiledDrawingViewModel(
-        variation: variation,
-        tileForegroundColor: variation.defaultForegroundColor,
-        tileBackgroundColor: variation.defaultBackgroundColor
-      )
-      let viewController = TiledDrawingViewController(viewModel: viewModel) { [weak self] in
-        self?.update($0)
+    case let .showDrawing(type):
+      switch type {
+      case .paintingStyle(.mondrian):
+        push(MondrianViewController { [weak self] in self?.update($0) })
+      case let .tile(type):
+        let viewModel = TiledDrawingViewModel(
+          variation: type,
+          tileForegroundColor: type.defaultForegroundColor,
+          tileBackgroundColor: type.defaultBackgroundColor
+        )
+        let viewController = TiledDrawingViewController(viewModel: viewModel) { [weak self] in
+          self?.update($0)
+        }
+        push(viewController)
       }
-      push(viewController)
-    case .showMondrian:
-      push(MondrianViewController { [weak self] in self?.update($0) })
     }
   }
 
