@@ -1,11 +1,8 @@
 import UIKit
 
 enum Message {
-  case showDrawing(DrawingType)
-}
-
-enum DrawingMessage {
   case dismiss
+  case showDrawing(DrawingType)
 }
 
 protocol Configuration {
@@ -31,6 +28,7 @@ final class Application {
 
   private func update(_ message: Message) {
     switch message {
+    case .dismiss: pop()
     case let .showDrawing(type):
       switch type {
       case .paintingStyle(.mondrian):
@@ -46,12 +44,6 @@ final class Application {
         }
         push(viewController)
       }
-    }
-  }
-
-  private func update(_ message: DrawingMessage) {
-    switch message {
-    case .dismiss: pop()
     }
   }
 

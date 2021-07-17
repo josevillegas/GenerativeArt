@@ -4,7 +4,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let viewModel: TiledDrawingViewModel
   private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
   private let toolbarController = TiledDrawingViewToolbarController()
-  private let send: (DrawingMessage) -> ()
+  private let send: (Message) -> ()
   private var timer: Timer?
   private var isPlaying = false {
     didSet {
@@ -17,7 +17,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     .darkContent
   }
 
-  init(viewModel: TiledDrawingViewModel, send: @escaping (DrawingMessage) -> ()) {
+  init(viewModel: TiledDrawingViewModel, send: @escaping (Message) -> ()) {
     self.viewModel = viewModel
     self.send = send
     super.init(nibName: nil, bundle: nil)
