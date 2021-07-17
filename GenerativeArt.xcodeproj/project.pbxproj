@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8218A38B26A3398C00457FBE /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A38A26A3398C00457FBE /* Application.swift */; };
 		8226935522D2D65200451E84 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8226935422D2D65200451E84 /* Tiles.swift */; };
 		823928F422D2751700F8B1B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F322D2751700F8B1B2 /* AppDelegate.swift */; };
 		823928F622D2751700F8B1B2 /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F522D2751700F8B1B2 /* IndexViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8218A38A26A3398C00457FBE /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		8226935422D2D65200451E84 /* Tiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		823928F022D2751700F8B1B2 /* GenerativeArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenerativeArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		823928F322D2751700F8B1B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				823928F322D2751700F8B1B2 /* AppDelegate.swift */,
+				8218A38A26A3398C00457FBE /* Application.swift */,
 				825B64CA26A2290B007727F6 /* MainNavigationController.swift */,
 				829035F022E559810075041B /* MainViewController.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
@@ -276,6 +279,7 @@
 				82E606D622EBDBE8001EA30F /* ColorPickerView.swift in Sources */,
 				8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */,
 				826309D922E3BC61003E3F29 /* Variations.swift in Sources */,
+				8218A38B26A3398C00457FBE /* Application.swift in Sources */,
 				82EF793D22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
