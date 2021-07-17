@@ -11,13 +11,11 @@ extension Index {
   }
 
   enum Row {
-    case tiledDrawing(TiledDrawingType)
-    case paintingStyle(PaintingStyle)
+    case drawing(DrawingType)
 
     var title: String {
       switch self {
-      case let .tiledDrawing(type): return type.title
-      case let .paintingStyle(style): return style.title
+      case let .drawing(type): return type.title
       }
     }
   }
@@ -68,8 +66,7 @@ class IndexViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch index.sections[indexPath.section].rows[indexPath.row] {
-    case let .tiledDrawing(type): send(.showDrawing(.tile(type)))
-    case let .paintingStyle(style): send(.showDrawing(.paintingStyle(style)))
+    case let .drawing(type): send(.showDrawing(type))
     }
   }
 }

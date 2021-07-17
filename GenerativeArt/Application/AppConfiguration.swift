@@ -2,17 +2,17 @@ struct AppConfiguration: Configuration {
   var sections: [Index.Section] {
     [
       Index.Section(title: "Lines", rows: [
-        .tiledDrawing(.diagonals),
-        .tiledDrawing(.scribbles)
+        .drawing(.tile(.diagonals)),
+        .drawing(.tile(.scribbles))
       ]),
       Index.Section(title: "Shapes", rows: [
-        .tiledDrawing(.triangles),
-        .tiledDrawing(.quadrants),
-        .tiledDrawing(.trianglesAndQuadrants),
-        .tiledDrawing(.concentricShapes),
+        .drawing(.tile(.triangles)),
+        .drawing(.tile(.quadrants)),
+        .drawing(.tile(.trianglesAndQuadrants)),
+        .drawing(.tile(.concentricShapes))
       ]),
       Index.Section(title: "Painting Styles", rows: [
-        .paintingStyle(.mondrian)
+        .drawing(.paintingStyle(.mondrian))
       ])
     ]
   }
