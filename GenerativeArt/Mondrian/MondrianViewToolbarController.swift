@@ -12,8 +12,8 @@ final class MondrianViewToolbarController {
   init() {
     toolbarItems = [
       UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-      UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redraw))
+      .flexibleSpace,
+      UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(redraw))
     ]
   }
 

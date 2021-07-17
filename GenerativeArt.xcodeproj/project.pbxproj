@@ -18,6 +18,7 @@
 		824570012335929500229D00 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824570002335929500229D00 /* Random.swift */; };
 		825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CA26A2290B007727F6 /* MainNavigationController.swift */; };
 		825B64CD26A2304D007727F6 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CC26A2304D007727F6 /* UIImage.swift */; };
+		825B64CF26A25C73007727F6 /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */; };
 		826309D122E3AB88003E3F29 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* Path.swift */; };
 		826309D322E3ABA5003E3F29 /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D222E3ABA5003E3F29 /* Draw.swift */; };
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
@@ -50,6 +51,7 @@
 		824570002335929500229D00 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		825B64CA26A2290B007727F6 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		825B64CC26A2304D007727F6 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		826309D222E3ABA5003E3F29 /* Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				829CA41222D5AADA00453DA7 /* UIColor.swift */,
+				825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */,
 				825B64CC26A2304D007727F6 /* UIImage.swift */,
 			);
 			path = Extensions;
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82E02393230CD91100F32857 /* MondrianViewToolbarController.swift in Sources */,
+				825B64CF26A25C73007727F6 /* UIBarButtonItem.swift in Sources */,
 				829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */,
 				829035F122E559810075041B /* MainViewController.swift in Sources */,
 				826309D122E3AB88003E3F29 /* Path.swift in Sources */,

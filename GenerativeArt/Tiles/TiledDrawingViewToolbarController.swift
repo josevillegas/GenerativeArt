@@ -15,14 +15,14 @@ final class TiledDrawingViewToolbarController {
   init() {
     toolbarItems = [
       UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-      UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(updateVariations)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+      .flexibleSpace,
       UIBarButtonItem(title: "Front", style: .plain, target: self, action: #selector(showForegroundColors)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+      .flexibleSpace,
       UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(showBackgroundColors)),
-      UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-      UIBarButtonItem(title: "Size", style: .plain, target: self, action: #selector(showSizeSlider))
+      .flexibleSpace,
+      UIBarButtonItem(title: "Size", style: .plain, target: self, action: #selector(showSizeSlider)),
+      .flexibleSpace,
+      UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(updateVariations))
     ]
   }
 
