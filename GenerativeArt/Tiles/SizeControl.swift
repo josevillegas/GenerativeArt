@@ -9,9 +9,14 @@ final class SizeControl: UIView {
 
   private let slider = UISlider()
   private var lastValue: CGFloat = 0
+  private var min: CGFloat = 0
+  private var max: CGFloat = 1
 
   init() {
     super.init(frame: .zero)
+
+    slider.minimumValue = 0
+    slider.maximumValue = 1
 
     backgroundColor = .systemBackground
     layer.borderWidth = 1 / UIScreen.main.scale
@@ -36,14 +41,22 @@ final class SizeControl: UIView {
   }
 
   func configure(min: CGFloat, max: CGFloat) {
-    slider.minimumValue = Float(min)
-    slider.maximumValue = Float(max)
+    self.min = min
+    self.max = max
   }
 
   @objc private func valueDidChange() {
-    let value = CGFloat(slider.value)
+    let value = currentValue()
     if value == lastValue { return }
     lastValue = value
     perform(.valueDidChange(value))
+  }
+
+  private func currentValue() -> CGFloat {
+    let sliderValue = CGFloat(slider.value)
+    // y = - log(-.2(x - 5)) gives us a good curve with (5, 3) max coordinates.
+    // We normalize the max coordinates with `x = sliderValue * 5` and dividing by 3 at the end.
+    let y = -log(-0.2 * (sliderValue * 5 - 5)) / 3
+    return min + (max - min) * Swift.min(1, y)
   }
 }

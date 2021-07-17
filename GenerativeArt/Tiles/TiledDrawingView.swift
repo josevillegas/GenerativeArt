@@ -251,7 +251,7 @@ final class TiledDrawingView: UIView {
 
   private func update(_ action: DrawingBoundsView.Action) {
     switch action {
-    case let .sizeDidChange(size): sizeControl.configure(min: 10, max: min(size.width, size.height))
+    case let .sizeDidChange(size): sizeControl.configure(min: 20, max: min(size.width, size.height))
     }
   }
 }
