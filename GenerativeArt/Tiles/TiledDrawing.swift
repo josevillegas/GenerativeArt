@@ -60,22 +60,22 @@ extension TiledDrawing {
       self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {
         Path.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
       }
-    case .tiledLines:
+    case .diagonals:
       self.init(unitSize: 15, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
         .fillRect($0.frame, color: $0.backgroundColor),
         .randomDiagonal($0.frame, color: $0.foregroundColor)
       ]}
-    case .kellyTiles1:
+    case .triangles:
       self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
         .fillRect($0.frame, color: $0.backgroundColor),
         .randomTriangle($0.frame, color: $0.foregroundColor)
       ]}
-    case .kellyTiles2:
+    case .quadrants:
       self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
         .fillRect($0.frame, color: $0.backgroundColor),
         .randomQuarterCircle($0.frame, color: $0.foregroundColor)
       ]}
-    case .kellyTiles3:
+    case .trianglesAndQuadrants:
       self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
         .fillRect($0.frame, color: $0.backgroundColor),
         .randomTrianglesAndQuarterCircles($0.frame, color: $0.foregroundColor)

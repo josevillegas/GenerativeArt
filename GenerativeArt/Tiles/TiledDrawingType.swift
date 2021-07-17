@@ -2,19 +2,19 @@ import Foundation
 
 enum TiledDrawingType {
   case concentricShapes
-  case tiledLines
-  case kellyTiles1
-  case kellyTiles2
-  case kellyTiles3
+  case diagonals
+  case triangles
+  case quadrants
+  case trianglesAndQuadrants
   case scribbles
 
   var title: String {
     switch self {
     case .concentricShapes: return "Concentric Shapes"
-    case .tiledLines: return "Tiled Lines"
-    case .kellyTiles1: return "Kelly Tiles"
-    case .kellyTiles2: return "Kelly Tiles 2"
-    case .kellyTiles3: return "Kelly Tiles 3"
+    case .diagonals: return "Diagonals"
+    case .triangles: return "Triangles"
+    case .quadrants: return "Quadrants"
+    case .trianglesAndQuadrants: return "Triangles and Quadrants"
     case .scribbles: return "Scribbles"
     }
   }
