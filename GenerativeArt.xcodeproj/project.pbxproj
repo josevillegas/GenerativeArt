@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8218A38B26A3398C00457FBE /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A38A26A3398C00457FBE /* Application.swift */; };
+		8218A38D26A350BB00457FBE /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A38C26A350BB00457FBE /* AppConfiguration.swift */; };
 		8226935522D2D65200451E84 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8226935422D2D65200451E84 /* Tiles.swift */; };
 		823928F422D2751700F8B1B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F322D2751700F8B1B2 /* AppDelegate.swift */; };
 		823928F622D2751700F8B1B2 /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F522D2751700F8B1B2 /* IndexViewController.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		8218A38A26A3398C00457FBE /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		8218A38C26A350BB00457FBE /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		8226935422D2D65200451E84 /* Tiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		823928F022D2751700F8B1B2 /* GenerativeArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenerativeArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		823928F322D2751700F8B1B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				823928F322D2751700F8B1B2 /* AppDelegate.swift */,
 				8218A38A26A3398C00457FBE /* Application.swift */,
+				8218A38C26A350BB00457FBE /* AppConfiguration.swift */,
 				825B64CA26A2290B007727F6 /* MainNavigationController.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 			);
@@ -268,6 +271,7 @@
 				82EF793F22ECED150018AD6F /* SizeControl.swift in Sources */,
 				824570012335929500229D00 /* Random.swift in Sources */,
 				826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */,
+				8218A38D26A350BB00457FBE /* AppConfiguration.swift in Sources */,
 				8239DD2D2338552A00652A46 /* Color.swift in Sources */,
 				8239290622D2779500F8B1B2 /* TiledDrawingViewController.swift in Sources */,
 				82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */,

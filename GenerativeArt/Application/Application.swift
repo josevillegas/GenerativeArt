@@ -9,14 +9,26 @@ enum DrawingMessage {
   case dismiss
 }
 
+protocol Configuration {
+  var sections: [Index.Section] { get }
+}
+
 final class Application {
   var rootViewController: UIViewController {
     navigationController
   }
 
   private lazy var navigationController: UINavigationController = {
-    MainNavigationController(rootViewController: IndexViewController { [weak self] in self?.update($0) })
+    MainNavigationController(
+      rootViewController: IndexViewController(index: Index(sections: configuration.sections)) { [weak self] in self?.update($0) }
+    )
   }()
+
+  private let configuration: Configuration
+
+  init(configuration: Configuration) {
+    self.configuration = configuration
+  }
 
   private func update(_ message: Message) {
     switch message {
