@@ -1,9 +1,7 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-  private var mainView: MainView {
-    view as! MainView
-  }
+  private let controlsView = MainControlsView()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -15,14 +13,39 @@ final class MainViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func loadView() {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    view.backgroundColor = .systemBackground
+
     let indexViewController = IndexViewController { [weak self] in self?.update($0) }
+    let tableView = indexViewController.tableView!
     addChild(indexViewController)
-
-    let view = MainView(tableView: indexViewController.tableView)
-    self.view = view
-
+    view.addSubview(tableView)
     indexViewController.didMove(toParent: self)
+
+    let separatorView = UIView()
+    separatorView.backgroundColor = .separator
+
+    view.addSubview(separatorView)
+    view.addSubview(controlsView)
+
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+    separatorView.translatesAutoresizingMaskIntoConstraints = false
+    separatorView.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+    separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    separatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+
+    controlsView.translatesAutoresizingMaskIntoConstraints = false
+    controlsView.topAnchor.constraint(equalTo: separatorView.bottomAnchor).isActive = true
+    controlsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    controlsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    controlsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
 
   private func update(_ action: IndexViewController.Action) {
@@ -33,7 +56,7 @@ final class MainViewController: UIViewController {
         tileForegroundColor: variation.defaultForegroundColor,
         tileBackgroundColor: variation.defaultBackgroundColor
       )
-      let viewController = TiledDrawingViewController(viewModel: viewModel, animated: mainView.animateVariations) { [weak self] in
+      let viewController = TiledDrawingViewController(viewModel: viewModel, animated: controlsView.animationSwitch.isOn) { [weak self] in
         self?.update($0)
       }
       push(viewController)
@@ -61,48 +84,6 @@ final class MainViewController: UIViewController {
 
   private func pop() {
     navigationController?.popViewController(animated: true)
-  }
-}
-
-final class MainView: UIView {
-  var animateVariations: Bool {
-    controlsView.animationSwitch.isOn
-  }
-
-  private let controlsView = MainControlsView()
-
-  init(tableView: UITableView) {
-    super.init(frame: .zero)
-
-    backgroundColor = .systemBackground
-
-    let separatorView = UIView()
-    separatorView.backgroundColor = .separator
-
-    addSubview(tableView)
-    addSubview(separatorView)
-    addSubview(controlsView)
-
-    tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-    tableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-    tableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-
-    separatorView.translatesAutoresizingMaskIntoConstraints = false
-    separatorView.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-    separatorView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-    separatorView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
-
-    controlsView.translatesAutoresizingMaskIntoConstraints = false
-    controlsView.topAnchor.constraint(equalTo: separatorView.bottomAnchor).isActive = true
-    controlsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-    controlsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    controlsView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 }
 
