@@ -15,11 +15,7 @@ final class Application {
   }
 
   private lazy var navigationController: UINavigationController = {
-    MainNavigationController(rootViewController: mainViewController)
-  }()
-
-  private lazy var mainViewController: MainViewController = {
-    MainViewController { [weak self] in self?.update($0) }
+    MainNavigationController(rootViewController: IndexViewController { [weak self] in self?.update($0) })
   }()
 
   private func update(_ message: Message) {

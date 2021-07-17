@@ -39,6 +39,9 @@ class IndexViewController: UITableViewController {
   init(send: @escaping (Message) -> ()) {
     self.send = send
     super.init(style: .insetGrouped)
+
+    title = "Generative Art"
+    navigationItem.largeTitleDisplayMode = .always
   }
 
   required init?(coder aDecoder: NSCoder) {
