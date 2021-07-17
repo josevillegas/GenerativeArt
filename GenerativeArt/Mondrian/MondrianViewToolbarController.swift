@@ -1,12 +1,12 @@
 import UIKit
 
 final class MondrianViewToolbarController: BarButtonItemProvider {
-  enum Action {
+  enum Message {
     case dismiss
     case redraw
   }
 
-  var perform: (Action) -> Void = { _ in }
+  var send: (Message) -> Void = { _ in }
   private(set) var toolbarItems: [UIBarButtonItem] = []
 
   init() {
@@ -17,10 +17,10 @@ final class MondrianViewToolbarController: BarButtonItemProvider {
   }
 
   @objc private func dismiss() {
-    perform(.dismiss)
+    send(.dismiss)
   }
 
   @objc private func redraw() {
-    perform(.redraw)
+    send(.redraw)
   }
 }

@@ -1,7 +1,7 @@
 import UIKit
 
 final class TiledDrawingViewToolbarController: BarButtonItemProvider {
-  enum Action {
+  enum Message {
     case dismiss
     case showBackgroundColors
     case showForegroundColors
@@ -10,7 +10,7 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
     case updateVariations
   }
 
-  var perform: (Action) -> Void = { _ in }
+  var send: (Message) -> Void = { _ in }
 
   private(set) var toolbarItems: [UIBarButtonItem] = []
   private let playButton = UIBarButtonItem(image: nil, style: .plain, target: nil, action: nil)
@@ -39,26 +39,26 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
   }
 
   @objc private func dismiss() {
-    perform(.dismiss)
+    send(.dismiss)
   }
 
   @objc private func showBackgroundColors() {
-    perform(.showBackgroundColors)
+    send(.showBackgroundColors)
   }
 
   @objc private func showForegroundColors() {
-    perform(.showForegroundColors)
+    send(.showForegroundColors)
   }
 
   @objc private func showSizeSlider() {
-    perform(.showSizeSlider)
+    send(.showSizeSlider)
   }
 
   @objc private func toggleAnimation() {
-    perform(.toggleAnimation)
+    send(.toggleAnimation)
   }
 
   @objc private func updateVariations() {
-    perform(.updateVariations)
+    send(.updateVariations)
   }
 }

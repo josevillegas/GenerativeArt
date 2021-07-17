@@ -1,11 +1,11 @@
 import UIKit
 
 final class SizeControl: UIView {
-  enum Action {
+  enum Message {
     case valueDidChange(CGFloat)
   }
 
-  var perform: (Action) -> Void = { _ in }
+  var send: (Message) -> Void = { _ in }
 
   private let slider = UISlider()
   private var lastValue: CGFloat = 0
@@ -44,7 +44,7 @@ final class SizeControl: UIView {
     let value = currentValue()
     if value == lastValue { return }
     lastValue = value
-    perform(.valueDidChange(value))
+    send(.valueDidChange(value))
   }
 
   private func currentValue() -> CGFloat {

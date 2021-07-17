@@ -1,7 +1,7 @@
 import UIKit
 
 struct TiledDrawingViewModel {
-  enum Action {
+  enum Message {
     case dismissControl
   }
 
@@ -27,7 +27,7 @@ final class TiledDrawingView: UIView {
   private let dismissControl = UIControl()
   private var viewModel: TiledDrawingViewModel
 
-  private let perform: (TiledDrawingViewModel.Action) -> Void
+  private let send: (TiledDrawingViewModel.Message) -> Void
   private var colorPickerTopConstraint: NSLayoutConstraint!
   private var colorPickerBottomConstraint: NSLayoutConstraint!
   private var sizeControlTopConstraint: NSLayoutConstraint!
@@ -37,9 +37,9 @@ final class TiledDrawingView: UIView {
   private var isSizeControlHidden = true
   private var isAnimating = false
 
-  init(viewModel: TiledDrawingViewModel, perform: @escaping (TiledDrawingViewModel.Action) -> Void) {
+  init(viewModel: TiledDrawingViewModel, send: @escaping (TiledDrawingViewModel.Message) -> Void) {
     self.viewModel = viewModel
-    self.perform = perform
+    self.send = send
     let tiledDrawing = TiledDrawing(
       variation: viewModel.variation,
       foregroundColor: viewModel.tileForegroundColor.color(),
@@ -84,8 +84,8 @@ final class TiledDrawingView: UIView {
     sizeControlBottomConstraint.isActive = true
 
     colorPickerView.didSelect = { [weak self] in self?.didSelectColor($0) }
-    boundsView.perform = { [weak self] in self?.update($0) }
-    sizeControl.perform = { [weak self] in self?.update($0) }
+    boundsView.send = { [weak self] in self?.update($0) }
+    sizeControl.send = { [weak self] in self?.update($0) }
     dismissControl.addTarget(self, action: #selector(didPressDismissControl), for: .touchUpInside)
   }
 
@@ -229,11 +229,11 @@ final class TiledDrawingView: UIView {
   }
 
   @objc private func didPressDismissControl() {
-    perform(.dismissControl)
+    send(.dismissControl)
   }
 
-  private func update(_ action: SizeControl.Action) {
-    switch action {
+  private func update(_ message: SizeControl.Message) {
+    switch message {
     case let .valueDidChange(value):
       let initialTileSize = boundsView.panelView.tiledDrawing.tileSize
       boundsView.panelView.tiledDrawing.unitSize = value
@@ -243,20 +243,20 @@ final class TiledDrawingView: UIView {
     }
   }
 
-  private func update(_ action: DrawingBoundsView.Action) {
-    switch action {
+  private func update(_ message: DrawingBoundsView.Message) {
+    switch message {
     case let .sizeDidChange(size): sizeControl.configure(min: 20, max: min(size.width, size.height))
     }
   }
 }
 
 final class DrawingBoundsView: UIView {
-  enum Action {
+  enum Message {
     case sizeDidChange(CGSize)
   }
 
   let panelView: DrawingPanelView
-  var perform: (Action) -> Void = { _ in }
+  var send: (Message) -> Void = { _ in }
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
@@ -284,7 +284,7 @@ final class DrawingBoundsView: UIView {
     guard lastSize != bounds.size else { return }
     lastSize = bounds.size
     updatePanelSize()
-    perform(.sizeDidChange(bounds.size))
+    send(.sizeDidChange(bounds.size))
   }
 
   func updatePanelSize() {

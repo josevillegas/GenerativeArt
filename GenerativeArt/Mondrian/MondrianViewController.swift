@@ -10,7 +10,7 @@ final class MondrianViewController: UIViewController, ToolbarController {
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
-    toolbarController.perform = { [weak self] in self?.update($0) }
+    toolbarController.send = { [weak self] in self?.update($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -21,8 +21,8 @@ final class MondrianViewController: UIViewController, ToolbarController {
     view = mondrianView
   }
 
-  private func update(_ action: MondrianViewToolbarController.Action) {
-    switch action {
+  private func update(_ message: MondrianViewToolbarController.Message) {
+    switch message {
     case .dismiss: send(.dismiss)
     case .redraw: mondrianView.redraw()
     }

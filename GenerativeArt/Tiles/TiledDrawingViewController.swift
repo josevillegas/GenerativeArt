@@ -23,7 +23,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
-    toolbarController.perform = { [weak self] in self?.update($0) }
+    toolbarController.send = { [weak self] in self?.update($0) }
     updateForIsPlaying()
   }
 
@@ -45,14 +45,14 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     drawingView.updateRandomTiles(count: 20)
   }
 
-  private func update(_ action: TiledDrawingViewModel.Action) {
-    switch action {
+  private func update(_ message: TiledDrawingViewModel.Message) {
+    switch message {
     case .dismissControl: drawingView.hideControl()
     }
   }
 
-  private func update(_ action: TiledDrawingViewToolbarController.Action) {
-    switch action {
+  private func update(_ message: TiledDrawingViewToolbarController.Message) {
+    switch message {
     case .dismiss:  send(.dismiss)
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
