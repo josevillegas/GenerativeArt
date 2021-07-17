@@ -62,10 +62,7 @@ final class TiledDrawingView: UIView {
     dismissControl.addEdgeConstraints(to: self)
 
     addSubview(colorPickerView)
-
-    colorPickerView.translatesAutoresizingMaskIntoConstraints = false
-    colorPickerView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
-    colorPickerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+    colorPickerView.addHorizontalConstraints(to: self, margin: 12)
 
     colorPickerTopConstraint = colorPickerView.topAnchor.constraint(equalTo: bottomAnchor)
     colorPickerTopConstraint.priority = .defaultHigh
@@ -76,10 +73,7 @@ final class TiledDrawingView: UIView {
     colorPickerBottomConstraint.isActive = true
 
     addSubview(sizeControl)
-
-    sizeControl.translatesAutoresizingMaskIntoConstraints = false
-    sizeControl.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
-    sizeControl.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+    sizeControl.addHorizontalConstraints(to: self, margin: 12)
 
     sizeControlTopConstraint = sizeControl.topAnchor.constraint(equalTo: bottomAnchor)
     sizeControlTopConstraint.priority = .defaultHigh

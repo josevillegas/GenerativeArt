@@ -31,12 +31,11 @@ final class ColorPickerView: UIView {
 
     let scrollView = UIScrollView()
 
-    scrollView.addSubview(stackView)
     addSubview(scrollView)
+    scrollView.addSubview(stackView)
 
     scrollView.addEdgeConstraints(to: self)
-    scrollView.addEdgeConstraints(to: scrollView.contentLayoutGuide)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.addEdgeConstraints(to: scrollView.contentLayoutGuide)
     stackView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor).isActive = true
   }
 

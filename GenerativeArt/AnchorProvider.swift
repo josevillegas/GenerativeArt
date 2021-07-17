@@ -32,6 +32,18 @@ extension AnchorProvider {
     addEdgeConstraints(to: anchorProvider, insets: UIEdgeInsets(top: margin, left: margin, bottom: -margin, right: -margin))
   }
 
+  func addVerticalConstraints(to anchorProvider: AnchorProvider, margin: CGFloat = 0) {
+    prepareAutoResizingBehavior()
+    topAnchor.constraint(equalTo: anchorProvider.topAnchor, constant: margin).isActive = true
+    bottomAnchor.constraint(equalTo: anchorProvider.bottomAnchor, constant: -margin).isActive = true
+  }
+
+  func addHorizontalConstraints(to anchorProvider: AnchorProvider, margin: CGFloat = 0) {
+    prepareAutoResizingBehavior()
+    leftAnchor.constraint(equalTo: anchorProvider.leftAnchor, constant: margin).isActive = true
+    rightAnchor.constraint(equalTo: anchorProvider.rightAnchor, constant: -margin).isActive = true
+  }
+
   func center(with anchorProvider: AnchorProvider) {
     prepareAutoResizingBehavior()
     centerXAnchor.constraint(equalTo: anchorProvider.centerXAnchor).isActive = true

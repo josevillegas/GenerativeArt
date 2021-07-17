@@ -26,12 +26,7 @@ final class SizeControl: UIView {
     slider.setContentCompressionResistancePriority(.required, for: .vertical)
 
     addSubview(slider)
-
-    slider.translatesAutoresizingMaskIntoConstraints = false
-    slider.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-    slider.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
-    slider.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
-    slider.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+    slider.addEdgeConstraints(to: self, insets: UIEdgeInsets(top: 8, left: 12, bottom: -8, right: -12))
 
     slider.addTarget(self, action: #selector(valueDidChange), for: .valueChanged)
   }
