@@ -1,6 +1,6 @@
 import UIKit
 
-final class MondrianViewToolbarController {
+final class MondrianViewToolbarController: BarButtonItemProvider {
   enum Action {
     case dismiss
     case redraw
@@ -11,8 +11,8 @@ final class MondrianViewToolbarController {
 
   init() {
     toolbarItems = [
-      UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(redraw))
+      barButtonItem(image: .backChevron, action: #selector(dismiss)),
+      barButtonItem(image: .goForward, action: #selector(redraw))
     ].addingFlexibleSpaces()
   }
 

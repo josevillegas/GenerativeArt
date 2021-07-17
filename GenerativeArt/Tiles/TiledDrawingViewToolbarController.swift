@@ -1,6 +1,6 @@
 import UIKit
 
-final class TiledDrawingViewToolbarController {
+final class TiledDrawingViewToolbarController: BarButtonItemProvider {
   enum Action {
     case dismiss
     case updateVariations
@@ -14,11 +14,11 @@ final class TiledDrawingViewToolbarController {
 
   init() {
     toolbarItems = [
-      UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      UIBarButtonItem(title: "Front", style: .plain, target: self, action: #selector(showForegroundColors)),
-      UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(showBackgroundColors)),
-      UIBarButtonItem(title: "Size", style: .plain, target: self, action: #selector(showSizeSlider)),
-      UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(updateVariations))
+      barButtonItem(image: .backChevron, action: #selector(dismiss)),
+      barButtonItem(title: "Front", action: #selector(showForegroundColors)),
+      barButtonItem(title: "Back", action: #selector(showBackgroundColors)),
+      barButtonItem(title: "Size", action: #selector(showSizeSlider)),
+      barButtonItem(image: .goForward, action: #selector(updateVariations))
     ].addingFlexibleSpaces()
   }
 
