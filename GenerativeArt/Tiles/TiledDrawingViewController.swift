@@ -6,22 +6,25 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let toolbarController = TiledDrawingViewToolbarController()
   private let send: (DrawingMessage) -> ()
   private var timer: Timer?
+  private var isPlaying = false {
+    didSet {
+      guard isPlaying != oldValue else { return }
+      updateForIsPlaying()
+    }
+  }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
   }
 
-  init(viewModel: TiledDrawingViewModel, animated: Bool, send: @escaping (DrawingMessage) -> ()) {
+  init(viewModel: TiledDrawingViewModel, send: @escaping (DrawingMessage) -> ()) {
     self.viewModel = viewModel
     self.send = send
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
     toolbarController.perform = { [weak self] in self?.update($0) }
-
-    if animated {
-      timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] _ in self?.updateRandomTiles() }
-    }
+    updateForIsPlaying()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -51,10 +54,21 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private func update(_ action: TiledDrawingViewToolbarController.Action) {
     switch action {
     case .dismiss:  send(.dismiss)
-    case .updateVariations: drawingView.updateVariations()
-    case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
+    case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showSizeSlider: drawingView.showSizeControl()
+    case .toggleAnimation: isPlaying.toggle()
+    case .updateVariations: drawingView.updateVariations()
     }
+  }
+
+  private func updateForIsPlaying() {
+    timer?.invalidate()
+    if isPlaying {
+      timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] _ in self?.updateRandomTiles() }
+    } else {
+      timer = nil
+    }
+    toolbarController.updatePlayButton(isPlaying: isPlaying)
   }
 }

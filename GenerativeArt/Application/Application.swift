@@ -30,7 +30,7 @@ final class Application {
         tileForegroundColor: variation.defaultForegroundColor,
         tileBackgroundColor: variation.defaultBackgroundColor
       )
-      let viewController = TiledDrawingViewController(viewModel: viewModel, animated: mainViewController.isAnimationOn) { [weak self] in
+      let viewController = TiledDrawingViewController(viewModel: viewModel) { [weak self] in
         self?.update($0)
       }
       push(viewController)

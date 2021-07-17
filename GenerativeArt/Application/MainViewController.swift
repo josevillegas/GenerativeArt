@@ -1,10 +1,6 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-  var isAnimationOn: Bool {
-    controlsView.animationSwitch.isOn
-  }
-
   private let controlsView = MainControlsView()
   private let send: (Message) -> ()
 
