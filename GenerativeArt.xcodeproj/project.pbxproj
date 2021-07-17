@@ -37,7 +37,6 @@
 		82E606D622EBDBE8001EA30F /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E606D522EBDBE8001EA30F /* ColorPickerView.swift */; };
 		82EF793D22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793C22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift */; };
 		82EF793F22ECED150018AD6F /* SizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793E22ECED150018AD6F /* SizeControl.swift */; };
-		82F53D4826A204A10089C0BC /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82F53D4726A204A10089C0BC /* Common.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -255,7 +254,6 @@
 			files = (
 				823928FE22D2751800F8B1B2 /* LaunchScreen.storyboard in Resources */,
 				823928FB22D2751800F8B1B2 /* Assets.xcassets in Resources */,
-				82F53D4826A204A10089C0BC /* Common.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
