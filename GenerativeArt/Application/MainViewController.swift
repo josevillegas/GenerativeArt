@@ -1,9 +1,15 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-  private let controlsView = MainControlsView()
+  var isAnimationOn: Bool {
+    controlsView.animationSwitch.isOn
+  }
 
-  init() {
+  private let controlsView = MainControlsView()
+  private let perform: (IndexViewController.Action) -> ()
+
+  init(perform: @escaping (IndexViewController.Action) -> ()) {
+    self.perform = perform
     super.init(nibName: nil, bundle: nil)
     title = "Generative Art"
     navigationItem.largeTitleDisplayMode = .always
@@ -18,7 +24,7 @@ final class MainViewController: UIViewController {
 
     view.backgroundColor = .systemBackground
 
-    let indexViewController = IndexViewController { [weak self] in self?.update($0) }
+    let indexViewController = IndexViewController(perform: perform)
     let tableView = indexViewController.tableView!
     addChild(indexViewController)
     view.addSubview(tableView)
@@ -46,44 +52,6 @@ final class MainViewController: UIViewController {
     controlsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
     controlsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     controlsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-  }
-
-  private func update(_ action: IndexViewController.Action) {
-    switch action {
-    case let .showTiledDrawing(variation):
-      let viewModel = TiledDrawingViewModel(
-        variation: variation,
-        tileForegroundColor: variation.defaultForegroundColor,
-        tileBackgroundColor: variation.defaultBackgroundColor
-      )
-      let viewController = TiledDrawingViewController(viewModel: viewModel, animated: controlsView.animationSwitch.isOn) { [weak self] in
-        self?.update($0)
-      }
-      push(viewController)
-    case .showMondrian:
-      let viewController = MondrianViewController { [weak self] in self?.update($0) }
-      push(viewController)
-    }
-  }
-
-  private func update(_ action: TiledDrawingViewController.Action) {
-    switch action {
-    case .dismiss: pop()
-    }
-  }
-
-  private func update(_ action: MondrianViewController.Action) {
-    switch action {
-    case .dismiss: pop()
-    }
-  }
-
-  private func push(_ viewController: UIViewController) {
-    navigationController?.pushViewController(viewController, animated: true)
-  }
-
-  private func pop() {
-    navigationController?.popViewController(animated: true)
   }
 }
 
