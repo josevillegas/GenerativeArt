@@ -7,6 +7,7 @@ final class MainNavigationController: UINavigationController, UINavigationContro
     delegate = self
     isNavigationBarHidden = true
     isToolbarHidden = false
+    navigationBar.prefersLargeTitles = true
     updateToolbarColor()
   }
 
@@ -31,8 +32,10 @@ final class MainNavigationController: UINavigationController, UINavigationContro
   func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
     if viewController is ToolbarController {
       isToolbarHidden = false
+      isNavigationBarHidden = true
     } else {
       isToolbarHidden = true
+      isNavigationBarHidden = false
     }
   }
 }

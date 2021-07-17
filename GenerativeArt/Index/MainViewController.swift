@@ -7,6 +7,8 @@ final class MainViewController: UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
+    title = "Generative Art"
+    navigationItem.largeTitleDisplayMode = .always
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -14,15 +16,12 @@ final class MainViewController: UIViewController {
   }
 
   override func loadView() {
-    view = MainView()
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
     let indexViewController = IndexViewController { [weak self] in self?.update($0) }
     addChild(indexViewController)
-    mainView.indexView = indexViewController.view
+
+    let view = MainView(tableView: indexViewController.tableView)
+    self.view = view
+
     indexViewController.didMove(toParent: self)
   }
 
@@ -66,40 +65,31 @@ final class MainViewController: UIViewController {
 }
 
 final class MainView: UIView {
-  var indexView: UIView? {
-    didSet {
-      if let view = oldValue { view.removeFromSuperview() }
-      guard let view = indexView else { return }
-      addToContainerView(view)
-    }
-  }
-
   var animateVariations: Bool {
     controlsView.animationSwitch.isOn
   }
 
-  private let containerView = UIView()
   private let controlsView = MainControlsView()
 
-  init() {
+  init(tableView: UITableView) {
     super.init(frame: .zero)
 
     backgroundColor = .systemBackground
 
     let separatorView = UIView()
-    separatorView.backgroundColor = .lightGray
+    separatorView.backgroundColor = .separator
 
-    addSubview(containerView)
+    addSubview(tableView)
     addSubview(separatorView)
     addSubview(controlsView)
 
-    containerView.translatesAutoresizingMaskIntoConstraints = false
-    containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-    containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-    containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    tableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+    tableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
     separatorView.translatesAutoresizingMaskIntoConstraints = false
-    separatorView.topAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+    separatorView.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
     separatorView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
     separatorView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
@@ -113,15 +103,6 @@ final class MainView: UIView {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  private func addToContainerView(_ view: UIView) {
-    containerView.addSubview(view)
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-    view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-    view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-    view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
   }
 }
 

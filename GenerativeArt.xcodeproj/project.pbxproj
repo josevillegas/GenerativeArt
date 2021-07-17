@@ -143,8 +143,8 @@
 		82E0238D230CD67600F32857 /* Index */ = {
 			isa = PBXGroup;
 			children = (
-				829035F022E559810075041B /* MainViewController.swift */,
 				825B64CA26A2290B007727F6 /* MainNavigationController.swift */,
+				829035F022E559810075041B /* MainViewController.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 			);
 			path = Index;
