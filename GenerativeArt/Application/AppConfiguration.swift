@@ -12,7 +12,7 @@ struct AppConfiguration: Configuration {
         .tiledDrawing(.concentricShapes),
       ]),
       Index.Section(title: "Painting Styles", rows: [
-        .mondrian
+        .paintingStyle(.mondrian)
       ])
     ]
   }

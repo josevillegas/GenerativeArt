@@ -7,4 +7,10 @@ enum DrawingType {
 
 enum PaintingStyle {
   case mondrian
+
+  var title: String {
+    switch self {
+    case .mondrian: return "Mondrian"
+    }
+  }
 }
