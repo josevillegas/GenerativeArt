@@ -1,7 +1,8 @@
 import UIKit
+import Algorithms
 
-extension UIBarButtonItem {
-  static var flexibleSpace: UIBarButtonItem {
-    UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+extension Array where Element == UIBarButtonItem {
+  func addingFlexibleSpaces() -> [UIBarButtonItem] {
+    Array(self.interspersed(with: .flexibleSpace()))
   }
 }

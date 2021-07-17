@@ -15,15 +15,11 @@ final class TiledDrawingViewToolbarController {
   init() {
     toolbarItems = [
       UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      .flexibleSpace,
       UIBarButtonItem(title: "Front", style: .plain, target: self, action: #selector(showForegroundColors)),
-      .flexibleSpace,
       UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(showBackgroundColors)),
-      .flexibleSpace,
       UIBarButtonItem(title: "Size", style: .plain, target: self, action: #selector(showSizeSlider)),
-      .flexibleSpace,
       UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(updateVariations))
-    ]
+    ].addingFlexibleSpaces()
   }
 
   @objc private func dismiss() {

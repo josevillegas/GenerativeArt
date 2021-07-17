@@ -12,9 +12,8 @@ final class MondrianViewToolbarController {
   init() {
     toolbarItems = [
       UIBarButtonItem(image: .backChevron, style: .plain, target: self, action: #selector(dismiss)),
-      .flexibleSpace,
       UIBarButtonItem(image: .goForward, style: .plain, target: self, action: #selector(redraw))
-    ]
+    ].addingFlexibleSpaces()
   }
 
   @objc private func dismiss() {
