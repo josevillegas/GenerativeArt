@@ -1,7 +1,7 @@
 import UIKit
 
 enum Message {
-  case dismiss
+  case dismissDrawing
   case showDrawing(DrawingType)
 }
 
@@ -11,13 +11,22 @@ protocol Configuration {
 
 final class Application {
   var rootViewController: UIViewController {
-    navigationController
+    splitViewController
   }
 
-  private lazy var navigationController: UINavigationController = {
-    MainNavigationController(
-      rootViewController: IndexViewController(index: Index(sections: configuration.sections)) { [weak self] in self?.update($0) }
-    )
+  private lazy var compactNavigationController: UINavigationController = {
+    MainNavigationController(rootViewController: indexViewController())
+  }()
+
+  private lazy var splitViewController: UISplitViewController = {
+    let controller = UISplitViewController(style: .doubleColumn)
+    controller.preferredSplitBehavior = .overlay
+
+    controller.setViewController(indexViewController(), for: .primary)
+    controller.setViewController(secondaryNavigationController(rootViewController: tileViewController(type: .diagonals)), for: .secondary)
+    controller.setViewController(compactNavigationController, for: .compact)
+
+    return controller
   }()
 
   private let configuration: Configuration
@@ -28,30 +37,52 @@ final class Application {
 
   private func update(_ message: Message) {
     switch message {
-    case .dismiss: pop()
+    case .dismissDrawing: dismissDrawing()
     case let .showDrawing(type):
       switch type {
       case .paintingStyle(.mondrian):
-        push(MondrianViewController { [weak self] in self?.update($0) })
+        showDrawing(MondrianViewController { [weak self] in self?.update($0) })
       case let .tile(type):
-        let viewModel = TiledDrawingViewModel(
-          variation: type,
-          tileForegroundColor: type.defaultForegroundColor,
-          tileBackgroundColor: type.defaultBackgroundColor
-        )
-        let viewController = TiledDrawingViewController(viewModel: viewModel) { [weak self] in
-          self?.update($0)
-        }
-        push(viewController)
+        showDrawing(tileViewController(type: type))
       }
     }
   }
 
-  private func push(_ viewController: UIViewController) {
-    navigationController.pushViewController(viewController, animated: true)
+  private func showDrawing(_ viewController: UIViewController) {
+    if splitViewController.isCollapsed {
+      compactNavigationController.pushViewController(viewController, animated: true)
+    } else {
+      splitViewController.showDetailViewController(secondaryNavigationController(rootViewController: viewController), sender: nil)
+    }
   }
 
-  private func pop() {
-    navigationController.popViewController(animated: true)
+  private func dismissDrawing() {
+    if splitViewController.isCollapsed {
+      compactNavigationController.popViewController(animated: true)
+    } else {
+      splitViewController.show(.primary)
+    }
+  }
+
+  private func tileViewController(type: TiledDrawingType) -> UIViewController {
+    let viewModel = TiledDrawingViewModel(
+      variation: type,
+      tileForegroundColor: type.defaultForegroundColor,
+      tileBackgroundColor: type.defaultBackgroundColor
+    )
+    return TiledDrawingViewController(viewModel: viewModel) { [weak self] in
+      self?.update($0)
+    }
+  }
+
+  private func indexViewController() -> UIViewController {
+    IndexViewController(index: Index(sections: configuration.sections)) { [weak self] in self?.update($0) }
+  }
+
+  private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {
+    let navigationController = UINavigationController(rootViewController: rootViewController)
+    navigationController.isNavigationBarHidden = true
+    navigationController.isToolbarHidden = false
+    return navigationController
   }
 }

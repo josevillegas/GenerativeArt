@@ -53,7 +53,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   private func update(_ message: TiledDrawingViewToolbarController.Message) {
     switch message {
-    case .dismiss:  send(.dismiss)
+    case .dismiss:  send(.dismissDrawing)
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showSizeSlider: drawingView.showSizeControl()
