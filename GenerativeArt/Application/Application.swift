@@ -18,12 +18,20 @@ final class Application {
     MainNavigationController(rootViewController: indexViewController())
   }()
 
+  private lazy var secondaryNavigationController: UINavigationController = {
+    let navigationController = UINavigationController(rootViewController:  tileViewController(type: .diagonals))
+    navigationController.isNavigationBarHidden = true
+    navigationController.isToolbarHidden = false
+    return navigationController
+  }()
+
   private lazy var splitViewController: UISplitViewController = {
     let controller = UISplitViewController(style: .doubleColumn)
+    controller.delegate = self
     controller.preferredSplitBehavior = .overlay
 
     controller.setViewController(indexViewController(), for: .primary)
-    controller.setViewController(secondaryNavigationController(rootViewController: tileViewController(type: .diagonals)), for: .secondary)
+    controller.setViewController(secondaryNavigationController, for: .secondary)
     controller.setViewController(compactNavigationController, for: .compact)
 
     return controller
@@ -52,7 +60,8 @@ final class Application {
     if splitViewController.isCollapsed {
       compactNavigationController.pushViewController(viewController, animated: true)
     } else {
-      splitViewController.showDetailViewController(secondaryNavigationController(rootViewController: viewController), sender: nil)
+      secondaryNavigationController.viewControllers = [viewController]
+      splitViewController.show(.secondary)
     }
   }
 
@@ -84,5 +93,43 @@ final class Application {
     navigationController.isNavigationBarHidden = true
     navigationController.isToolbarHidden = false
     return navigationController
+  }
+}
+
+extension Application: UISplitViewControllerDelegate {
+  func splitViewController(_ svc: UISplitViewController, willShow column: UISplitViewController.Column) {
+    print("WILL SHOW: \(column)")
+  }
+
+  func splitViewController(_ svc: UISplitViewController, willHide column: UISplitViewController.Column) {
+    print("WILL HIDE: \(column)")
+  }
+
+  func splitViewController(
+    _ svc: UISplitViewController,
+    topColumnForCollapsingToProposedTopColumn proposedTopColumn: UISplitViewController.Column
+  ) -> UISplitViewController.Column {
+    print("COLLAPSING: \(proposedTopColumn)")
+    return proposedTopColumn
+  }
+
+  func splitViewController(
+    _ svc: UISplitViewController,
+    displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
+  ) -> UISplitViewController.DisplayMode {
+    print("EXPANDING: \(proposedDisplayMode)")
+    return proposedDisplayMode
+  }
+
+  func splitViewControllerDidExpand(_ svc: UISplitViewController) {
+    print("DID EXPAND")
+  }
+
+  func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
+    print("DID COLLAPSE")
+  }
+
+  func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
+    print("WILL CHANGE: \(displayMode)")
   }
 }
