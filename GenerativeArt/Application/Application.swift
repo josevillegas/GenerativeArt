@@ -19,7 +19,7 @@ final class Application {
   }()
 
   private lazy var secondaryNavigationController: UINavigationController = {
-    let navigationController = UINavigationController(rootViewController:  tileViewController(type: .diagonals))
+    let navigationController = UINavigationController(rootViewController: viewController(for: lastSelectedDrawingType))
     navigationController.isNavigationBarHidden = true
     navigationController.isToolbarHidden = false
     return navigationController
@@ -27,8 +27,10 @@ final class Application {
 
   private lazy var splitViewController: UISplitViewController = {
     let controller = UISplitViewController(style: .doubleColumn)
-    controller.delegate = self
+    // Set the display mode for the initial state only.
+    controller.preferredDisplayMode = .oneOverSecondary
     controller.preferredSplitBehavior = .overlay
+    controller.delegate = self
 
     controller.setViewController(indexViewController(), for: .primary)
     controller.setViewController(secondaryNavigationController, for: .secondary)
@@ -38,6 +40,7 @@ final class Application {
   }()
 
   private let configuration: Configuration
+  private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
 
   init(configuration: Configuration) {
     self.configuration = configuration
@@ -45,18 +48,25 @@ final class Application {
 
   private func update(_ message: Message) {
     switch message {
-    case .dismissDrawing: dismissDrawing()
+    case .dismissDrawing:
+      dismissDrawing()
     case let .showDrawing(type):
-      switch type {
-      case .paintingStyle(.mondrian):
-        showDrawing(MondrianViewController { [weak self] in self?.update($0) })
-      case let .tile(type):
-        showDrawing(tileViewController(type: type))
-      }
+      lastSelectedDrawingType = type
+      showDrawing(viewController(for: type))
+    }
+  }
+
+  private func viewController(for type: DrawingType) -> UIViewController {
+    switch type {
+    case .paintingStyle(.mondrian):
+      return MondrianViewController { [weak self] in self?.update($0) }
+    case let .tile(type):
+      return tileViewController(type: type)
     }
   }
 
   private func showDrawing(_ viewController: UIViewController) {
+    splitViewController.preferredDisplayMode = .automatic
     if splitViewController.isCollapsed {
       compactNavigationController.pushViewController(viewController, animated: true)
     } else {
@@ -122,10 +132,15 @@ extension Application: UISplitViewControllerDelegate {
   }
 
   func splitViewControllerDidExpand(_ svc: UISplitViewController) {
+    secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType)]
+
     print("DID EXPAND")
   }
 
   func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
+    compactNavigationController.popToRootViewController(animated: false)
+    compactNavigationController.pushViewController(viewController(for: lastSelectedDrawingType), animated: false)
+
     print("DID COLLAPSE")
   }
 
