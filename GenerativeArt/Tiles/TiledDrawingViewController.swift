@@ -5,13 +5,8 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
   private let toolbarController: TiledDrawingViewToolbarController
   private let send: (Message) -> ()
-  private var timer: Timer?
-  private var isPlaying = false {
-    didSet {
-      guard isPlaying != oldValue else { return }
-      updateForIsPlaying()
-    }
-  }
+  private let timer = DrawingTimer()
+  private var wasPlaying = false
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
@@ -24,26 +19,36 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
-    toolbarController.send = { [weak self] in self?.update($0) }
-    updateForIsPlaying()
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  deinit {
-    timer?.invalidate()
+  override func loadView() {
+    view = TiledDrawingView(viewModel: viewModel) { [weak self] in self?.update($0) }
   }
 
-  override func loadView() {
-    view = TiledDrawingView(viewModel: viewModel) { [weak self] in
-      self?.update($0)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    toolbarController.send = { [weak self] in self?.update($0) }
+    timer.send = { [weak self] in self?.update($0) }
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    if wasPlaying {
+      timer.start()
     }
   }
 
-  private func updateRandomTiles() {
-    drawingView.updateRandomTiles(count: 20)
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    wasPlaying = timer.isPlaying
+    timer.stop()
   }
 
   private func update(_ message: TiledDrawingViewModel.Message) {
@@ -58,18 +63,16 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showSizeSlider: drawingView.showSizeControl()
-    case .toggleAnimation: isPlaying.toggle()
+    case .toggleAnimation: timer.togglePlay()
     case .updateVariations: drawingView.updateVariations()
     }
   }
 
-  private func updateForIsPlaying() {
-    timer?.invalidate()
-    if isPlaying {
-      timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] _ in self?.updateRandomTiles() }
-    } else {
-      timer = nil
+  private func update(_ message: DrawingTimer.Message) {
+    switch message {
+    case .started: toolbarController.updatePlayButton(isPlaying: true)
+    case .stopped: toolbarController.updatePlayButton(isPlaying: false)
+    case .timerFired: drawingView.updateRandomTiles(count: 20)
     }
-    toolbarController.updatePlayButton(isPlaying: isPlaying)
   }
 }

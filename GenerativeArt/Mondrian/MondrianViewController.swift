@@ -11,7 +11,6 @@ final class MondrianViewController: UIViewController, ToolbarController {
     super.init(nibName: nil, bundle: nil)
 
     toolbarItems = toolbarController.toolbarItems
-    toolbarController.send = { [weak self] in self?.update($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -20,6 +19,12 @@ final class MondrianViewController: UIViewController, ToolbarController {
 
   override func loadView() {
     view = mondrianView
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    toolbarController.send = { [weak self] in self?.update($0) }
   }
 
   private func update(_ message: MondrianViewToolbarController.Message) {

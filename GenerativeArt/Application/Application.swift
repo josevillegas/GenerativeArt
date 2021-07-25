@@ -104,7 +104,9 @@ extension Application: UISplitViewControllerDelegate {
   }
 
   func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
-    compactNavigationController.popToRootViewController(animated: false)
-    compactNavigationController.pushViewController(viewController(for: lastSelectedDrawingType, presentationMode: .pushed), animated: false)
+    compactNavigationController.viewControllers = [
+      compactNavigationController.viewControllers.first,
+      viewController(for: lastSelectedDrawingType, presentationMode: .pushed)
+    ].compactMap { $0 }
   }
 }
