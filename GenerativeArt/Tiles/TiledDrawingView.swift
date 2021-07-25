@@ -10,6 +10,12 @@ struct TiledDrawingViewModel {
   var tileBackgroundColor: Color
 }
 
+extension TiledDrawingViewModel {
+  init(type: TiledDrawingType) {
+    self.init(variation: type, tileForegroundColor: type.defaultForegroundColor, tileBackgroundColor: type.defaultBackgroundColor)
+  }
+}
+
 final class TiledDrawingView: UIView {
   private enum ColorSelection {
     case none

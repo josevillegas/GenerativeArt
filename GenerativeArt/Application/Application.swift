@@ -61,7 +61,9 @@ final class Application {
     case .paintingStyle(.mondrian):
       return MondrianViewController { [weak self] in self?.update($0) }
     case let .tile(type):
-      return tileViewController(type: type)
+      return TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type)) { [weak self] in
+        self?.update($0)
+      }
     }
   }
 
@@ -83,17 +85,6 @@ final class Application {
     }
   }
 
-  private func tileViewController(type: TiledDrawingType) -> UIViewController {
-    let viewModel = TiledDrawingViewModel(
-      variation: type,
-      tileForegroundColor: type.defaultForegroundColor,
-      tileBackgroundColor: type.defaultBackgroundColor
-    )
-    return TiledDrawingViewController(viewModel: viewModel) { [weak self] in
-      self?.update($0)
-    }
-  }
-
   private func indexViewController() -> UIViewController {
     IndexViewController(index: Index(sections: configuration.sections)) { [weak self] in self?.update($0) }
   }
@@ -107,44 +98,12 @@ final class Application {
 }
 
 extension Application: UISplitViewControllerDelegate {
-  func splitViewController(_ svc: UISplitViewController, willShow column: UISplitViewController.Column) {
-    print("WILL SHOW: \(column)")
-  }
-
-  func splitViewController(_ svc: UISplitViewController, willHide column: UISplitViewController.Column) {
-    print("WILL HIDE: \(column)")
-  }
-
-  func splitViewController(
-    _ svc: UISplitViewController,
-    topColumnForCollapsingToProposedTopColumn proposedTopColumn: UISplitViewController.Column
-  ) -> UISplitViewController.Column {
-    print("COLLAPSING: \(proposedTopColumn)")
-    return proposedTopColumn
-  }
-
-  func splitViewController(
-    _ svc: UISplitViewController,
-    displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
-  ) -> UISplitViewController.DisplayMode {
-    print("EXPANDING: \(proposedDisplayMode)")
-    return proposedDisplayMode
-  }
-
   func splitViewControllerDidExpand(_ svc: UISplitViewController) {
     secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType)]
-
-    print("DID EXPAND")
   }
 
   func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
     compactNavigationController.popToRootViewController(animated: false)
     compactNavigationController.pushViewController(viewController(for: lastSelectedDrawingType), animated: false)
-
-    print("DID COLLAPSE")
-  }
-
-  func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
-    print("WILL CHANGE: \(displayMode)")
   }
 }
