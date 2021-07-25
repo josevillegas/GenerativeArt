@@ -1,11 +1,12 @@
 import UIKit
 
 final class MondrianViewController: UIViewController, ToolbarController {
-  private let toolbarController = MondrianViewToolbarController()
+  private let toolbarController: MondrianViewToolbarController
   private let mondrianView = MondrianView()
   private let send: (Message) -> ()
 
-  init(send: @escaping (Message) -> ()) {
+  init(presentationMode: DrawingPresentationMode, send: @escaping (Message) -> ()) {
+    toolbarController = MondrianViewToolbarController(presentationMode: presentationMode)
     self.send = send
     super.init(nibName: nil, bundle: nil)
 

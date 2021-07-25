@@ -15,9 +15,9 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
   private(set) var toolbarItems: [UIBarButtonItem] = []
   private let playButton = UIBarButtonItem(image: nil, style: .plain, target: nil, action: nil)
 
-  init() {
+  init(presentationMode: DrawingPresentationMode) {
     toolbarItems = [
-      barButtonItem(image: .backChevron, action: #selector(dismiss)),
+      barButtonItem(image: .dismiss(with: presentationMode), action: #selector(dismiss)),
       barButtonItem(title: "Front", action: #selector(showForegroundColors)),
       barButtonItem(title: "Back", action: #selector(showBackgroundColors)),
       barButtonItem(title: "Size", action: #selector(showSizeSlider)),

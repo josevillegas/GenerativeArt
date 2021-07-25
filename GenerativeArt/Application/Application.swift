@@ -19,7 +19,8 @@ final class Application {
   }()
 
   private lazy var secondaryNavigationController: UINavigationController = {
-    let navigationController = UINavigationController(rootViewController: viewController(for: lastSelectedDrawingType))
+    let rootViewController = viewController(for: lastSelectedDrawingType, presentationMode: .secondary)
+    let navigationController = UINavigationController(rootViewController: rootViewController)
     navigationController.isNavigationBarHidden = true
     navigationController.isToolbarHidden = false
     return navigationController
@@ -52,27 +53,27 @@ final class Application {
       dismissDrawing()
     case let .showDrawing(type):
       lastSelectedDrawingType = type
-      showDrawing(viewController(for: type))
+      showDrawing(type)
     }
   }
 
-  private func viewController(for type: DrawingType) -> UIViewController {
+  private func viewController(for type: DrawingType, presentationMode: DrawingPresentationMode) -> UIViewController {
     switch type {
     case .paintingStyle(.mondrian):
-      return MondrianViewController { [weak self] in self?.update($0) }
+      return MondrianViewController(presentationMode: presentationMode) { [weak self] in self?.update($0) }
     case let .tile(type):
-      return TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type)) { [weak self] in
+      return TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode) { [weak self] in
         self?.update($0)
       }
     }
   }
 
-  private func showDrawing(_ viewController: UIViewController) {
+  private func showDrawing(_ type: DrawingType) {
     splitViewController.preferredDisplayMode = .automatic
     if splitViewController.isCollapsed {
-      compactNavigationController.pushViewController(viewController, animated: true)
+      compactNavigationController.pushViewController(viewController(for: type, presentationMode: .pushed), animated: true)
     } else {
-      secondaryNavigationController.viewControllers = [viewController]
+      secondaryNavigationController.viewControllers = [viewController(for: type, presentationMode: .secondary)]
       splitViewController.show(.secondary)
     }
   }
@@ -99,11 +100,11 @@ final class Application {
 
 extension Application: UISplitViewControllerDelegate {
   func splitViewControllerDidExpand(_ svc: UISplitViewController) {
-    secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType)]
+    secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType, presentationMode: .secondary)]
   }
 
   func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
     compactNavigationController.popToRootViewController(animated: false)
-    compactNavigationController.pushViewController(viewController(for: lastSelectedDrawingType), animated: false)
+    compactNavigationController.pushViewController(viewController(for: lastSelectedDrawingType, presentationMode: .pushed), animated: false)
   }
 }

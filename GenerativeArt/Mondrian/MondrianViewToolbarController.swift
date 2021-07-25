@@ -9,9 +9,9 @@ final class MondrianViewToolbarController: BarButtonItemProvider {
   var send: (Message) -> Void = { _ in }
   private(set) var toolbarItems: [UIBarButtonItem] = []
 
-  init() {
+  init(presentationMode: DrawingPresentationMode) {
     toolbarItems = [
-      barButtonItem(image: .backChevron, action: #selector(dismiss)),
+      barButtonItem(image: .dismiss(with: presentationMode), action: #selector(dismiss)),
       barButtonItem(image: .goForward, action: #selector(redraw))
     ].addingFlexibleSpaces()
   }
