@@ -42,6 +42,7 @@ final class Application {
 
   private let configuration: Configuration
   private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
+  private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
   init(configuration: Configuration) {
     self.configuration = configuration
@@ -99,14 +100,30 @@ final class Application {
 }
 
 extension Application: UISplitViewControllerDelegate {
-  func splitViewControllerDidExpand(_ svc: UISplitViewController) {
+  func splitViewControllerDidExpand(_ splitViewController: UISplitViewController) {
     secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType, presentationMode: .secondary)]
   }
 
-  func splitViewControllerDidCollapse(_ svc: UISplitViewController) {
-    compactNavigationController.viewControllers = [
-      compactNavigationController.viewControllers.first,
-      viewController(for: lastSelectedDrawingType, presentationMode: .pushed)
-    ].compactMap { $0 }
+  func splitViewControllerDidCollapse(_ splitViewController: UISplitViewController) {
+    var viewControllers = [compactNavigationController.viewControllers.first].compactMap { $0 }
+    if lastDisplayMode == .secondaryOnly {
+      viewControllers.append(viewController(for: lastSelectedDrawingType, presentationMode: .pushed))
+    }
+    compactNavigationController.viewControllers = viewControllers
+  }
+
+  func splitViewController(
+    _ splitViewController: UISplitViewController,
+    topColumnForCollapsingToProposedTopColumn proposedTopColumn: UISplitViewController.Column
+  ) -> UISplitViewController.Column {
+    lastDisplayMode = splitViewController.displayMode
+    return proposedTopColumn
+  }
+
+  func splitViewController(
+    _ splitViewController: UISplitViewController,
+    displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
+  ) -> UISplitViewController.DisplayMode {
+    compactNavigationController.viewControllers.count == 1 ? .oneOverSecondary : .secondaryOnly
   }
 }
