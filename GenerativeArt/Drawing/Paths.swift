@@ -138,23 +138,22 @@ extension Path {
       start: Path.BezierPoint(position: Random.point(in: frame), control: Random.point(in: controlFrame)),
       end: Path.BezierPoint(position: Random.point(in: frame), control: Random.point(in: controlFrame))
     )
-    return [
-      .addBezierCurve(path),
-    ]
+    return [.addBezierCurve(path)]
   }
 
   /// Requires at least four colors.
   static func concentricShapePaths(frame: CGRect, colors: [UIColor]) -> [Path] {
     var colors = colors
     guard colors.count > 3 else { return [] }
+
     let color1 = colors.remove(at: Int.random(in: 0..<colors.count))
     let color2 = colors.remove(at: Int.random(in: 0..<colors.count))
     let color3 = colors.remove(at: Int.random(in: 0..<colors.count))
     let color4 = colors[Int.random(in: 0..<colors.count)]
 
-    let frame2 = insetFrame(frame, withScale: 0.8)
-    let frame3 = insetFrame(frame, withScale: 0.55)
-    let frame4 = insetFrame(frame, withScale: 0.3)
+    let frame2 = frame.insetWithScale(0.8)
+    let frame3 = frame.insetWithScale(0.55)
+    let frame4 = frame.insetWithScale(0.3)
     let cornerRadius2 = min(frame2.width, frame2.height) * 0.25
     let cornerRadius3 = min(frame3.width, frame3.height) * 0.32
 
@@ -165,10 +164,13 @@ extension Path {
       Path(fillColor: color4, strokeColor: nil, commands: [.addShape(.oval(frame4))])
     ]
   }
+}
 
-  private static func insetFrame(_ frame: CGRect, withScale scale: CGFloat) -> CGRect {
-    let xInset = (frame.width - frame.width * scale) / 2
-    let yInset = (frame.height - frame.height * scale) / 2
-    return frame.inset(by: UIEdgeInsets(top: yInset, left: xInset, bottom: yInset, right: xInset))
+extension CGRect {
+  fileprivate func insetWithScale(_ scale: CGFloat) -> CGRect {
+    insetBy(
+      dx: (width - width * scale) / 2,
+      dy: (height - height * scale) / 2
+    )
   }
 }
