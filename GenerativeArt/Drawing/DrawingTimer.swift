@@ -4,31 +4,26 @@ import Combine
 final class DrawingTimer {
   var send: () -> Void = {}
 
-  @Published private(set) var isPlaying = false
+  @Published var isPlaying = false {
+    didSet {
+      guard isPlaying != oldValue else { return }
+      if isPlaying {
+        cancellable = Timer.publish(every: 0.8, on: .main, in: .default)
+          .autoconnect()
+          .sink { [weak self] _ in self?.send() }
+      } else {
+        cancellable = nil
+      }
+    }
+  }
 
   private var cancellable: AnyCancellable?
 
   func start() {
-    guard !isPlaying else { return }
     isPlaying = true
-
-    cancellable = Timer.publish(every: 0.8, on: .main, in: .default)
-      .autoconnect()
-      .sink { [weak self] _ in self?.send() }
   }
 
   func stop() {
-    guard isPlaying else { return }
     isPlaying = false
-
-    cancellable = nil
-  }
-
-  func togglePlay() {
-    if isPlaying {
-      stop()
-    } else {
-      start()
-    }
   }
 }

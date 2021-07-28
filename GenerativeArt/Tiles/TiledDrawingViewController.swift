@@ -70,7 +70,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
     case .showSizeSlider: drawingView.showSizeControl()
-    case .toggleAnimation: timer.togglePlay()
+    case .toggleAnimation: timer.isPlaying.toggle()
     case .updateVariations: drawingView.updateVariations()
     }
   }
