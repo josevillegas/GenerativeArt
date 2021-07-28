@@ -328,6 +328,6 @@ final class DrawingPanelView: UIView {
   }
 
   override func draw(_: CGRect) {
-    Draw.paths(tiledDrawing.paths)
+    tiledDrawing.paths.draw()
   }
 }
