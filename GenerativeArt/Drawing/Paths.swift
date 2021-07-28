@@ -129,11 +129,7 @@ extension Path {
   }
 
   static func scribble(frame: CGRect) -> [Path.Command] {
-    let scaleFactor: CGFloat = 2.8
-    let controlFrame = frame.insetBy(
-      dx: -(frame.width * scaleFactor - frame.width) / 2,
-      dy: -(frame.height * scaleFactor - frame.height) / 2
-    )
+    let controlFrame = frame.insetWithScale(2.8)
     let path = Path.BezierCurve(
       start: Path.BezierPoint(position: frame.randomPointInside(), control: controlFrame.randomPointInside()),
       end: Path.BezierPoint(position: frame.randomPointInside(), control: controlFrame.randomPointInside())
