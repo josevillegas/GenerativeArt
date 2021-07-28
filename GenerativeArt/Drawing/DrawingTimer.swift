@@ -2,15 +2,9 @@ import Foundation
 import Combine
 
 final class DrawingTimer {
-  enum Message {
-    case started
-    case stopped
-    case timerFired
-  }
+  var send: () -> Void = {}
 
-  var send: (Message) -> Void = { _ in }
-
-  private(set) var isPlaying = false
+  @Published private(set) var isPlaying = false
 
   private var cancellable: AnyCancellable?
 
@@ -20,16 +14,14 @@ final class DrawingTimer {
 
     cancellable = Timer.publish(every: 0.8, on: .main, in: .default)
       .autoconnect()
-      .sink { [weak self] _ in self?.send(.timerFired) }
-    send(.started)
+      .sink { [weak self] _ in self?.send() }
   }
 
   func stop() {
     guard isPlaying else { return }
     isPlaying = false
 
-    cancellable?.cancel()
-    send(.stopped)
+    cancellable = nil
   }
 
   func togglePlay() {

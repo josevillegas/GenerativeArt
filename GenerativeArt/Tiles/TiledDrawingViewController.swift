@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let viewModel: TiledDrawingViewModel
@@ -7,6 +8,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let send: (Message) -> ()
   private let timer = DrawingTimer()
   private var wasPlaying = false
+  private var isPlayingCancellable: AnyCancellable?
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
@@ -32,8 +34,13 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    timer.send = { [weak self] in
+      self?.drawingView.updateRandomTiles(count: 20)
+    }
+    isPlayingCancellable = timer.$isPlaying.sink { [weak self] in
+      self?.toolbarController.updatePlayButton(isPlaying: $0)
+    }
     toolbarController.send = { [weak self] in self?.update($0) }
-    timer.send = { [weak self] in self?.update($0) }
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -65,14 +72,6 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     case .showSizeSlider: drawingView.showSizeControl()
     case .toggleAnimation: timer.togglePlay()
     case .updateVariations: drawingView.updateVariations()
-    }
-  }
-
-  private func update(_ message: DrawingTimer.Message) {
-    switch message {
-    case .started: toolbarController.updatePlayButton(isPlaying: true)
-    case .stopped: toolbarController.updatePlayButton(isPlaying: false)
-    case .timerFired: drawingView.updateRandomTiles(count: 20)
     }
   }
 }
