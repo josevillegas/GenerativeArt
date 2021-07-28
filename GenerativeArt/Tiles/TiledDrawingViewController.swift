@@ -34,9 +34,11 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    timer.onFire.sink { [weak self] in self?.drawingView.updateRandomTiles(count: 20) }
+    timer.onFire
+      .sink { [weak self] in self?.drawingView.updateRandomTiles(count: 20) }
       .store(in: &cancellables)
-    timer.$isPlaying.sink { [weak self] in self?.toolbarController.updatePlayButton(isPlaying: $0) }
+    timer.$isPlaying
+      .sink { [weak self] in self?.toolbarController.updatePlayButton(isPlaying: $0) }
       .store(in: &cancellables)
     toolbarController.send = { [weak self] in self?.update($0) }
   }
