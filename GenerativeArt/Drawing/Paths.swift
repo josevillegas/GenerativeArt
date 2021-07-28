@@ -135,8 +135,8 @@ extension Path {
       dy: -(frame.height * scaleFactor - frame.height) / 2
     )
     let path = Path.BezierCurve(
-      start: Path.BezierPoint(position: Random.point(in: frame), control: Random.point(in: controlFrame)),
-      end: Path.BezierPoint(position: Random.point(in: frame), control: Random.point(in: controlFrame))
+      start: Path.BezierPoint(position: frame.randomPointInside(), control: controlFrame.randomPointInside()),
+      end: Path.BezierPoint(position: frame.randomPointInside(), control: controlFrame.randomPointInside())
     )
     return [.addBezierCurve(path)]
   }
@@ -167,10 +167,17 @@ extension Path {
 }
 
 extension CGRect {
-  fileprivate func insetWithScale(_ scale: CGFloat) -> CGRect {
+  func insetWithScale(_ scale: CGFloat) -> CGRect {
     insetBy(
       dx: (width - width * scale) / 2,
       dy: (height - height * scale) / 2
+    )
+  }
+
+  func randomPointInside() -> CGPoint {
+    CGPoint(
+      x: CGFloat.random(in: origin.x...(origin.x + size.width)),
+      y: CGFloat.random(in: origin.y...(origin.y + size.height))
     )
   }
 }
