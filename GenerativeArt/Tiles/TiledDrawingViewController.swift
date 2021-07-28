@@ -7,8 +7,8 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let toolbarController: TiledDrawingViewToolbarController
   private let send: (Message) -> ()
   private let timer = DrawingTimer()
+  private var cancellables: [AnyCancellable] = []
   private var wasPlaying = false
-  private var isPlayingCancellable: AnyCancellable?
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
@@ -34,12 +34,10 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    timer.send = { [weak self] in
-      self?.drawingView.updateRandomTiles(count: 20)
-    }
-    isPlayingCancellable = timer.$isPlaying.sink { [weak self] in
-      self?.toolbarController.updatePlayButton(isPlaying: $0)
-    }
+    timer.onFire.sink { [weak self] in self?.drawingView.updateRandomTiles(count: 20) }
+      .store(in: &cancellables)
+    timer.$isPlaying.sink { [weak self] in self?.toolbarController.updatePlayButton(isPlaying: $0) }
+      .store(in: &cancellables)
     toolbarController.send = { [weak self] in self?.update($0) }
   }
 
