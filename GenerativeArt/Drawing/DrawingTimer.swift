@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 final class DrawingTimer {
   enum Message {
@@ -10,27 +11,24 @@ final class DrawingTimer {
   var send: (Message) -> Void = { _ in }
 
   private(set) var isPlaying = false
-  private var timer: Timer?
 
-  deinit {
-    timer?.invalidate()
-  }
+  private var cancellable: AnyCancellable?
 
   func start() {
     guard !isPlaying else { return }
     isPlaying = true
-    timer?.invalidate()
-    timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] _ in
-      self?.send(.timerFired)
-    }
+
+    cancellable = Timer.publish(every: 0.8, on: .main, in: .default)
+      .autoconnect()
+      .sink { [weak self] _ in self?.send(.timerFired) }
     send(.started)
   }
 
   func stop() {
     guard isPlaying else { return }
     isPlaying = false
-    timer?.invalidate()
-    timer = nil
+
+    cancellable?.cancel()
     send(.stopped)
   }
 
