@@ -16,8 +16,8 @@ extension Index {
 }
 
 class IndexViewController: UICollectionViewController {
-  typealias DataSource = UICollectionViewDiffableDataSource<String, DrawingType>
-  typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
+  typealias DataSource = UICollectionViewDiffableDataSource<Index.Section, DrawingType>
+  typealias SuppRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
 
   private let index: Index
   private let send: (Message) -> ()
@@ -43,16 +43,12 @@ class IndexViewController: UICollectionViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let sections = index.sections.map(\.title)
-    var snapshot = NSDiffableDataSourceSnapshot<String, DrawingType>()
-    snapshot.appendSections(sections)
-    dataSource.apply(snapshot)
-
+    var snapshot = NSDiffableDataSourceSnapshot<Index.Section, DrawingType>()
     for section in index.sections {
-      var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<DrawingType>()
-      sectionSnapshot.append(section.rows)
-      dataSource.apply(sectionSnapshot, to: section.title, animatingDifferences: false)
+      snapshot.appendSections([section])
+      snapshot.appendItems(section.rows)
     }
+    dataSource.apply(snapshot, animatingDifferences: false)
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -60,23 +56,23 @@ class IndexViewController: UICollectionViewController {
   }
 
   func makeDataSource() -> DataSource {
-    let registration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType> { cell, _, item in
+    let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType> { cell, _, item in
       var configuration = cell.defaultContentConfiguration()
       configuration.text = item.title
       cell.contentConfiguration = configuration
     }
     let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
-      collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
+      collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
     }
 
-    let headerRegistration = HeaderRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, indexPath in
+    let headerRegistration = SuppRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, indexPath in
       guard let self = self else { return }
-      let title = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+      let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
       var configuration = view.defaultContentConfiguration()
-      configuration.text = title
+      configuration.text = section.title
       view.contentConfiguration = configuration
     }
-    dataSource.supplementaryViewProvider = { [weak self] view, kind, indexPath in
+    dataSource.supplementaryViewProvider = { [weak self] view, _, indexPath in
       self?.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
     }
 
