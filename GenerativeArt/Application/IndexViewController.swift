@@ -5,12 +5,12 @@ struct Index {
 }
 
 extension Index {
-  struct Section {
+  struct Section: Hashable {
     let title: String
     let rows: [Row]
   }
 
-  enum Row {
+  enum Row: Hashable {
     case drawing(DrawingType)
 
     var title: String {
@@ -22,13 +22,17 @@ extension Index {
 }
 
 class IndexViewController: UICollectionViewController {
+  typealias DataSource = UICollectionViewDiffableDataSource<String, Index.Row>
+  typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
+
   private let index: Index
   private let send: (Message) -> ()
+  private lazy var dataSource: DataSource = { makeDataSource() }()
 
-  init(index: Index, send: @escaping (Message) -> ()) {
+  init(index: Index, appearance: UICollectionLayoutListConfiguration.Appearance, send: @escaping (Message) -> ()) {
     self.index = index
     self.send = send
-    super.init(collectionViewLayout: .indexLayout())
+    super.init(collectionViewLayout: .indexLayout(appearance: .insetGrouped))
 
     title = "Generative Art"
     navigationItem.largeTitleDisplayMode = .always
@@ -40,30 +44,45 @@ class IndexViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.register(IndexCell.self, forCellWithReuseIdentifier: "Cell")
-  }
 
-  override func numberOfSections(in collectionView: UICollectionView) -> Int {
-    index.sections.count
-  }
+    let sections = index.sections.map(\.title)
+    var snapshot = NSDiffableDataSourceSnapshot<String, Index.Row>()
+    snapshot.appendSections(sections)
+    dataSource.apply(snapshot)
 
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    index.sections[section].rows.count
-  }
-
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-    let rows = index.sections[indexPath.section].rows
-    if let cell = cell as? IndexCell, indexPath.row < rows.count {
-      cell.label.text = rows[indexPath.row].title
+    for section in index.sections {
+      var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<Index.Row>()
+      sectionSnapshot.append(section.rows)
+      dataSource.apply(sectionSnapshot, to: section.title, animatingDifferences: false)
     }
-    return cell
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     switch index.sections[indexPath.section].rows[indexPath.row] {
     case let .drawing(type): send(.showDrawing(type))
     }
+  }
+
+  func makeDataSource() -> DataSource {
+    let registration = UICollectionView.CellRegistration<IndexCell, Index.Row> { cell, _, item in
+      cell.label.text = item.title
+    }
+    let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
+      collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
+    }
+
+    let headerRegistration = HeaderRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, indexPath in
+      guard let self = self else { return }
+      let title = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+      var configuration = view.defaultContentConfiguration()
+      configuration.text = title
+      view.contentConfiguration = configuration
+    }
+    dataSource.supplementaryViewProvider = { [weak self] view, kind, indexPath in
+      self?.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+    }
+
+    return dataSource
   }
 }
 
@@ -87,16 +106,19 @@ final class IndexCell: UICollectionViewCell {
 }
 
 extension UICollectionViewLayout {
-  static func indexLayout() -> UICollectionViewLayout {
+  static func indexLayout(appearance: UICollectionLayoutListConfiguration.Appearance) -> UICollectionViewLayout {
     UICollectionViewCompositionalLayout { (sectionNumber, environment) -> NSCollectionLayoutSection? in
-      .indexLayoutSection(environment: environment)
+      .indexLayoutSection(environment: environment, appearance: appearance)
     }
   }
 }
 
 extension NSCollectionLayoutSection {
-  static func indexLayoutSection(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-    var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+  static func indexLayoutSection(
+    environment: NSCollectionLayoutEnvironment,
+    appearance: UICollectionLayoutListConfiguration.Appearance
+  ) -> NSCollectionLayoutSection {
+    var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
     configuration.separatorConfiguration
       .bottomSeparatorInsets = NSDirectionalEdgeInsets(top: 0, leading: IndexCell.insetMargin, bottom: 0, trailing: 0)
     let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: environment)

@@ -15,7 +15,7 @@ final class Application {
   }
 
   private lazy var compactNavigationController: UINavigationController = {
-    MainNavigationController(rootViewController: indexViewController())
+    MainNavigationController(rootViewController: indexViewController(appearance: .insetGrouped))
   }()
 
   private lazy var secondaryNavigationController: UINavigationController = {
@@ -33,7 +33,7 @@ final class Application {
     controller.preferredSplitBehavior = .overlay
     controller.delegate = self
 
-    controller.setViewController(indexViewController(), for: .primary)
+    controller.setViewController(indexViewController(appearance: .sidebar), for: .primary)
     controller.setViewController(secondaryNavigationController, for: .secondary)
     controller.setViewController(compactNavigationController, for: .compact)
 
@@ -87,8 +87,8 @@ final class Application {
     }
   }
 
-  private func indexViewController() -> UIViewController {
-    IndexViewController(index: Index(sections: configuration.sections)) { [weak self] in self?.update($0) }
+  private func indexViewController(appearance: UICollectionLayoutListConfiguration.Appearance) -> UIViewController {
+    IndexViewController(index: Index(sections: configuration.sections), appearance: appearance) { [weak self] in self?.update($0) }
   }
 
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {

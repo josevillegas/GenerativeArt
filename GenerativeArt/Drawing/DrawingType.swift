@@ -1,6 +1,6 @@
 import Foundation
 
-enum DrawingType {
+enum DrawingType: Hashable {
   case tile(TiledDrawingType)
   case paintingStyle(PaintingStyle)
 
