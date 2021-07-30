@@ -42,17 +42,20 @@ class IndexViewController: UICollectionViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    applySnapshot()
+  }
 
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    send(.showDrawing(index[indexPath]))
+  }
+
+  func applySnapshot() {
     var snapshot = NSDiffableDataSourceSnapshot<Index.Section, DrawingType>()
     for section in index.sections {
       snapshot.appendSections([section])
       snapshot.appendItems(section.rows)
     }
     dataSource.apply(snapshot, animatingDifferences: false)
-  }
-
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    send(.showDrawing(index[indexPath]))
   }
 
   func makeDataSource() -> DataSource {
