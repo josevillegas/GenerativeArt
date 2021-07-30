@@ -27,14 +27,10 @@ class IndexViewController: UICollectionViewController {
     self.index = index
     self.send = send
 
-    let layout = UICollectionViewCompositionalLayout { (_, environment) -> NSCollectionLayoutSection? in
-      var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
-      configuration.headerMode = .supplementary
-      let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: environment)
-      return section
-    }
+    var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
+    configuration.headerMode = .supplementary
 
-    super.init(collectionViewLayout: layout)
+    super.init(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
 
     title = "Generative Art"
     navigationItem.largeTitleDisplayMode = .always
