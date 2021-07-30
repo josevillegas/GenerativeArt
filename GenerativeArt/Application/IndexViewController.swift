@@ -2,27 +2,21 @@ import UIKit
 
 struct Index {
   let sections: [Section]
+
+  subscript (_ indexPath: IndexPath) -> DrawingType {
+    sections[indexPath.section].rows[indexPath.row]
+  }
 }
 
 extension Index {
   struct Section: Hashable {
     let title: String
-    let rows: [Row]
-  }
-
-  enum Row: Hashable {
-    case drawing(DrawingType)
-
-    var title: String {
-      switch self {
-      case let .drawing(type): return type.title
-      }
-    }
+    let rows: [DrawingType]
   }
 }
 
 class IndexViewController: UICollectionViewController {
-  typealias DataSource = UICollectionViewDiffableDataSource<String, Index.Row>
+  typealias DataSource = UICollectionViewDiffableDataSource<String, DrawingType>
   typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
 
   private let index: Index
@@ -46,25 +40,23 @@ class IndexViewController: UICollectionViewController {
     super.viewDidLoad()
 
     let sections = index.sections.map(\.title)
-    var snapshot = NSDiffableDataSourceSnapshot<String, Index.Row>()
+    var snapshot = NSDiffableDataSourceSnapshot<String, DrawingType>()
     snapshot.appendSections(sections)
     dataSource.apply(snapshot)
 
     for section in index.sections {
-      var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<Index.Row>()
+      var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<DrawingType>()
       sectionSnapshot.append(section.rows)
       dataSource.apply(sectionSnapshot, to: section.title, animatingDifferences: false)
     }
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    switch index.sections[indexPath.section].rows[indexPath.row] {
-    case let .drawing(type): send(.showDrawing(type))
-    }
+    send(.showDrawing(index[indexPath]))
   }
 
   func makeDataSource() -> DataSource {
-    let registration = UICollectionView.CellRegistration<IndexCell, Index.Row> { cell, _, item in
+    let registration = UICollectionView.CellRegistration<IndexCell, DrawingType> { cell, _, item in
       cell.label.text = item.title
     }
     let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
