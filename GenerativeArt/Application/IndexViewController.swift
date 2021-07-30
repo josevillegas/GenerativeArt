@@ -26,7 +26,15 @@ class IndexViewController: UICollectionViewController {
   init(index: Index, appearance: UICollectionLayoutListConfiguration.Appearance, send: @escaping (Message) -> ()) {
     self.index = index
     self.send = send
-    super.init(collectionViewLayout: .indexLayout(appearance: .insetGrouped))
+
+    let layout = UICollectionViewCompositionalLayout { (_, environment) -> NSCollectionLayoutSection? in
+      var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
+      configuration.headerMode = .supplementary
+      let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: environment)
+      return section
+    }
+
+    super.init(collectionViewLayout: layout)
 
     title = "Generative Art"
     navigationItem.largeTitleDisplayMode = .always
@@ -56,8 +64,10 @@ class IndexViewController: UICollectionViewController {
   }
 
   func makeDataSource() -> DataSource {
-    let registration = UICollectionView.CellRegistration<IndexCell, DrawingType> { cell, _, item in
-      cell.label.text = item.title
+    let registration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType> { cell, _, item in
+      var configuration = cell.defaultContentConfiguration()
+      configuration.text = item.title
+      cell.contentConfiguration = configuration
     }
     let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
       collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
@@ -75,51 +85,5 @@ class IndexViewController: UICollectionViewController {
     }
 
     return dataSource
-  }
-}
-
-final class IndexCell: UICollectionViewCell {
-  let label = UILabel()
-
-  static let insetMargin: CGFloat = 18
-
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    backgroundColor = .white
-
-    contentView.addSubview(label)
-    label.addEdgeConstraints(to: contentView, insets: UIEdgeInsets(top: 12, left: Self.insetMargin, bottom: 12, right: Self.insetMargin))
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-}
-
-extension UICollectionViewLayout {
-  static func indexLayout(appearance: UICollectionLayoutListConfiguration.Appearance) -> UICollectionViewLayout {
-    UICollectionViewCompositionalLayout { (sectionNumber, environment) -> NSCollectionLayoutSection? in
-      .indexLayoutSection(environment: environment, appearance: appearance)
-    }
-  }
-}
-
-extension NSCollectionLayoutSection {
-  static func indexLayoutSection(
-    environment: NSCollectionLayoutEnvironment,
-    appearance: UICollectionLayoutListConfiguration.Appearance
-  ) -> NSCollectionLayoutSection {
-    var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
-    configuration.separatorConfiguration
-      .bottomSeparatorInsets = NSDirectionalEdgeInsets(top: 0, leading: IndexCell.insetMargin, bottom: 0, trailing: 0)
-    let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: environment)
-    let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(0)),
-      elementKind: UICollectionView.elementKindSectionHeader,
-      alignment: .top
-    )
-    section.boundarySupplementaryItems = [sectionHeader]
-    return section
   }
 }
