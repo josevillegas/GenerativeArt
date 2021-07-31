@@ -3,7 +3,7 @@ import UIKit
 struct Index {
   let sections: [Section]
 
-  subscript (_ indexPath: IndexPath) -> DrawingType {
+  subscript(indexPath: IndexPath) -> DrawingType {
     sections[indexPath.section].rows[indexPath.row]
   }
 }
@@ -70,9 +70,8 @@ class IndexViewController: UICollectionViewController {
 
     let headerRegistration = SuppRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, indexPath in
       guard let self = self else { return }
-      let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
       var configuration = view.defaultContentConfiguration()
-      configuration.text = section.title
+      configuration.text = self.index.sections[indexPath.section].title
       view.contentConfiguration = configuration
     }
     dataSource.supplementaryViewProvider = { [weak self] view, _, indexPath in
