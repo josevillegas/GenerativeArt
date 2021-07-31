@@ -17,7 +17,8 @@ extension Index {
 
 class IndexViewController: UICollectionViewController {
   typealias DataSource = UICollectionViewDiffableDataSource<Index.Section, DrawingType>
-  typealias SuppRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
+  typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType>
+  typealias SupplementaryRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
 
   private let index: Index
   private let send: (Message) -> ()
@@ -59,8 +60,8 @@ class IndexViewController: UICollectionViewController {
   }
 
   func makeDataSource() -> DataSource {
-    let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType> { cell, _, item in
-      var configuration = cell.defaultContentConfiguration()
+    let cellRegistration = CellRegistration { cell, _, item in
+      var configuration = UIListContentConfiguration.cell()
       configuration.text = item.title
       cell.contentConfiguration = configuration
     }
@@ -68,9 +69,9 @@ class IndexViewController: UICollectionViewController {
       collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
     }
 
-    let headerRegistration = SuppRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, indexPath in
+    let headerRegistration = SupplementaryRegistration(elementKind: "header") { [weak self] view, _, indexPath in
       guard let self = self else { return }
-      var configuration = view.defaultContentConfiguration()
+      var configuration = UIListContentConfiguration.groupedHeader()
       configuration.text = self.index.sections[indexPath.section].title
       view.contentConfiguration = configuration
     }
