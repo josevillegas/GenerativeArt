@@ -87,7 +87,7 @@ final class Application {
     }
   }
 
-  private func indexViewController(appearance: UICollectionLayoutListConfiguration.Appearance) -> UIViewController {
+  private func indexViewController(appearance: IndexAppearance) -> UIViewController {
     IndexViewController(index: Index(sections: configuration.sections), appearance: appearance) { [weak self] in self?.update($0) }
   }
 

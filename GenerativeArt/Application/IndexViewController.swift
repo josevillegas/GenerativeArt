@@ -3,16 +3,15 @@ import UIKit
 struct Index {
   let sections: [Section]
 
-  subscript(indexPath: IndexPath) -> DrawingType {
-    sections[indexPath.section].rows[indexPath.row]
-  }
-}
-
-extension Index {
   struct Section: Hashable {
     let title: String
     let rows: [DrawingType]
   }
+}
+
+enum IndexAppearance {
+  case insetGrouped
+  case sidebar
 }
 
 class IndexViewController: UICollectionViewController {
@@ -22,13 +21,15 @@ class IndexViewController: UICollectionViewController {
 
   private let index: Index
   private let send: (Message) -> ()
+  private let appearance: IndexAppearance
   private lazy var dataSource: DataSource = { makeDataSource() }()
 
-  init(index: Index, appearance: UICollectionLayoutListConfiguration.Appearance, send: @escaping (Message) -> ()) {
+  init(index: Index, appearance: IndexAppearance, send: @escaping (Message) -> ()) {
     self.index = index
     self.send = send
+    self.appearance = appearance
 
-    var configuration = UICollectionLayoutListConfiguration(appearance: appearance)
+    var configuration = UICollectionLayoutListConfiguration(appearance: appearance.systemAppearance)
     configuration.headerMode = .supplementary
 
     super.init(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
@@ -60,8 +61,8 @@ class IndexViewController: UICollectionViewController {
   }
 
   func makeDataSource() -> DataSource {
-    let cellRegistration = CellRegistration { cell, _, item in
-      var configuration = UIListContentConfiguration.cell()
+    let cellRegistration = CellRegistration { [appearance] cell, _, item in
+      var configuration = appearance.cellConfiguration()
       configuration.text = item.title
       cell.contentConfiguration = configuration
     }
@@ -71,7 +72,7 @@ class IndexViewController: UICollectionViewController {
 
     let headerRegistration = SupplementaryRegistration(elementKind: "header") { [weak self] view, _, indexPath in
       guard let self = self else { return }
-      var configuration = UIListContentConfiguration.groupedHeader()
+      var configuration = self.appearance.headerConfiguration()
       configuration.text = self.index.sections[indexPath.section].title
       view.contentConfiguration = configuration
     }
@@ -80,5 +81,34 @@ class IndexViewController: UICollectionViewController {
     }
 
     return dataSource
+  }
+}
+
+extension Index {
+  subscript(indexPath: IndexPath) -> DrawingType {
+    sections[indexPath.section].rows[indexPath.row]
+  }
+}
+
+extension IndexAppearance {
+  var systemAppearance: UICollectionLayoutListConfiguration.Appearance {
+    switch self {
+    case .insetGrouped: return .insetGrouped
+    case .sidebar: return .sidebar
+    }
+  }
+
+  func cellConfiguration() -> UIListContentConfiguration {
+    switch self {
+    case .insetGrouped: return UIListContentConfiguration.cell()
+    case .sidebar: return UIListContentConfiguration.sidebarCell()
+    }
+  }
+
+  func headerConfiguration() -> UIListContentConfiguration {
+    switch self {
+    case .insetGrouped: return UIListContentConfiguration.groupedHeader()
+    case .sidebar: return UIListContentConfiguration.sidebarHeader()
+    }
   }
 }
