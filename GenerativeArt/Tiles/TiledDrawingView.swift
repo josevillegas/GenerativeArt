@@ -39,6 +39,7 @@ final class TiledDrawingView: UIView {
   private var sizeControlTopConstraint: NSLayoutConstraint!
   private var sizeControlBottomConstraint: NSLayoutConstraint!
   private var colorSelection: ColorSelection = .none
+  private var tileSizeControl: TileSizeControl = .empty
   private var isColorPickerHidden = true
   private var isSizeControlHidden = true
   private var isAnimating = false
@@ -242,35 +243,17 @@ final class TiledDrawingView: UIView {
     switch message {
     case let .valueDidChange(value):
       let initialTileSize = boundsView.panelView.tiledDrawing.tileSize
-      boundsView.panelView.tiledDrawing.unitSize = drawingSizeControl.convertedValue(value)
+      boundsView.panelView.tiledDrawing.unitSize = tileSizeControl.widthForValue(value)
       guard initialTileSize != boundsView.panelView.tiledDrawing.tileSize else { return }
       boundsView.updatePanelSize()
       updateVariations()
     }
   }
 
-  private var drawingSizeControl = DrawingSizeControl.standard
-
   private func update(_ message: DrawingBoundsView.Message) {
     switch message {
-    case let .sizeDidChange(size): drawingSizeControl = DrawingSizeControl(min: 20, max: min(size.width, size.height))
+    case let .sizeDidChange(size): tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
     }
-  }
-}
-
-struct DrawingSizeControl {
-  let min: CGFloat
-  let max: CGFloat
-
-  func convertedValue(_ value: CGFloat) -> CGFloat {
-    // y = - log(-.2(x - 5)) gives us a good curve with (5, 3) max coordinates.
-    // We normalize the max coordinates with `x = sliderValue * 5` and dividing by 3 at the end.
-    let y = -log(-0.2 * (value * 5 - 5)) / 3
-    return min + (max - min) * Swift.min(1, y)
-  }
-
-  static var standard: DrawingSizeControl {
-    DrawingSizeControl(min: 0, max: 1)
   }
 }
 

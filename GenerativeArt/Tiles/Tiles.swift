@@ -8,6 +8,12 @@ struct Tiles {
   /// Use the `scale` property to align the tiles to the screen pixels.
   /// The `scale` value represents the number of pixels per point.
   init(maxSize: CGSize, maxTileSize: CGFloat, scale: CGFloat? = nil) {
+    guard maxTileSize > 0 else {
+      size = maxSize
+      tileSize = maxSize
+      frames = []
+      return
+    }
     let xCount = floor(maxSize.width / maxTileSize)
     let xStep = Tiles.roundedForScale(maxSize.width / xCount, scale: scale)
     let yCount = floor(maxSize.height / maxTileSize)
