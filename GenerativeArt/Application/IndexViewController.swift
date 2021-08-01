@@ -65,6 +65,7 @@ class IndexViewController: UICollectionViewController {
       var configuration = appearance.cellConfiguration()
       configuration.text = item.title
       cell.contentConfiguration = configuration
+      cell.accessories = appearance.accessories()
     }
     let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
       collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
@@ -109,6 +110,13 @@ extension IndexAppearance {
     switch self {
     case .insetGrouped: return UIListContentConfiguration.groupedHeader()
     case .sidebar: return UIListContentConfiguration.sidebarHeader()
+    }
+  }
+
+  func accessories() -> [UICellAccessory] {
+    switch self {
+    case .insetGrouped: return [.disclosureIndicator()]
+    case .sidebar: return []
     }
   }
 }
