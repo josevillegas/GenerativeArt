@@ -39,13 +39,13 @@ enum TiledDrawingType {
 
   var options: TiledDrawingViewToolbarController.Options {
     switch self {
-    case .concentricShapes,
-         .diagonals,
+    case .diagonals,
          .triangles,
          .quadrants,
          .trianglesAndQuadrants:
       return .all
-    case .scribbles:
+    case .concentricShapes,
+         .scribbles:
       return []
     }
   }

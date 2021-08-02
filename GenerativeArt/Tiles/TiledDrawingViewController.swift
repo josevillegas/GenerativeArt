@@ -1,14 +1,10 @@
 import UIKit
-import Combine
 
 final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let viewModel: TiledDrawingViewModel
   private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
   private let toolbarController: TiledDrawingViewToolbarController
   private let send: (Message) -> ()
-  private let timer = DrawingTimer()
-  private var cancellables: [AnyCancellable] = []
-  private var wasPlaying = false
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
@@ -33,29 +29,17 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    timer.onFire
-      .sink { [weak self] in self?.drawingView.updateRandomTiles(count: 20) }
-      .store(in: &cancellables)
-    timer.$isPlaying
-      .sink { [weak self] in self?.toolbarController.updatePlayButton(isPlaying: $0) }
-      .store(in: &cancellables)
     toolbarController.send = { [weak self] in self?.update($0) }
   }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-
-    if wasPlaying {
-      timer.start()
-    }
+    toolbarController.viewDidAppear()
   }
 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-
-    wasPlaying = timer.isPlaying
-    timer.stop()
+    toolbarController.viewWillDisappear()
   }
 
   private func update(_ message: TiledDrawingViewModel.Message) {
@@ -69,9 +53,9 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     case .dismiss:  send(.dismissDrawing)
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()
     case .showForegroundColors: drawingView.showForegroundColorPicker()
+    case .showNext: drawingView.updateVariations()
+    case .showNextFromTimer: drawingView.updateRandomTiles(count: 20)
     case .showSizeSlider: drawingView.showSizeControl()
-    case .toggleAnimation: timer.isPlaying.toggle()
-    case .updateVariations: drawingView.updateVariations()
     }
   }
 }

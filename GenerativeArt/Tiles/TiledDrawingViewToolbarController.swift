@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 final class TiledDrawingViewToolbarController: BarButtonItemProvider {
@@ -12,15 +13,18 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
     case dismiss
     case showBackgroundColors
     case showForegroundColors
+    case showNext
+    case showNextFromTimer
     case showSizeSlider
-    case toggleAnimation
-    case updateVariations
   }
 
   var send: (Message) -> Void = { _ in }
 
   private(set) var toolbarItems: [UIBarButtonItem] = []
   private let playButton = UIBarButtonItem(image: nil, style: .plain, target: nil, action: nil)
+  private let timer = DrawingTimer()
+  private var cancellables: [AnyCancellable] = []
+  private var wasPlaying = false
 
   init(options: Options, presentationMode: DrawingPresentationMode) {
     toolbarItems = [
@@ -29,7 +33,7 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
       options.contains(.colors) ? barButtonItem(title: "Back", action: #selector(showBackgroundColors)) : nil,
       barButtonItem(title: "Size", action: #selector(showSizeSlider)),
       playButton,
-      barButtonItem(image: .goForward, action: #selector(updateVariations))
+      barButtonItem(image: .goForward, action: #selector(showNext))
     ]
       .compactMap { $0 }
       .addingFlexibleSpaces()
@@ -37,9 +41,27 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
     playButton.image = playButtonImage(isPlaying: false)
     playButton.target = self
     playButton.action = #selector(toggleAnimation)
+
+    timer.onFire
+      .sink { [weak self] in self?.send(.showNextFromTimer) }
+      .store(in: &cancellables)
+    timer.$isPlaying
+      .sink { [weak self] in self?.updatePlayButton(isPlaying: $0) }
+      .store(in: &cancellables)
   }
 
-  func updatePlayButton(isPlaying: Bool) {
+  func viewDidAppear() {
+    if wasPlaying {
+      timer.start()
+    }
+  }
+
+  func viewWillDisappear() {
+    wasPlaying = timer.isPlaying
+    timer.stop()
+  }
+
+  private func updatePlayButton(isPlaying: Bool) {
     playButton.image = playButtonImage(isPlaying: isPlaying)
   }
 
@@ -64,10 +86,10 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
   }
 
   @objc private func toggleAnimation() {
-    send(.toggleAnimation)
+    timer.isPlaying.toggle()
   }
 
-  @objc private func updateVariations() {
-    send(.updateVariations)
+  @objc private func showNext() {
+    send(.showNext)
   }
 }
