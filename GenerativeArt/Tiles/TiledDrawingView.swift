@@ -5,14 +5,14 @@ struct TiledDrawingViewModel {
     case dismissControl
   }
 
-  let variation: TiledDrawingType
+  let type: TiledDrawingType
   var tileForegroundColor: Color
   var tileBackgroundColor: Color
 }
 
 extension TiledDrawingViewModel {
   init(type: TiledDrawingType) {
-    self.init(variation: type, tileForegroundColor: type.defaultForegroundColor, tileBackgroundColor: type.defaultBackgroundColor)
+    self.init(type: type, tileForegroundColor: type.defaultForegroundColor, tileBackgroundColor: type.defaultBackgroundColor)
   }
 }
 
@@ -48,7 +48,7 @@ final class TiledDrawingView: UIView {
     self.viewModel = viewModel
     self.send = send
     let tiledDrawing = TiledDrawing(
-      variation: viewModel.variation,
+      type: viewModel.type,
       foregroundColor: viewModel.tileForegroundColor.color(),
       backgroundColor: viewModel.tileBackgroundColor.color()
     )
@@ -56,7 +56,7 @@ final class TiledDrawingView: UIView {
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
 
-    backgroundColor = viewModel.variation.backgroundColor.color()
+    backgroundColor = viewModel.type.backgroundColor.color()
 
     colorPickerView.isHidden = true
     sizeControl.isHidden = true

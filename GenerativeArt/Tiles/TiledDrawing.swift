@@ -53,8 +53,8 @@ struct TiledDrawing {
 }
 
 extension TiledDrawing {
-  init(variation: TiledDrawingType, foregroundColor: UIColor, backgroundColor: UIColor) {
-    switch variation {
+  init(type: TiledDrawingType, foregroundColor: UIColor, backgroundColor: UIColor) {
+    switch type {
     case .concentricShapes:
       let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
       self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {
