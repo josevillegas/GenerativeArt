@@ -37,7 +37,7 @@ enum TiledDrawingType {
     }
   }
 
-  var options: TiledDrawingViewToolbarController.Options {
+  var options: DrawingControls.Options {
     switch self {
     case .diagonals,
          .triangles,

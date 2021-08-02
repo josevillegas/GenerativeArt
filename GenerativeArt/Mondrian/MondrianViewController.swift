@@ -1,16 +1,16 @@
 import UIKit
 
 final class MondrianViewController: UIViewController, ToolbarController {
-  private let toolbarController: TiledDrawingViewToolbarController
+  private let drawingControls: DrawingControls
   private let mondrianView = MondrianView()
   private let send: (Message) -> ()
 
   init(presentationMode: DrawingPresentationMode, send: @escaping (Message) -> ()) {
-    toolbarController = TiledDrawingViewToolbarController(options: .none, presentationMode: presentationMode)
+    drawingControls = DrawingControls(options: .none, presentationMode: presentationMode)
     self.send = send
     super.init(nibName: nil, bundle: nil)
 
-    toolbarItems = toolbarController.toolbarItems
+    toolbarItems = drawingControls.toolbarItems
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -24,10 +24,10 @@ final class MondrianViewController: UIViewController, ToolbarController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    toolbarController.send = { [weak self] in self?.update($0) }
+    drawingControls.send = { [weak self] in self?.update($0) }
   }
 
-  private func update(_ message: TiledDrawingViewToolbarController.Message) {
+  private func update(_ message: DrawingControls.Message) {
     switch message {
     case .dismiss:
       send(.dismissDrawing)

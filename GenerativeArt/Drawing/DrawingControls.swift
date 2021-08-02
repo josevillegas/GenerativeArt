@@ -1,7 +1,17 @@
+import Algorithms
 import Combine
 import UIKit
 
-final class TiledDrawingViewToolbarController: BarButtonItemProvider {
+final class DrawingControls {
+  enum Message {
+    case dismiss
+    case showBackgroundColors
+    case showForegroundColors
+    case showNext
+    case showNextFromTimer
+    case showSizeSlider
+  }
+
   struct Options: OptionSet {
     let rawValue: Int
 
@@ -10,15 +20,6 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
 
     static let all: Options = [.colors, .size]
     static let none: Options = []
-  }
-
-  enum Message {
-    case dismiss
-    case showBackgroundColors
-    case showForegroundColors
-    case showNext
-    case showNextFromTimer
-    case showSizeSlider
   }
 
   var send: (Message) -> Void = { _ in }
@@ -94,5 +95,19 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
 
   @objc private func showNext() {
     send(.showNext)
+  }
+
+  private func barButtonItem(title: String, action: Selector) -> UIBarButtonItem {
+    UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+  }
+
+  private func barButtonItem(image: UIImage, action: Selector) -> UIBarButtonItem {
+    UIBarButtonItem(image: image, style: .plain, target: self, action: action)
+  }
+}
+
+extension Array where Element == UIBarButtonItem {
+  func addingFlexibleSpaces() -> [UIBarButtonItem] {
+    Array(self.interspersed(with: .flexibleSpace()))
   }
 }

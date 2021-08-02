@@ -3,7 +3,7 @@ import UIKit
 final class TiledDrawingViewController: UIViewController, ToolbarController {
   private let viewModel: TiledDrawingViewModel
   private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
-  private let toolbarController: TiledDrawingViewToolbarController
+  private let drawingControls: DrawingControls
   private let send: (Message) -> ()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -12,11 +12,11 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   init(viewModel: TiledDrawingViewModel, presentationMode: DrawingPresentationMode,  send: @escaping (Message) -> ()) {
     self.viewModel = viewModel
-    toolbarController = TiledDrawingViewToolbarController(options: viewModel.type.options, presentationMode: presentationMode)
+    drawingControls = DrawingControls(options: viewModel.type.options, presentationMode: presentationMode)
     self.send = send
     super.init(nibName: nil, bundle: nil)
 
-    toolbarItems = toolbarController.toolbarItems
+    toolbarItems = drawingControls.toolbarItems
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -29,17 +29,17 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    toolbarController.send = { [weak self] in self?.update($0) }
+    drawingControls.send = { [weak self] in self?.update($0) }
   }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    toolbarController.viewDidAppear()
+    drawingControls.viewDidAppear()
   }
 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    toolbarController.viewWillDisappear()
+    drawingControls.viewWillDisappear()
   }
 
   private func update(_ message: TiledDrawingViewModel.Message) {
@@ -48,7 +48,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     }
   }
 
-  private func update(_ message: TiledDrawingViewToolbarController.Message) {
+  private func update(_ message: DrawingControls.Message) {
     switch message {
     case .dismiss:  send(.dismissDrawing)
     case .showBackgroundColors: drawingView.showBackgroundColorPicker()

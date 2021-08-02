@@ -20,7 +20,6 @@
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
 		825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CA26A2290B007727F6 /* MainNavigationController.swift */; };
 		825B64CD26A2304D007727F6 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CC26A2304D007727F6 /* UIImage.swift */; };
-		825B64CF26A25C73007727F6 /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */; };
 		825B64D226A25E56007727F6 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 825B64D126A25E56007727F6 /* Algorithms */; };
 		826309D122E3AB88003E3F29 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* Path.swift */; };
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
@@ -31,10 +30,9 @@
 		829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CA41222D5AADA00453DA7 /* UIColor.swift */; };
 		82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBE77026ADECD00037EA4B /* DrawingTimer.swift */; };
 		82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02390230CD7B600F32857 /* MondrianViewController.swift */; };
-		82E02393230CD91100F32857 /* MondrianViewToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02392230CD91100F32857 /* MondrianViewToolbarController.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
 		82E606D622EBDBE8001EA30F /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E606D522EBDBE8001EA30F /* ColorPickerView.swift */; };
-		82EF793D22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793C22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift */; };
+		82EF793D22ECE9610018AD6F /* DrawingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793C22ECE9610018AD6F /* DrawingControls.swift */; };
 		82EF793F22ECED150018AD6F /* SizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793E22ECED150018AD6F /* SizeControl.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +52,6 @@
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
 		825B64CA26A2290B007727F6 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		825B64CC26A2304D007727F6 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
-		825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
 		826309D822E3BC61003E3F29 /* Variations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variations.swift; sourceTree = "<group>"; };
@@ -64,10 +61,9 @@
 		829CA41222D5AADA00453DA7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		82CBE77026ADECD00037EA4B /* DrawingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingTimer.swift; sourceTree = "<group>"; };
 		82E02390230CD7B600F32857 /* MondrianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianViewController.swift; sourceTree = "<group>"; };
-		82E02392230CD91100F32857 /* MondrianViewToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianViewToolbarController.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
 		82E606D522EBDBE8001EA30F /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
-		82EF793C22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingViewToolbarController.swift; sourceTree = "<group>"; };
+		82EF793C22ECE9610018AD6F /* DrawingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingControls.swift; sourceTree = "<group>"; };
 		82EF793E22ECED150018AD6F /* SizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeControl.swift; sourceTree = "<group>"; };
 		82F53D4726A204A10089C0BC /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = GenerativeArt/Resources/Common.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -104,6 +100,7 @@
 				826309D822E3BC61003E3F29 /* Variations.swift */,
 				8239DD2C2338552A00652A46 /* Color.swift */,
 				820FBBDA26A35E070043FFD5 /* DrawingType.swift */,
+				82EF793C22ECE9610018AD6F /* DrawingControls.swift */,
 				82CBE77026ADECD00037EA4B /* DrawingTimer.swift */,
 			);
 			path = Drawing;
@@ -153,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				829CA41222D5AADA00453DA7 /* UIColor.swift */,
-				825B64CE26A25C73007727F6 /* UIBarButtonItem.swift */,
 				825B64CC26A2304D007727F6 /* UIImage.swift */,
 				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
@@ -165,7 +161,6 @@
 			children = (
 				8239290522D2779500F8B1B2 /* TiledDrawingViewController.swift */,
 				826EE33922EAA15200901EFF /* TiledDrawingView.swift */,
-				82EF793C22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift */,
 				826309D422E3B7BE003E3F29 /* TiledDrawing.swift */,
 				8239DD2E2338556E00652A46 /* TiledDrawingType.swift */,
 				82E606D522EBDBE8001EA30F /* ColorPickerView.swift */,
@@ -179,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				82E02390230CD7B600F32857 /* MondrianViewController.swift */,
-				82E02392230CD91100F32857 /* MondrianViewToolbarController.swift */,
 				82E02394230CDCD900F32857 /* MondrianDrawing.swift */,
 			);
 			path = Mondrian;
@@ -262,8 +256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
-				82E02393230CD91100F32857 /* MondrianViewToolbarController.swift in Sources */,
-				825B64CF26A25C73007727F6 /* UIBarButtonItem.swift in Sources */,
 				829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */,
 				826309D122E3AB88003E3F29 /* Path.swift in Sources */,
 				825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */,
@@ -286,7 +278,7 @@
 				8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */,
 				826309D922E3BC61003E3F29 /* Variations.swift in Sources */,
 				8218A38B26A3398C00457FBE /* Application.swift in Sources */,
-				82EF793D22ECE9610018AD6F /* TiledDrawingViewToolbarController.swift in Sources */,
+				82EF793D22ECE9610018AD6F /* DrawingControls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
