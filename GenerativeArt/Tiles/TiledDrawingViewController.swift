@@ -16,7 +16,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 
   init(viewModel: TiledDrawingViewModel, presentationMode: DrawingPresentationMode,  send: @escaping (Message) -> ()) {
     self.viewModel = viewModel
-    toolbarController = TiledDrawingViewToolbarController(presentationMode: presentationMode)
+    toolbarController = TiledDrawingViewToolbarController(options: viewModel.type.options, presentationMode: presentationMode)
     self.send = send
     super.init(nibName: nil, bundle: nil)
 

@@ -36,4 +36,17 @@ enum TiledDrawingType {
     default: return .white
     }
   }
+
+  var options: TiledDrawingViewToolbarController.Options {
+    switch self {
+    case .concentricShapes,
+         .diagonals,
+         .triangles,
+         .quadrants,
+         .trianglesAndQuadrants:
+      return .all
+    case .scribbles:
+      return []
+    }
+  }
 }
