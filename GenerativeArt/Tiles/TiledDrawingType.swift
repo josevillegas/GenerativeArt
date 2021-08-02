@@ -46,7 +46,7 @@ enum TiledDrawingType {
       return .all
     case .concentricShapes,
          .scribbles:
-      return []
+      return [.size]
     }
   }
 }

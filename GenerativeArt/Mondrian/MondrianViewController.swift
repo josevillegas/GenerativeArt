@@ -1,12 +1,12 @@
 import UIKit
 
 final class MondrianViewController: UIViewController, ToolbarController {
-  private let toolbarController: MondrianViewToolbarController
+  private let toolbarController: TiledDrawingViewToolbarController
   private let mondrianView = MondrianView()
   private let send: (Message) -> ()
 
   init(presentationMode: DrawingPresentationMode, send: @escaping (Message) -> ()) {
-    toolbarController = MondrianViewToolbarController(presentationMode: presentationMode)
+    toolbarController = TiledDrawingViewToolbarController(options: .none, presentationMode: presentationMode)
     self.send = send
     super.init(nibName: nil, bundle: nil)
 
@@ -27,10 +27,17 @@ final class MondrianViewController: UIViewController, ToolbarController {
     toolbarController.send = { [weak self] in self?.update($0) }
   }
 
-  private func update(_ message: MondrianViewToolbarController.Message) {
+  private func update(_ message: TiledDrawingViewToolbarController.Message) {
     switch message {
-    case .dismiss: send(.dismissDrawing)
-    case .redraw: mondrianView.redraw()
+    case .dismiss:
+      send(.dismissDrawing)
+    case .showNext,
+         .showNextFromTimer:
+      mondrianView.redraw()
+    case .showBackgroundColors,
+         .showForegroundColors,
+         .showSizeSlider:
+      break
     }
   }
 }

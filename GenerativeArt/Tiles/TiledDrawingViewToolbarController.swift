@@ -6,7 +6,10 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
     let rawValue: Int
 
     static let colors = Options(rawValue: 1 << 0)
-    static let all: Options = [.colors]
+    static let size = Options(rawValue: 1 << 1)
+
+    static let all: Options = [.colors, .size]
+    static let none: Options = []
   }
 
   enum Message {
@@ -31,7 +34,7 @@ final class TiledDrawingViewToolbarController: BarButtonItemProvider {
       barButtonItem(image: .dismiss(with: presentationMode), action: #selector(dismiss)),
       options.contains(.colors) ? barButtonItem(title: "Front", action: #selector(showForegroundColors)) : nil,
       options.contains(.colors) ? barButtonItem(title: "Back", action: #selector(showBackgroundColors)) : nil,
-      barButtonItem(title: "Size", action: #selector(showSizeSlider)),
+      options.contains(.size) ? barButtonItem(title: "Size", action: #selector(showSizeSlider)): nil,
       playButton,
       barButtonItem(image: .goForward, action: #selector(showNext))
     ]
