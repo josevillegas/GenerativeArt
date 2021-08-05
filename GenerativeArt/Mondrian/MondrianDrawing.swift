@@ -32,40 +32,34 @@ struct MondrianDrawing {
 
   private func makeSplit(frame: CGRect) -> Split? {
     let margin: CGFloat = 10
-    switch Int.random(in: 0...1) {
-    case 0:
+    if Bool.random() {
       // Return two columns.
       let length = frame.size.width - margin * 2
       guard length > margin else { return nil }
 
       let offset = margin + round(CGFloat.random(in: margin...length))
       return Split(
-        frames: [
-          CGRect(x: frame.origin.x, y: frame.origin.y, width: offset, height: frame.size.height),
-          CGRect(x: frame.origin.x + offset, y: frame.origin.y, width: frame.size.width - offset, height: frame.size.height)
-        ],
+        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: offset, height: frame.size.height),
+        frame2: CGRect(x: frame.origin.x + offset, y: frame.origin.y, width: frame.size.width - offset, height: frame.size.height),
         line: Line(
           start: CGPoint(x: frame.origin.x + offset, y: frame.origin.y),
           end: CGPoint(x: frame.origin.x + offset, y: frame.origin.y + frame.size.height)
         )
       )
-    case 1:
+    } else {
       // Return two rows.
       let length = frame.size.height - margin * 2
       guard length > margin else { return nil }
 
       let offset = margin + round(CGFloat.random(in: margin...length))
       return Split(
-        frames: [
-          CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: offset),
-          CGRect(x: frame.origin.x, y: frame.origin.y + offset, width: frame.size.width, height: frame.size.height - offset)
-        ],
+        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: offset),
+        frame2: CGRect(x: frame.origin.x, y: frame.origin.y + offset, width: frame.size.width, height: frame.size.height - offset),
         line: Line(
           start: CGPoint(x: frame.origin.x, y: frame.origin.y + offset),
           end: CGPoint(x: frame.origin.x + frame.size.width, y: frame.origin.y + offset)
         )
       )
-    default: return nil
     }
   }
 
@@ -102,9 +96,20 @@ struct MondrianDrawing {
 }
 
 extension MondrianDrawing {
+  /// `Split` represents a rectangle split in two.
   struct Split {
-    let frames: [CGRect]
+    /// The first rectangle the primary rectangle is split into.
+    let frame1: CGRect
+
+    /// The second rectangle the primary rectangle is split into.
+    let frame2: CGRect
+
+    /// The line between the two rectangles in the split.
     let line: Line
+
+    var frames: [CGRect] {
+      [frame1, frame2]
+    }
   }
 
   struct Line {
