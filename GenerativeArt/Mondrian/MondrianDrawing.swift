@@ -90,34 +90,39 @@ extension MondrianDrawing {
 
 extension MondrianDrawing.Split {
   init?(frame: CGRect, margin: CGFloat) {
+    let width = frame.width
+    let height = frame.height
+    let x = frame.origin.x
+    let y = frame.origin.y
+
     if Bool.random() {
       // Return two columns.
-      let length = frame.size.width - margin * 2
+      let length = width - margin * 2
       guard length > margin else { return nil }
 
       let offset = margin + round(CGFloat.random(in: margin...length))
       self.init(
-        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: offset, height: frame.size.height),
-        frame2: CGRect(x: frame.origin.x + offset, y: frame.origin.y, width: frame.size.width - offset, height: frame.size.height),
-        line: MondrianDrawing.Line(
-          start: CGPoint(x: frame.origin.x + offset, y: frame.origin.y),
-          end: CGPoint(x: frame.origin.x + offset, y: frame.origin.y + frame.size.height)
-        )
+        frame1: CGRect(x: x, y: y, width: offset, height: height),
+        frame2: CGRect(x: x + offset, y: y, width: width - offset, height: height),
+        start: CGPoint(x: x + offset, y: y),
+        end: CGPoint(x: x + offset, y: y + height)
       )
     } else {
       // Return two rows.
-      let length = frame.size.height - margin * 2
+      let length = height - margin * 2
       guard length > margin else { return nil }
 
       let offset = margin + round(CGFloat.random(in: margin...length))
       self.init(
-        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: offset),
-        frame2: CGRect(x: frame.origin.x, y: frame.origin.y + offset, width: frame.size.width, height: frame.size.height - offset),
-        line: MondrianDrawing.Line(
-          start: CGPoint(x: frame.origin.x, y: frame.origin.y + offset),
-          end: CGPoint(x: frame.origin.x + frame.size.width, y: frame.origin.y + offset)
-        )
+        frame1: CGRect(x: x, y: y, width: width, height: offset),
+        frame2: CGRect(x: x, y: y + offset, width: width, height: height - offset),
+        start: CGPoint(x: x, y: y + offset),
+        end: CGPoint(x: x + width, y: y + offset)
       )
     }
+  }
+
+  init(frame1: CGRect, frame2: CGRect, start: CGPoint, end: CGPoint) {
+    self.init(frame1: frame1, frame2: frame2, line: MondrianDrawing.Line(start: start, end: end))
   }
 }
