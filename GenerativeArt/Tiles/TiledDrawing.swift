@@ -30,10 +30,6 @@ struct TiledDrawing {
     self.makePaths = makePaths
   }
 
-  init(type: TiledDrawingType, foregroundColor: UIColor, backgroundColor: UIColor) {
-    self.init(unitSize: type.defaultUnitSize, foregroundColor: foregroundColor, backgroundColor: backgroundColor, makePaths: type.paths)
-  }
-
   mutating func updateVariations() {
     tilePaths = frames.map { makePaths(frame: $0) }
   }

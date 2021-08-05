@@ -5,15 +5,12 @@ struct TiledDrawingViewModel {
     case dismissControl
   }
 
-  let type: TiledDrawingType
+  let options: DrawingControls.Options
+  let backgroundColor: Color
   var tileForegroundColor: Color
   var tileBackgroundColor: Color
-}
-
-extension TiledDrawingViewModel {
-  init(type: TiledDrawingType) {
-    self.init(type: type, tileForegroundColor: type.defaultForegroundColor, tileBackgroundColor: type.defaultBackgroundColor)
-  }
+  let defaultUnitSize: CGFloat
+  let paths: (TiledDrawing.PathProperties) -> [Path]
 }
 
 final class TiledDrawingView: UIView {
@@ -48,15 +45,16 @@ final class TiledDrawingView: UIView {
     self.viewModel = viewModel
     self.send = send
     let tiledDrawing = TiledDrawing(
-      type: viewModel.type,
+      unitSize: viewModel.defaultUnitSize,
       foregroundColor: viewModel.tileForegroundColor.color(),
-      backgroundColor: viewModel.tileBackgroundColor.color()
+      backgroundColor: viewModel.tileBackgroundColor.color(),
+      makePaths: viewModel.paths
     )
     boundsView = DrawingBoundsView(tiledDrawing: tiledDrawing)
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
 
-    backgroundColor = viewModel.type.backgroundColor.color()
+    backgroundColor = viewModel.backgroundColor.color()
 
     colorPickerView.isHidden = true
     sizeControl.isHidden = true
