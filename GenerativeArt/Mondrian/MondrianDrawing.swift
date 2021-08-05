@@ -23,44 +23,14 @@ struct MondrianDrawing {
 
     let index = Int.random(in: 0..<frames.count)
     let frame = frames.remove(at: index)
+    let margin: CGFloat = 10
     // If the first split fails, try one more time.
     // We may hit a frame that is too narrow when other frames are available.
-    guard let split = makeSplit(frame: frame) ?? makeSplit(frame: frame) else { return (frames, lines) }
+    guard let split = MondrianDrawing.Split(frame: frame, margin: margin) ?? MondrianDrawing.Split(frame: frame, margin: margin) else {
+      return (frames, lines)
+    }
 
     return reduce(frames: frames + split.frames, lines: lines + [split.line], count: count - 1)
-  }
-
-  private func makeSplit(frame: CGRect) -> Split? {
-    let margin: CGFloat = 10
-    if Bool.random() {
-      // Return two columns.
-      let length = frame.size.width - margin * 2
-      guard length > margin else { return nil }
-
-      let offset = margin + round(CGFloat.random(in: margin...length))
-      return Split(
-        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: offset, height: frame.size.height),
-        frame2: CGRect(x: frame.origin.x + offset, y: frame.origin.y, width: frame.size.width - offset, height: frame.size.height),
-        line: Line(
-          start: CGPoint(x: frame.origin.x + offset, y: frame.origin.y),
-          end: CGPoint(x: frame.origin.x + offset, y: frame.origin.y + frame.size.height)
-        )
-      )
-    } else {
-      // Return two rows.
-      let length = frame.size.height - margin * 2
-      guard length > margin else { return nil }
-
-      let offset = margin + round(CGFloat.random(in: margin...length))
-      return Split(
-        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: offset),
-        frame2: CGRect(x: frame.origin.x, y: frame.origin.y + offset, width: frame.size.width, height: frame.size.height - offset),
-        line: Line(
-          start: CGPoint(x: frame.origin.x, y: frame.origin.y + offset),
-          end: CGPoint(x: frame.origin.x + frame.size.width, y: frame.origin.y + offset)
-        )
-      )
-    }
   }
 
   private func colorPaths(frames: [CGRect]) -> [Path] {
@@ -115,5 +85,39 @@ extension MondrianDrawing {
   struct Line {
     let start: CGPoint
     let end: CGPoint
+  }
+}
+
+extension MondrianDrawing.Split {
+  init?(frame: CGRect, margin: CGFloat) {
+    if Bool.random() {
+      // Return two columns.
+      let length = frame.size.width - margin * 2
+      guard length > margin else { return nil }
+
+      let offset = margin + round(CGFloat.random(in: margin...length))
+      self.init(
+        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: offset, height: frame.size.height),
+        frame2: CGRect(x: frame.origin.x + offset, y: frame.origin.y, width: frame.size.width - offset, height: frame.size.height),
+        line: MondrianDrawing.Line(
+          start: CGPoint(x: frame.origin.x + offset, y: frame.origin.y),
+          end: CGPoint(x: frame.origin.x + offset, y: frame.origin.y + frame.size.height)
+        )
+      )
+    } else {
+      // Return two rows.
+      let length = frame.size.height - margin * 2
+      guard length > margin else { return nil }
+
+      let offset = margin + round(CGFloat.random(in: margin...length))
+      self.init(
+        frame1: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: offset),
+        frame2: CGRect(x: frame.origin.x, y: frame.origin.y + offset, width: frame.size.width, height: frame.size.height - offset),
+        line: MondrianDrawing.Line(
+          start: CGPoint(x: frame.origin.x, y: frame.origin.y + offset),
+          end: CGPoint(x: frame.origin.x + frame.size.width, y: frame.origin.y + offset)
+        )
+      )
+    }
   }
 }
