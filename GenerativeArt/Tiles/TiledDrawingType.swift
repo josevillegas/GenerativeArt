@@ -1,4 +1,4 @@
-import Foundation
+import CoreGraphics
 
 enum TiledDrawingType {
   case concentricShapes
@@ -37,6 +37,19 @@ enum TiledDrawingType {
     }
   }
 
+  var defaultUnitSize: CGFloat {
+    switch self {
+    case .concentricShapes,
+         .triangles,
+         .quadrants,
+         .trianglesAndQuadrants,
+         .scribbles:
+      return 30
+    case .diagonals:
+      return 15
+    }
+  }
+
   var options: DrawingControls.Options {
     switch self {
     case .diagonals,
@@ -47,6 +60,40 @@ enum TiledDrawingType {
     case .concentricShapes,
          .scribbles:
       return [.size]
+    }
+  }
+
+  var paths: (TiledDrawing.PathProperties) -> [Path] {
+    switch self {
+    case .concentricShapes:
+      let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
+      return {
+        Path.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
+      }
+    case .diagonals:
+      return {[
+        .fillRect($0.frame, color: $0.backgroundColor),
+        .randomDiagonal($0.frame, color: $0.foregroundColor)
+      ]}
+    case .triangles:
+      return {[
+        .fillRect($0.frame, color: $0.backgroundColor),
+        .randomTriangle($0.frame, color: $0.foregroundColor)
+      ]}
+    case .quadrants:
+      return {[
+        .fillRect($0.frame, color: $0.backgroundColor),
+        .randomQuarterCircle($0.frame, color: $0.foregroundColor)
+      ]}
+    case .trianglesAndQuadrants:
+      return {[
+        .fillRect($0.frame, color: $0.backgroundColor),
+        .randomTrianglesAndQuarterCircles($0.frame, color: $0.foregroundColor)
+      ]}
+    case .scribbles:
+      return {[
+        .scribble($0.frame, color: $0.foregroundColor)
+      ]}
     }
   }
 }

@@ -30,6 +30,10 @@ struct TiledDrawing {
     self.makePaths = makePaths
   }
 
+  init(type: TiledDrawingType, foregroundColor: UIColor, backgroundColor: UIColor) {
+    self.init(unitSize: type.defaultUnitSize, foregroundColor: foregroundColor, backgroundColor: backgroundColor, makePaths: type.paths)
+  }
+
   mutating func updateVariations() {
     tilePaths = frames.map { makePaths(frame: $0) }
   }
@@ -49,41 +53,5 @@ struct TiledDrawing {
     frames = tiles.frames
     size = tiles.size
     tileSize = tiles.tileSize
-  }
-}
-
-extension TiledDrawing {
-  init(type: TiledDrawingType, foregroundColor: UIColor, backgroundColor: UIColor) {
-    switch type {
-    case .concentricShapes:
-      let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
-      self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {
-        Path.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
-      }
-    case .diagonals:
-      self.init(unitSize: 15, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomDiagonal($0.frame, color: $0.foregroundColor)
-      ]}
-    case .triangles:
-      self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomTriangle($0.frame, color: $0.foregroundColor)
-      ]}
-    case .quadrants:
-      self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomQuarterCircle($0.frame, color: $0.foregroundColor)
-      ]}
-    case .trianglesAndQuadrants:
-      self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomTrianglesAndQuarterCircles($0.frame, color: $0.foregroundColor)
-      ]}
-    case .scribbles:
-      self.init(unitSize: 30, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {[
-        .scribble($0.frame, color: $0.foregroundColor)
-      ]}
-    }
   }
 }
