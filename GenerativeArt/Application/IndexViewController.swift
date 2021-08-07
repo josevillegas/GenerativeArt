@@ -71,7 +71,8 @@ class IndexViewController: UICollectionViewController {
       collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
     }
 
-    let headerRegistration = SupplementaryRegistration(elementKind: "header") { [weak self] view, _, indexPath in
+    let headerKind = UICollectionView.elementKindSectionHeader
+    let headerRegistration = SupplementaryRegistration(elementKind: headerKind) { [weak self] view, _, indexPath in
       guard let self = self else { return }
       var configuration = self.appearance.headerConfiguration()
       configuration.text = self.index.sections[indexPath.section].title
