@@ -31,10 +31,6 @@ final class TiledDrawingView: UIView {
   private var viewModel: TiledDrawingViewModel
 
   private let send: (TiledDrawingViewModel.Message) -> Void
-  private var colorPickerTopConstraint: NSLayoutConstraint!
-  private var colorPickerBottomConstraint: NSLayoutConstraint!
-  private var sizeControlTopConstraint: NSLayoutConstraint!
-  private var sizeControlBottomConstraint: NSLayoutConstraint!
   private var colorSelection: ColorSelection = .none
   private var tileSizeControl: TileSizeControl = .empty
   private var isColorPickerHidden = true
@@ -60,6 +56,9 @@ final class TiledDrawingView: UIView {
     sizeControl.isHidden = true
     dismissControl.isHidden = true
 
+    colorPickerView.alpha = 0
+    sizeControl.alpha = 0
+
     addSubview(boundsView)
     boundsView.addEdgeConstraints(to: safeAreaLayoutGuide, margin: 12)
 
@@ -68,25 +67,11 @@ final class TiledDrawingView: UIView {
 
     addSubview(colorPickerView)
     colorPickerView.addHorizontalConstraints(to: self, margin: 12)
-
-    colorPickerTopConstraint = colorPickerView.topAnchor.constraint(equalTo: bottomAnchor)
-    colorPickerTopConstraint.priority = .defaultHigh
-    colorPickerTopConstraint.isActive = true
-
-    colorPickerBottomConstraint = colorPickerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12)
-    colorPickerBottomConstraint.priority = .defaultLow
-    colorPickerBottomConstraint.isActive = true
+    colorPickerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
 
     addSubview(sizeControl)
     sizeControl.addHorizontalConstraints(to: self, margin: 12)
-
-    sizeControlTopConstraint = sizeControl.topAnchor.constraint(equalTo: bottomAnchor)
-    sizeControlTopConstraint.priority = .defaultHigh
-    sizeControlTopConstraint.isActive = true
-
-    sizeControlBottomConstraint = sizeControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12)
-    sizeControlBottomConstraint.priority = .defaultLow
-    sizeControlBottomConstraint.isActive = true
+    sizeControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
 
     colorPickerView.didSelect = { [weak self] in self?.didSelectColor($0) }
     boundsView.send = { [weak self] in self?.update($0) }
@@ -167,19 +152,19 @@ final class TiledDrawingView: UIView {
     if isAnimating { return }
     isAnimating = true
 
-    colorPickerTopConstraint.priority = isColorPickerHidden ? .defaultLow : .defaultHigh
-    colorPickerBottomConstraint.priority = isColorPickerHidden ? .defaultHigh : .defaultLow
     isColorPickerHidden.toggle()
     dismissControl.isHidden.toggle()
 
     if !isColorPickerHidden {
-      colorPickerView.alpha = 1
       colorPickerView.isHidden = false
     }
 
     UIView.animate(
-      withDuration: 0.3,
-      animations: { [weak self] in self?.layoutIfNeeded() },
+      withDuration: 0.2,
+      animations: { [weak self] in
+        guard let self = self else { return }
+        self.colorPickerView.alpha = self.isColorPickerHidden ? 0 : 1
+      },
       completion: { [weak self] _ in
         guard let self = self else { return }
         self.isAnimating = false
@@ -195,19 +180,19 @@ final class TiledDrawingView: UIView {
     if isAnimating { return }
     isAnimating = true
 
-    sizeControlTopConstraint.priority = isSizeControlHidden ? .defaultLow : .defaultHigh
-    sizeControlBottomConstraint.priority = isSizeControlHidden ? .defaultHigh : .defaultLow
     isSizeControlHidden.toggle()
     dismissControl.isHidden.toggle()
 
     if !isSizeControlHidden {
-      sizeControl.alpha = 1
       sizeControl.isHidden = false
     }
 
     UIView.animate(
-      withDuration: 0.3,
-      animations: { [weak self] in self?.layoutIfNeeded() },
+      withDuration: 0.2,
+      animations: { [weak self] in
+        guard let self = self else { return }
+        self.sizeControl.alpha = self.isSizeControlHidden ? 0 : 1
+      },
       completion: { [weak self] _ in
         guard let self = self else { return }
         self.isAnimating = false
