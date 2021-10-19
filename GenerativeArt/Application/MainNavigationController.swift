@@ -22,6 +22,8 @@ final class MainNavigationController: UINavigationController, UINavigationContro
   }
 
   private func updateToolbarColor() {
+    if #available(iOS 15, *) { return }
+
     if traitCollection.userInterfaceStyle == .dark {
       toolbar.isTranslucent = false
     } else {
