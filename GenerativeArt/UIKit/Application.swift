@@ -1,5 +1,10 @@
 import UIKit
 
+enum Message {
+  case dismissDrawing
+  case showDrawing(DrawingType)
+}
+
 final class Application {
 
 //  private lazy var splitViewController: UISplitViewController = {
