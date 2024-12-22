@@ -27,10 +27,10 @@ struct ContentView: View {
 
   var body: some View {
     if horizontalSizeClass == .compact {
-      CompactView(sections: sections, send: send)
+      SidebarView(sections: sections, appearance: .insetGrouped, send: send)
     } else {
       NavigationSplitView {
-        SidebarView(sections: sections, send: send)
+        SidebarView(sections: sections, appearance: .sidebar, send: send)
       } detail: {
         DetailView(drawingType: lastSelectedDrawingType, send: send)
       }
@@ -68,12 +68,13 @@ struct ContentView: View {
 
 struct SidebarView: UIViewControllerRepresentable {
   let sections: [IndexSection]
+  let appearance: IndexAppearance
   let send: (Message) -> Void
 
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    IndexViewController(sections: sections, appearance: .sidebar, send: send)
+    IndexViewController(sections: sections, appearance: appearance, send: send)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -92,19 +93,6 @@ struct DetailView: UIViewControllerRepresentable {
     case let .tile(type):
       TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: .secondary, send: send)
     }
-  }
-
-  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
-
-struct CompactView: UIViewControllerRepresentable {
-  let sections: [IndexSection]
-  let send: (Message) -> Void
-
-  typealias UIViewControllerType = UIViewController
-
-  func makeUIViewController(context: Context) -> UIViewController {
-    IndexViewController(sections: sections, appearance: .insetGrouped, send: send)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
