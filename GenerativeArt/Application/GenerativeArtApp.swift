@@ -33,7 +33,7 @@ struct SidebarView: UIViewControllerRepresentable {
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.sidebarViewController
+    app.indexViewController(appearance: .sidebar)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -57,7 +57,7 @@ struct CompactView: UIViewControllerRepresentable {
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.compactNavigationController
+    app.indexViewController(appearance: .insetGrouped)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

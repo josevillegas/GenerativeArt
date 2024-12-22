@@ -6,20 +6,8 @@ enum Message {
 }
 
 final class Application {
-  lazy var sidebarViewController: UIViewController = {
-    indexViewController(appearance: .sidebar)
-  }()
-
-  lazy var detailViewController: UINavigationController = {
-    let rootViewController = viewController(for: lastSelectedDrawingType, presentationMode: .secondary)
-    let navigationController = UINavigationController(rootViewController: rootViewController)
-    navigationController.isNavigationBarHidden = true
-    navigationController.isToolbarHidden = false
-    return navigationController
-  }()
-
-  lazy var compactNavigationController: UINavigationController = {
-    MainNavigationController(rootViewController: indexViewController(appearance: .insetGrouped))
+  lazy var detailViewController: UIViewController = {
+    viewController(for: lastSelectedDrawingType, presentationMode: .secondary)
   }()
 
 //  private lazy var splitViewController: UISplitViewController = {
@@ -94,7 +82,7 @@ final class Application {
 //    }
   }
 
-  private func indexViewController(appearance: IndexAppearance) -> UIViewController {
+  func indexViewController(appearance: IndexAppearance) -> UIViewController {
     IndexViewController(sections: sections, appearance: appearance) { [weak self] in self?.update($0) }
   }
 
@@ -112,11 +100,11 @@ extension Application: UISplitViewControllerDelegate {
   }
 
   func splitViewControllerDidCollapse(_ splitViewController: UISplitViewController) {
-    var viewControllers = [compactNavigationController.viewControllers.first].compactMap { $0 }
-    if lastDisplayMode == .secondaryOnly {
-      viewControllers.append(viewController(for: lastSelectedDrawingType, presentationMode: .pushed))
-    }
-    compactNavigationController.viewControllers = viewControllers
+//    var viewControllers = [compactNavigationController.viewControllers.first].compactMap { $0 }
+//    if lastDisplayMode == .secondaryOnly {
+//      viewControllers.append(viewController(for: lastSelectedDrawingType, presentationMode: .pushed))
+//    }
+//    compactNavigationController.viewControllers = viewControllers
   }
 
   func splitViewController(
@@ -131,6 +119,7 @@ extension Application: UISplitViewControllerDelegate {
     _ splitViewController: UISplitViewController,
     displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
   ) -> UISplitViewController.DisplayMode {
-    compactNavigationController.viewControllers.count == 1 ? .oneOverSecondary : .secondaryOnly
+//    compactNavigationController.viewControllers.count == 1 ? .oneOverSecondary : .secondaryOnly
+    .oneOverSecondary
   }
 }
