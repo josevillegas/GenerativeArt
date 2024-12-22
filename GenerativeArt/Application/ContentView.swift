@@ -30,7 +30,7 @@ struct ContentView: View {
       NavigationStack {
         SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
           .navigationDestination(item: $selectedDrawingType) { drawingType in
-            DetailView(drawingType: drawingType, send: send)
+            GeneralDrawingView(drawingType: drawingType, send: send)
           }
       }
     } else {
@@ -38,7 +38,7 @@ struct ContentView: View {
         SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
       } detail: {
         if let selectedDrawingType {
-          DetailView(drawingType: selectedDrawingType, send: send)
+          GeneralDrawingView(drawingType: selectedDrawingType, send: send)
         } else {
           Text("Select an item")
         }
@@ -47,4 +47,18 @@ struct ContentView: View {
   }
 
   private func send(_ message: Message) {}
+}
+
+struct GeneralDrawingView: View {
+  let drawingType: DrawingType
+  let send: (Message) -> Void
+
+  var body: some View {
+    switch drawingType {
+    case .paintingStyle(.mondrian):
+      MondrianViewRepresentable(send: send)
+    case let .tile(type):
+      TiledDrawingViewRepresentable(type: type, send: send)
+    }
+  }
 }

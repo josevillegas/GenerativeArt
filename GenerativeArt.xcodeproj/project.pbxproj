@@ -27,7 +27,7 @@
 		827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C229026A14B6F004AAA61 /* AnchorProvider.swift */; };
 		82CBB0C82D1803CD00FC7A78 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0C72D1803C900FC7A78 /* ContentView.swift */; };
 		82CBB0CA2D18055C00FC7A78 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0C92D18055B00FC7A78 /* SidebarView.swift */; };
-		82CBB0CC2D18057900FC7A78 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0CB2D18057700FC7A78 /* DetailView.swift */; };
+		82CBB0CC2D18057900FC7A78 /* DetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0CB2D18057700FC7A78 /* DetailViews.swift */; };
 		82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBE77026ADECD00037EA4B /* DrawingTimer.swift */; };
 		82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02390230CD7B600F32857 /* MondrianViewController.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
@@ -58,7 +58,7 @@
 		827C229026A14B6F004AAA61 /* AnchorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorProvider.swift; sourceTree = "<group>"; };
 		82CBB0C72D1803C900FC7A78 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		82CBB0C92D18055B00FC7A78 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		82CBB0CB2D18057700FC7A78 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		82CBB0CB2D18057700FC7A78 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };
 		82CBE77026ADECD00037EA4B /* DrawingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingTimer.swift; sourceTree = "<group>"; };
 		82E02390230CD7B600F32857 /* MondrianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianViewController.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 				823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */,
 				82CBB0C72D1803C900FC7A78 /* ContentView.swift */,
 				82CBB0C92D18055B00FC7A78 /* SidebarView.swift */,
-				82CBB0CB2D18057700FC7A78 /* DetailView.swift */,
+				82CBB0CB2D18057700FC7A78 /* DetailViews.swift */,
 				8218A38A26A3398C00457FBE /* Application.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 			);
@@ -256,7 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
-				82CBB0CC2D18057900FC7A78 /* DetailView.swift in Sources */,
+				82CBB0CC2D18057900FC7A78 /* DetailViews.swift in Sources */,
 				826309D122E3AB88003E3F29 /* GAPath.swift in Sources */,
 				826EE33A22EAA15200901EFF /* TiledDrawingView.swift in Sources */,
 				82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */,
