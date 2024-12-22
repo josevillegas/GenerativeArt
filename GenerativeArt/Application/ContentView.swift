@@ -7,7 +7,6 @@ enum Message {
 
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
-  @State private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
   @State private var selectedDrawingType: DrawingType?
 
   private let sections = [
@@ -28,41 +27,24 @@ struct ContentView: View {
 
   var body: some View {
     if horizontalSizeClass == .compact {
-      SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
+      NavigationStack {
+        SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
+          .navigationDestination(item: $selectedDrawingType) { drawingType in
+            DetailView(drawingType: drawingType, send: send)
+          }
+      }
     } else {
       NavigationSplitView {
         SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
       } detail: {
-        DetailView(drawingType: lastSelectedDrawingType, send: send)
+        if let selectedDrawingType {
+          DetailView(drawingType: selectedDrawingType, send: send)
+        } else {
+          Text("Select an item")
+        }
       }
     }
   }
 
-  private func send(_ message: Message) {
-    switch message {
-    case .dismissDrawing:
-      dismissDrawing()
-    case let .showDrawing(type):
-      lastSelectedDrawingType = type
-      showDrawing(type)
-    }
-  }
-
-  private func showDrawing(_ type: DrawingType) {
-//    splitViewController.preferredDisplayMode = .automatic
-//    if splitViewController.isCollapsed {
-//      compactNavigationController.pushViewController(viewController(for: type, presentationMode: .pushed), animated: true)
-//    } else {
-//      secondaryNavigationController.viewControllers = [viewController(for: type, presentationMode: .secondary)]
-//      splitViewController.show(.secondary)
-//    }
-  }
-
-  private func dismissDrawing() {
-//    if splitViewController.isCollapsed {
-//      compactNavigationController.popViewController(animated: true)
-//    } else {
-//      splitViewController.show(.primary)
-//    }
-  }
+  private func send(_ message: Message) {}
 }
