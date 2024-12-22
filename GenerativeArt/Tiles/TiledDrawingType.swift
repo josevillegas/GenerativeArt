@@ -10,19 +10,19 @@ enum TiledDrawingType {
 
   var title: String {
     switch self {
-    case .concentricShapes: return "Concentric Shapes"
-    case .diagonals: return "Diagonals"
-    case .triangles: return "Triangles"
-    case .quadrants: return "Quadrants"
-    case .trianglesAndQuadrants: return "Triangles and Quadrants"
-    case .scribbles: return "Scribbles"
+    case .concentricShapes: "Concentric Shapes"
+    case .diagonals: "Diagonals"
+    case .triangles: "Triangles"
+    case .quadrants: "Quadrants"
+    case .trianglesAndQuadrants: "Triangles and Quadrants"
+    case .scribbles: "Scribbles"
     }
   }
 
   var defaultForegroundColor: Color {
     switch self {
-    case .scribbles: return .black
-    default: return .red
+    case .scribbles: .black
+    default: .red
     }
   }
 
@@ -32,8 +32,8 @@ enum TiledDrawingType {
 
   var backgroundColor: Color {
     switch self {
-    case .scribbles: return .lightGray
-    default: return .white
+    case .scribbles: .lightGray
+    default: .white
     }
   }
 
@@ -43,10 +43,8 @@ enum TiledDrawingType {
          .triangles,
          .quadrants,
          .trianglesAndQuadrants,
-         .scribbles:
-      return 30
-    case .diagonals:
-      return 15
+         .scribbles: 30
+    case .diagonals: 15
     }
   }
 
@@ -55,11 +53,9 @@ enum TiledDrawingType {
     case .diagonals,
          .triangles,
          .quadrants,
-         .trianglesAndQuadrants:
-      return .all
+         .trianglesAndQuadrants: .all
     case .concentricShapes,
-         .scribbles:
-      return [.size]
+         .scribbles: [.size]
     }
   }
 

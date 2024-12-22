@@ -6,8 +6,8 @@ enum DrawingType: Hashable {
 
   var title: String {
     switch self {
-    case let .paintingStyle(style): return style.title
-    case let .tile(type): return type.title
+    case let .paintingStyle(style): style.title
+    case let .tile(type): type.title
     }
   }
 }
@@ -17,7 +17,7 @@ enum PaintingStyle {
 
   var title: String {
     switch self {
-    case .mondrian: return "Mondrian"
+    case .mondrian: "Mondrian"
     }
   }
 }

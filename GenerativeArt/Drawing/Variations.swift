@@ -6,8 +6,8 @@ enum Variation2 {
 
   static func random() -> Variation2 {
     switch Int.random(in: 1...2) {
-    case 1: return .a
-    default: return .b
+    case 1: .a
+    default: .b
     }
   }
 }
@@ -20,10 +20,10 @@ enum Variation4 {
 
   static func random() -> Variation4 {
     switch Int.random(in: 1...4) {
-    case 1: return .a
-    case 2: return .b
-    case 3: return .c
-    default: return .d
+    case 1: .a
+    case 2: .b
+    case 3: .c
+    default: .d
     }
   }
 }

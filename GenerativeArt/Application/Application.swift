@@ -68,9 +68,9 @@ final class Application {
   private func viewController(for type: DrawingType, presentationMode: DrawingPresentationMode) -> UIViewController {
     switch type {
     case .paintingStyle(.mondrian):
-      return MondrianViewController(presentationMode: presentationMode) { [weak self] in self?.update($0) }
+      MondrianViewController(presentationMode: presentationMode) { [weak self] in self?.update($0) }
     case let .tile(type):
-      return TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode) { [weak self] in
+      TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode) { [weak self] in
         self?.update($0)
       }
     }

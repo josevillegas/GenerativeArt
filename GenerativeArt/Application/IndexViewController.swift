@@ -85,29 +85,29 @@ class IndexViewController: UICollectionViewController {
 extension IndexAppearance {
   var systemAppearance: UICollectionLayoutListConfiguration.Appearance {
     switch self {
-    case .insetGrouped: return .insetGrouped
-    case .sidebar: return .sidebar
+    case .insetGrouped: .insetGrouped
+    case .sidebar: .sidebar
     }
   }
 
   func cellConfiguration() -> UIListContentConfiguration {
     switch self {
-    case .insetGrouped: return UIListContentConfiguration.cell()
-    case .sidebar: return UIListContentConfiguration.sidebarCell()
+    case .insetGrouped: UIListContentConfiguration.cell()
+    case .sidebar: UIListContentConfiguration.sidebarCell()
     }
   }
 
   func headerConfiguration() -> UIListContentConfiguration {
     switch self {
-    case .insetGrouped: return UIListContentConfiguration.groupedHeader()
-    case .sidebar: return UIListContentConfiguration.sidebarHeader()
+    case .insetGrouped: UIListContentConfiguration.groupedHeader()
+    case .sidebar: UIListContentConfiguration.sidebarHeader()
     }
   }
 
   func accessories() -> [UICellAccessory] {
     switch self {
-    case .insetGrouped: return [.disclosureIndicator()]
-    case .sidebar: return []
+    case .insetGrouped: [.disclosureIndicator()]
+    case .sidebar: []
     }
   }
 }

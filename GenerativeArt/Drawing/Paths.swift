@@ -23,8 +23,8 @@ extension GAPath {
 
   static func randomTrianglesAndQuarterCircles(_ frame: CGRect, color: UIColor) -> GAPath {
     switch Variation2.random() {
-    case .a: return randomTriangle(frame, color: color)
-    case .b: return randomQuarterCircle(frame, color: color)
+    case .a: randomTriangle(frame, color: color)
+    case .b: randomQuarterCircle(frame, color: color)
     }
   }
 
@@ -62,27 +62,27 @@ extension GAPath {
     let width = frame.size.width
     let height = frame.size.height
 
-    switch Variation4.random() {
+    return switch Variation4.random() {
     case .a:
-      return [
+      [
         .moveTo(origin),
         .addLineTo(x + width, y),
         .addLineTo(x + width, y + height)
       ]
     case .b:
-      return [
+      [
         .moveTo(x + width, y),
         .addLineTo(x + width, y + height),
         .addLineTo(x, y + height)
       ]
     case .c:
-      return [
+      [
         .moveTo(x + width, y + height),
         .addLineTo(x, y + height),
         .addLineTo(origin)
       ]
     case .d:
-      return [
+      [
         .moveTo(x, y + height),
         .addLineTo(origin),
         .addLineTo(x + width, y)

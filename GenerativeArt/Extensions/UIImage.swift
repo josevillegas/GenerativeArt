@@ -9,8 +9,8 @@ extension UIImage {
 
   static func dismiss(with presentationMode: DrawingPresentationMode) -> UIImage {
     switch presentationMode {
-    case .pushed: return .backChevron
-    case .secondary: return .sidebar
+    case .pushed: .backChevron
+    case .secondary: .sidebar
     }
   }
 

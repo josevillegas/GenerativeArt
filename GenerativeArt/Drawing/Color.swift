@@ -14,16 +14,16 @@ enum Color {
 
   func color() -> UIColor {
     switch self {
-    case .black: return .black
-    case .blue: return .blue
-    case .green: return .green
-    case .lightGray: return Color.color(white: 0.9)
-    case .red: return .red
-    case .orange: return .orange
-    case .purple: return .purple
-    case .white: return .white
-    case .yellow: return .yellow
-    case .selection: return Color.color(red: 51, green: 204, blue: 255)
+    case .black: .black
+    case .blue: .blue
+    case .green: .green
+    case .lightGray: Color.color(white: 0.9)
+    case .red: .red
+    case .orange: .orange
+    case .purple: .purple
+    case .white: .white
+    case .yellow: .yellow
+    case .selection: Color.color(red: 51, green: 204, blue: 255)
     }
   }
 
