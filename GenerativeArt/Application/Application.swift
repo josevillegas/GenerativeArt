@@ -1,14 +1,6 @@
 import UIKit
 
-enum Message {
-  case dismissDrawing
-  case showDrawing(DrawingType)
-}
-
 final class Application {
-  func detailViewController(drawingType: DrawingType, send: @escaping (Message) -> Void) -> UIViewController {
-    viewController(for: drawingType, presentationMode: .secondary, send: send)
-  }
 
 //  private lazy var splitViewController: UISplitViewController = {
 //    let controller = UISplitViewController(style: .doubleColumn)
@@ -26,7 +18,7 @@ final class Application {
 
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
-  private func viewController(
+  func viewController(
     for type: DrawingType,
     presentationMode: DrawingPresentationMode,
     send: @escaping (Message) -> Void
@@ -37,10 +29,6 @@ final class Application {
     case let .tile(type):
       TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode, send: send)
     }
-  }
-
-  func indexViewController(sections: [IndexSection], appearance: IndexAppearance, send: @escaping (Message) -> Void) -> UIViewController {
-    IndexViewController(sections: sections, appearance: appearance, send: send)
   }
 
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {

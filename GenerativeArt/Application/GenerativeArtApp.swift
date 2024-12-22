@@ -9,6 +9,11 @@ struct GenerativeArtApp: App {
   }
 }
 
+enum Message {
+  case dismissDrawing
+  case showDrawing(DrawingType)
+}
+
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
@@ -33,10 +38,10 @@ struct ContentView: View {
 
   var body: some View {
     if horizontalSizeClass == .compact {
-      CompactView(app: app, sections: sections, send: send)
+      CompactView(sections: sections, send: send)
     } else {
       NavigationSplitView {
-        SidebarView(app: app, sections: sections, send: send)
+        SidebarView(sections: sections, send: send)
       } detail: {
         DetailView(drawingType: lastSelectedDrawingType, app: app, send: send)
       }
@@ -73,14 +78,13 @@ struct ContentView: View {
 }
 
 struct SidebarView: UIViewControllerRepresentable {
-  let app: Application
   let sections: [IndexSection]
   let send: (Message) -> Void
 
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.indexViewController(sections: sections, appearance: .sidebar, send: send)
+    IndexViewController(sections: sections, appearance: .sidebar, send: send)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -94,21 +98,20 @@ struct DetailView: UIViewControllerRepresentable {
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.detailViewController(drawingType: drawingType, send: send)
+    app.viewController(for: drawingType, presentationMode: .secondary, send: send)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 struct CompactView: UIViewControllerRepresentable {
-  let app: Application
   let sections: [IndexSection]
   let send: (Message) -> Void
 
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.indexViewController(sections: sections, appearance: .insetGrouped, send: send)
+    IndexViewController(sections: sections, appearance: .insetGrouped, send: send)
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
