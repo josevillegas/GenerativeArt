@@ -7,10 +7,8 @@ enum Message {
 
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
   @State private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
 
-  private let app = Application()
   private let sections = [
     IndexSection(title: "Lines", rows: [
       .tile(.diagonals),
@@ -34,7 +32,7 @@ struct ContentView: View {
       NavigationSplitView {
         SidebarView(sections: sections, send: send)
       } detail: {
-        DetailView(drawingType: lastSelectedDrawingType, app: app, send: send)
+        DetailView(drawingType: lastSelectedDrawingType, send: send)
       }
     }
   }
@@ -83,13 +81,17 @@ struct SidebarView: UIViewControllerRepresentable {
 
 struct DetailView: UIViewControllerRepresentable {
   let drawingType: DrawingType
-  let app: Application
   let send: (Message) -> Void
 
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.viewController(for: drawingType, presentationMode: .secondary, send: send)
+    switch drawingType {
+    case .paintingStyle(.mondrian):
+      MondrianViewController(presentationMode: .secondary, send: send)
+    case let .tile(type):
+      TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: .secondary, send: send)
+    }
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

@@ -18,19 +18,6 @@ final class Application {
 
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
-  func viewController(
-    for type: DrawingType,
-    presentationMode: DrawingPresentationMode,
-    send: @escaping (Message) -> Void
-  ) -> UIViewController {
-    switch type {
-    case .paintingStyle(.mondrian):
-      MondrianViewController(presentationMode: presentationMode, send: send)
-    case let .tile(type):
-      TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode, send: send)
-    }
-  }
-
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {
     let navigationController = UINavigationController(rootViewController: rootViewController)
     navigationController.isNavigationBarHidden = true
@@ -68,3 +55,30 @@ extension Application: UISplitViewControllerDelegate {
     .oneOverSecondary
   }
 }
+
+final class MainNavigationController: UINavigationController, UINavigationControllerDelegate {
+  override init(rootViewController: UIViewController) {
+    super.init(rootViewController: rootViewController)
+
+    delegate = self
+    isNavigationBarHidden = true
+    isToolbarHidden = false
+    navigationBar.prefersLargeTitles = true
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    if viewController is ToolbarController {
+      isToolbarHidden = false
+      isNavigationBarHidden = true
+    } else {
+      isToolbarHidden = true
+      isNavigationBarHidden = false
+    }
+  }
+}
+
+protocol ToolbarController {}

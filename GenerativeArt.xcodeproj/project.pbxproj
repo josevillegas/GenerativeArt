@@ -17,7 +17,6 @@
 		8239290622D2779500F8B1B2 /* TiledDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239290522D2779500F8B1B2 /* TiledDrawingViewController.swift */; };
 		8239DD2D2338552A00652A46 /* GAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* GAColor.swift */; };
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
-		825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CA26A2290B007727F6 /* MainNavigationController.swift */; };
 		825B64CD26A2304D007727F6 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CC26A2304D007727F6 /* UIImage.swift */; };
 		825B64D226A25E56007727F6 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 825B64D126A25E56007727F6 /* Algorithms */; };
 		826309D122E3AB88003E3F29 /* GAPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* GAPath.swift */; };
@@ -48,7 +47,6 @@
 		8239290522D2779500F8B1B2 /* TiledDrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingViewController.swift; sourceTree = "<group>"; };
 		8239DD2C2338552A00652A46 /* GAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAColor.swift; sourceTree = "<group>"; };
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
-		825B64CA26A2290B007727F6 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		825B64CC26A2304D007727F6 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* GAPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAPath.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */,
 				82CBB0C72D1803C900FC7A78 /* ContentView.swift */,
 				8218A38A26A3398C00457FBE /* Application.swift */,
-				825B64CA26A2290B007727F6 /* MainNavigationController.swift */,
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 			);
 			path = Application;
@@ -254,7 +251,6 @@
 			files = (
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
 				826309D122E3AB88003E3F29 /* GAPath.swift in Sources */,
-				825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */,
 				826EE33A22EAA15200901EFF /* TiledDrawingView.swift in Sources */,
 				82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */,
 				8226935522D2D65200451E84 /* Tiles.swift in Sources */,
