@@ -8,6 +8,7 @@ enum Message {
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
   @State private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
+  @State private var selectedDrawingType: DrawingType?
 
   private let sections = [
     IndexSection(title: "Lines", rows: [
@@ -27,10 +28,10 @@ struct ContentView: View {
 
   var body: some View {
     if horizontalSizeClass == .compact {
-      SidebarView(sections: sections, appearance: .insetGrouped, send: send)
+      SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
     } else {
       NavigationSplitView {
-        SidebarView(sections: sections, appearance: .sidebar, send: send)
+        SidebarView(sections: sections, selectedDrawingType: $selectedDrawingType)
       } detail: {
         DetailView(drawingType: lastSelectedDrawingType, send: send)
       }

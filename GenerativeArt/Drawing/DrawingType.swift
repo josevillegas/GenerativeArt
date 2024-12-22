@@ -1,8 +1,10 @@
 import Foundation
 
-enum DrawingType: Hashable {
+enum DrawingType: Hashable, Identifiable {
   case tile(TiledDrawingType)
   case paintingStyle(PaintingStyle)
+
+  var id: String { title }
 
   var title: String {
     switch self {

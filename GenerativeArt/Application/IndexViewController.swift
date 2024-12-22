@@ -1,6 +1,7 @@
 import UIKit
 
-struct IndexSection: Hashable {
+struct IndexSection: Hashable, Identifiable {
+  var id: String { title }
   let title: String
   let rows: [DrawingType]
 }

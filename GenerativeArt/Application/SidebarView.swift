@@ -1,15 +1,18 @@
 import SwiftUI
 
-struct SidebarView: UIViewControllerRepresentable {
+struct SidebarView: View {
   let sections: [IndexSection]
-  let appearance: IndexAppearance
-  let send: (Message) -> Void
+  @Binding var selectedDrawingType: DrawingType?
 
-  typealias UIViewControllerType = UIViewController
-
-  func makeUIViewController(context: Context) -> UIViewController {
-    IndexViewController(sections: sections, appearance: appearance, send: send)
+  var body: some View {
+    List(selection: $selectedDrawingType) {
+      ForEach(sections) { section in
+        Section(section.title) {
+          ForEach(section.rows) { row in
+            NavigationLink(value: row) { Text(row.title).padding(.leading, 12) }
+          }
+        }
+      }
+    }
   }
-
-  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
