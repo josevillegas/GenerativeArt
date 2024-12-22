@@ -5,10 +5,6 @@ enum Message {
   case showDrawing(DrawingType)
 }
 
-protocol Configuration {
-  var sections: [Index.Section] { get }
-}
-
 final class Application {
   var rootViewController: UIViewController {
     splitViewController
@@ -40,13 +36,24 @@ final class Application {
     return controller
   }()
 
-  private let configuration: Configuration
   private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
-  init(configuration: Configuration) {
-    self.configuration = configuration
-  }
+  private let sections: [Index.Section] = [
+    Index.Section(title: "Lines", rows: [
+      .tile(.diagonals),
+      .tile(.scribbles)
+    ]),
+    Index.Section(title: "Shapes", rows: [
+      .tile(.triangles),
+      .tile(.quadrants),
+      .tile(.trianglesAndQuadrants),
+      .tile(.concentricShapes)
+    ]),
+    Index.Section(title: "Painting Styles", rows: [
+      .paintingStyle(.mondrian)
+    ])
+  ]
 
   private func update(_ message: Message) {
     switch message {
@@ -88,7 +95,7 @@ final class Application {
   }
 
   private func indexViewController(appearance: IndexAppearance) -> UIViewController {
-    IndexViewController(index: Index(sections: configuration.sections), appearance: appearance) { [weak self] in self?.update($0) }
+    IndexViewController(index: Index(sections: sections), appearance: appearance) { [weak self] in self?.update($0) }
   }
 
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {

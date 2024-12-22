@@ -4,7 +4,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
-  private let app = Application(configuration: AppConfiguration())
+  private let app = Application()
 
   func application(
     _ application: UIApplication,
