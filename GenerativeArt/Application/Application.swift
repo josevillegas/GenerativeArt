@@ -6,15 +6,11 @@ enum Message {
 }
 
 final class Application {
-  var rootViewController: UIViewController {
-    splitViewController
-  }
-
-  private lazy var compactNavigationController: UINavigationController = {
-    MainNavigationController(rootViewController: indexViewController(appearance: .insetGrouped))
+  lazy var sidebarViewController: UIViewController = {
+    indexViewController(appearance: .sidebar)
   }()
 
-  private lazy var secondaryNavigationController: UINavigationController = {
+  lazy var detailViewController: UINavigationController = {
     let rootViewController = viewController(for: lastSelectedDrawingType, presentationMode: .secondary)
     let navigationController = UINavigationController(rootViewController: rootViewController)
     navigationController.isNavigationBarHidden = true
@@ -22,19 +18,23 @@ final class Application {
     return navigationController
   }()
 
-  private lazy var splitViewController: UISplitViewController = {
-    let controller = UISplitViewController(style: .doubleColumn)
-    // Set the display mode for the initial state only.
-    controller.preferredDisplayMode = .oneOverSecondary
-    controller.preferredSplitBehavior = .overlay
-    controller.delegate = self
-
-    controller.setViewController(indexViewController(appearance: .sidebar), for: .primary)
-    controller.setViewController(secondaryNavigationController, for: .secondary)
-    controller.setViewController(compactNavigationController, for: .compact)
-
-    return controller
+  lazy var compactNavigationController: UINavigationController = {
+    MainNavigationController(rootViewController: indexViewController(appearance: .insetGrouped))
   }()
+
+//  private lazy var splitViewController: UISplitViewController = {
+//    let controller = UISplitViewController(style: .doubleColumn)
+//    // Set the display mode for the initial state only.
+//    controller.preferredDisplayMode = .oneOverSecondary
+//    controller.preferredSplitBehavior = .overlay
+//    controller.delegate = self
+//
+//    controller.setViewController(indexViewController(appearance: .sidebar), for: .primary)
+//    controller.setViewController(detailViewController, for: .secondary)
+//    controller.setViewController(compactNavigationController, for: .compact)
+//
+//    return controller
+//  }()
 
   private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
@@ -77,21 +77,21 @@ final class Application {
   }
 
   private func showDrawing(_ type: DrawingType) {
-    splitViewController.preferredDisplayMode = .automatic
-    if splitViewController.isCollapsed {
-      compactNavigationController.pushViewController(viewController(for: type, presentationMode: .pushed), animated: true)
-    } else {
-      secondaryNavigationController.viewControllers = [viewController(for: type, presentationMode: .secondary)]
-      splitViewController.show(.secondary)
-    }
+//    splitViewController.preferredDisplayMode = .automatic
+//    if splitViewController.isCollapsed {
+//      compactNavigationController.pushViewController(viewController(for: type, presentationMode: .pushed), animated: true)
+//    } else {
+//      secondaryNavigationController.viewControllers = [viewController(for: type, presentationMode: .secondary)]
+//      splitViewController.show(.secondary)
+//    }
   }
 
   private func dismissDrawing() {
-    if splitViewController.isCollapsed {
-      compactNavigationController.popViewController(animated: true)
-    } else {
-      splitViewController.show(.primary)
-    }
+//    if splitViewController.isCollapsed {
+//      compactNavigationController.popViewController(animated: true)
+//    } else {
+//      splitViewController.show(.primary)
+//    }
   }
 
   private func indexViewController(appearance: IndexAppearance) -> UIViewController {
@@ -108,7 +108,7 @@ final class Application {
 
 extension Application: UISplitViewControllerDelegate {
   func splitViewControllerDidExpand(_ splitViewController: UISplitViewController) {
-    secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType, presentationMode: .secondary)]
+//    secondaryNavigationController.viewControllers = [viewController(for: lastSelectedDrawingType, presentationMode: .secondary)]
   }
 
   func splitViewControllerDidCollapse(_ splitViewController: UISplitViewController) {

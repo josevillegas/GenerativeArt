@@ -10,18 +10,54 @@ struct GenerativeArtApp: App {
 }
 
 struct ContentView: View {
+  @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+  private let app = Application()
+
   var body: some View {
-    ViewControllerView()
+    if horizontalSizeClass == .compact {
+      CompactView(app: app)
+    } else {
+      NavigationSplitView {
+        SidebarView(app: app)
+      } detail: {
+        DetailView(app: app)
+      }
+    }
   }
 }
 
-struct ViewControllerView: UIViewControllerRepresentable {
-  private let app = Application()
+struct SidebarView: UIViewControllerRepresentable {
+  let app: Application
 
   typealias UIViewControllerType = UIViewController
 
   func makeUIViewController(context: Context) -> UIViewController {
-    app.rootViewController
+    app.sidebarViewController
+  }
+
+  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct DetailView: UIViewControllerRepresentable {
+  let app: Application
+
+  typealias UIViewControllerType = UIViewController
+
+  func makeUIViewController(context: Context) -> UIViewController {
+    app.detailViewController
+  }
+
+  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct CompactView: UIViewControllerRepresentable {
+  let app: Application
+
+  typealias UIViewControllerType = UIViewController
+
+  func makeUIViewController(context: Context) -> UIViewController {
+    app.compactNavigationController
   }
 
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
