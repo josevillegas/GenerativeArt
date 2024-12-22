@@ -1,12 +1,13 @@
 import UIKit
+import SwiftUI
 
 struct GAPath {
-  let fillColor: UIColor?
-  let strokeColor: UIColor?
+  let fillColor: Color?
+  let strokeColor: Color?
   let lineWidth: CGFloat
   let commands: [Command]
 
-  init(fillColor: UIColor? = nil, strokeColor: UIColor? = nil, lineWidth: CGFloat = 1, commands: [Command]) {
+  init(fillColor: Color? = nil, strokeColor: Color? = nil, lineWidth: CGFloat = 1, commands: [Command]) {
     self.fillColor = fillColor
     self.strokeColor = strokeColor
     self.lineWidth = lineWidth
@@ -90,11 +91,11 @@ extension GAPath {
       }
     }
     if let color = fillColor {
-      color.set()
+      UIColor(color).set()
       bezierPath.fill()
     }
     if let color = strokeColor {
-      color.set()
+      UIColor(color).set()
       bezierPath.lineWidth = lineWidth
       bezierPath.stroke()
     }

@@ -1,34 +1,35 @@
 import UIKit
+import SwiftUI
 
 extension GAPath {
-  static func concentricShapes(_ frame: CGRect, colors: [UIColor]) -> [GAPath] {
+  static func concentricShapes(_ frame: CGRect, colors: [Color]) -> [GAPath] {
     concentricShapePaths(frame: frame, colors: colors)
   }
 
-  static func fillRect(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func fillRect(_ frame: CGRect, color: Color) -> GAPath {
     GAPath(fillColor: color, strokeColor: nil, commands: [.addRect(frame)])
   }
 
-  static func randomDiagonal(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func randomDiagonal(_ frame: CGRect, color: Color) -> GAPath {
     GAPath(fillColor: nil, strokeColor: color, commands: randomDiagonalCommands(frame: frame))
   }
 
-  static func randomTriangle(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func randomTriangle(_ frame: CGRect, color: Color) -> GAPath {
     GAPath(fillColor: color, strokeColor: nil, commands: randomTriangleCommands(frame: frame))
   }
 
-  static func randomQuarterCircle(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func randomQuarterCircle(_ frame: CGRect, color: Color) -> GAPath {
     GAPath(fillColor: color, strokeColor: nil, commands: randomQuarterCircleCommands(frame: frame))
   }
 
-  static func randomTrianglesAndQuarterCircles(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func randomTrianglesAndQuarterCircles(_ frame: CGRect, color: Color) -> GAPath {
     switch Variation2.random() {
     case .a: randomTriangle(frame, color: color)
     case .b: randomQuarterCircle(frame, color: color)
     }
   }
 
-  static func scribble(_ frame: CGRect, color: UIColor) -> GAPath {
+  static func scribble(_ frame: CGRect, color: Color) -> GAPath {
     GAPath(fillColor: nil, strokeColor: color, commands: scribble(frame: frame))
   }
 }
@@ -138,7 +139,7 @@ extension GAPath {
   }
 
   /// Requires at least four colors.
-  static func concentricShapePaths(frame: CGRect, colors: [UIColor]) -> [GAPath] {
+  static func concentricShapePaths(frame: CGRect, colors: [Color]) -> [GAPath] {
     var colors = colors
     guard colors.count > 3 else { return [] }
 

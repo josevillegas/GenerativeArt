@@ -26,7 +26,6 @@
 		826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309DC22E3CE2A003E3F29 /* Paths.swift */; };
 		826EE33A22EAA15200901EFF /* TiledDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826EE33922EAA15200901EFF /* TiledDrawingView.swift */; };
 		827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C229026A14B6F004AAA61 /* AnchorProvider.swift */; };
-		829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CA41222D5AADA00453DA7 /* UIColor.swift */; };
 		82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBE77026ADECD00037EA4B /* DrawingTimer.swift */; };
 		82E02391230CD7B600F32857 /* MondrianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02390230CD7B600F32857 /* MondrianViewController.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
@@ -56,7 +55,6 @@
 		826309DC22E3CE2A003E3F29 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		826EE33922EAA15200901EFF /* TiledDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingView.swift; sourceTree = "<group>"; };
 		827C229026A14B6F004AAA61 /* AnchorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorProvider.swift; sourceTree = "<group>"; };
-		829CA41222D5AADA00453DA7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		82CBE77026ADECD00037EA4B /* DrawingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingTimer.swift; sourceTree = "<group>"; };
 		82E02390230CD7B600F32857 /* MondrianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianViewController.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		829CA41122D5AA9500453DA7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				829CA41222D5AADA00453DA7 /* UIColor.swift */,
 				825B64CC26A2304D007727F6 /* UIImage.swift */,
 				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
@@ -253,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
-				829CA41322D5AADA00453DA7 /* UIColor.swift in Sources */,
 				826309D122E3AB88003E3F29 /* GAPath.swift in Sources */,
 				825B64CB26A2290B007727F6 /* MainNavigationController.swift in Sources */,
 				826EE33A22EAA15200901EFF /* TiledDrawingView.swift in Sources */,

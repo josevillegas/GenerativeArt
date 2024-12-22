@@ -50,7 +50,7 @@ final class TiledDrawingView: UIView {
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
 
-    backgroundColor = viewModel.backgroundColor.color()
+    backgroundColor = UIColor(viewModel.backgroundColor.color())
 
     colorPickerView.isHidden = true
     sizeControl.isHidden = true

@@ -1,7 +1,8 @@
 import UIKit
+import SwiftUI
 
 struct MondrianDrawing {
-  private let colors: [UIColor] = [.red, .yellow, .blue]
+  private let colors: [Color] = [.red, .yellow, .blue]
 
   func paths(frame: CGRect) -> [GAPath] {
     let count = Int.random(in: 4...10)

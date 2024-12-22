@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 enum GAColor {
   case black
@@ -12,7 +12,7 @@ enum GAColor {
   case yellow
   case selection
 
-  func color() -> UIColor {
+  func color() -> Color {
     switch self {
     case .black: .black
     case .blue: .blue
@@ -27,11 +27,11 @@ enum GAColor {
     }
   }
 
-  static func color(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-    UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
+  private static func color(red: CGFloat, green: CGFloat, blue: CGFloat) -> Color {
+    Color(red: red / 255, green: green / 255, blue: blue / 255)
   }
 
-  static func color(white: CGFloat) -> UIColor {
-    UIColor(white: white, alpha: 1)
+  private static func color(white: CGFloat) -> Color {
+    Color(white: white)
   }
 }

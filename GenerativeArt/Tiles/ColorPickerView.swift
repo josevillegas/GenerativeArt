@@ -79,7 +79,8 @@ final class ColorPickerItem: UIControl {
     super.init(frame: .zero)
 
     selectionLayer.backgroundColor = GAColor.selection.color().cgColor
-    colorLayer.backgroundColor = color.color().cgColor
+    // The cgColor isn't correct if we get it from a Color.
+    colorLayer.backgroundColor = UIColor(color.color()).cgColor
 
     selectionLayer.isHidden = true
 
