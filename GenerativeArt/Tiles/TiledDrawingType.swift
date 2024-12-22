@@ -19,18 +19,18 @@ enum TiledDrawingType {
     }
   }
 
-  var defaultForegroundColor: Color {
+  var defaultForegroundColor: GAColor {
     switch self {
     case .scribbles: .black
     default: .red
     }
   }
 
-  var defaultBackgroundColor: Color {
+  var defaultBackgroundColor: GAColor {
     .white
   }
 
-  var backgroundColor: Color {
+  var backgroundColor: GAColor {
     switch self {
     case .scribbles: .lightGray
     default: .white
@@ -62,7 +62,7 @@ enum TiledDrawingType {
   var paths: (TiledDrawing.PathProperties) -> [GAPath] {
     switch self {
     case .concentricShapes:
-      let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
+      let colors: [GAColor] = [.black, .lightGray, .red, .orange, .purple, .white]
       return {
         GAPath.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
       }

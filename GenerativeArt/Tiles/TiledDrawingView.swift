@@ -6,9 +6,9 @@ struct TiledDrawingViewModel {
   }
 
   let options: DrawingControls.Options
-  let backgroundColor: Color
-  var tileForegroundColor: Color
-  var tileBackgroundColor: Color
+  let backgroundColor: GAColor
+  var tileForegroundColor: GAColor
+  var tileBackgroundColor: GAColor
   let defaultUnitSize: CGFloat
   let paths: (TiledDrawing.PathProperties) -> [GAPath]
 }
@@ -204,7 +204,7 @@ final class TiledDrawingView: UIView {
     )
   }
 
-  private func didSelectColor(_ color: Color) {
+  private func didSelectColor(_ color: GAColor) {
     toggleColorPicker()
     switch colorSelection {
     case .none: break

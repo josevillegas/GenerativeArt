@@ -1,6 +1,6 @@
 import UIKit
 
-enum Color {
+enum GAColor {
   case black
   case blue
   case green
@@ -17,13 +17,13 @@ enum Color {
     case .black: .black
     case .blue: .blue
     case .green: .green
-    case .lightGray: Color.color(white: 0.9)
+    case .lightGray: GAColor.color(white: 0.9)
     case .red: .red
     case .orange: .orange
     case .purple: .purple
     case .white: .white
     case .yellow: .yellow
-    case .selection: Color.color(red: 51, green: 204, blue: 255)
+    case .selection: GAColor.color(red: 51, green: 204, blue: 255)
     }
   }
 
