@@ -6,9 +6,9 @@ enum Message {
 }
 
 final class Application {
-  lazy var detailViewController: UIViewController = {
-    viewController(for: lastSelectedDrawingType, presentationMode: .secondary)
-  }()
+  func detailViewController(drawingType: DrawingType, send: @escaping (Message) -> Void) -> UIViewController {
+    viewController(for: drawingType, presentationMode: .secondary, send: send)
+  }
 
 //  private lazy var splitViewController: UISplitViewController = {
 //    let controller = UISplitViewController(style: .doubleColumn)
@@ -24,66 +24,23 @@ final class Application {
 //    return controller
 //  }()
 
-  private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
-  private let sections = [
-    IndexSection(title: "Lines", rows: [
-      .tile(.diagonals),
-      .tile(.scribbles)
-    ]),
-    IndexSection(title: "Shapes", rows: [
-      .tile(.triangles),
-      .tile(.quadrants),
-      .tile(.trianglesAndQuadrants),
-      .tile(.concentricShapes)
-    ]),
-    IndexSection(title: "Painting Styles", rows: [
-      .paintingStyle(.mondrian)
-    ])
-  ]
-
-  private func update(_ message: Message) {
-    switch message {
-    case .dismissDrawing:
-      dismissDrawing()
-    case let .showDrawing(type):
-      lastSelectedDrawingType = type
-      showDrawing(type)
-    }
-  }
-
-  private func viewController(for type: DrawingType, presentationMode: DrawingPresentationMode) -> UIViewController {
+  private func viewController(
+    for type: DrawingType,
+    presentationMode: DrawingPresentationMode,
+    send: @escaping (Message) -> Void
+  ) -> UIViewController {
     switch type {
     case .paintingStyle(.mondrian):
-      MondrianViewController(presentationMode: presentationMode) { [weak self] in self?.update($0) }
+      MondrianViewController(presentationMode: presentationMode, send: send)
     case let .tile(type):
-      TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode) { [weak self] in
-        self?.update($0)
-      }
+      TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: presentationMode, send: send)
     }
   }
 
-  private func showDrawing(_ type: DrawingType) {
-//    splitViewController.preferredDisplayMode = .automatic
-//    if splitViewController.isCollapsed {
-//      compactNavigationController.pushViewController(viewController(for: type, presentationMode: .pushed), animated: true)
-//    } else {
-//      secondaryNavigationController.viewControllers = [viewController(for: type, presentationMode: .secondary)]
-//      splitViewController.show(.secondary)
-//    }
-  }
-
-  private func dismissDrawing() {
-//    if splitViewController.isCollapsed {
-//      compactNavigationController.popViewController(animated: true)
-//    } else {
-//      splitViewController.show(.primary)
-//    }
-  }
-
-  func indexViewController(appearance: IndexAppearance) -> UIViewController {
-    IndexViewController(sections: sections, appearance: appearance) { [weak self] in self?.update($0) }
+  func indexViewController(sections: [IndexSection], appearance: IndexAppearance, send: @escaping (Message) -> Void) -> UIViewController {
+    IndexViewController(sections: sections, appearance: appearance, send: send)
   }
 
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {
