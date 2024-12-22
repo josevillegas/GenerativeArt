@@ -39,18 +39,18 @@ final class Application {
   private var lastSelectedDrawingType: DrawingType = .tile(.diagonals)
   private var lastDisplayMode: UISplitViewController.DisplayMode = .automatic
 
-  private let sections: [Index.Section] = [
-    Index.Section(title: "Lines", rows: [
+  private let sections = [
+    IndexSection(title: "Lines", rows: [
       .tile(.diagonals),
       .tile(.scribbles)
     ]),
-    Index.Section(title: "Shapes", rows: [
+    IndexSection(title: "Shapes", rows: [
       .tile(.triangles),
       .tile(.quadrants),
       .tile(.trianglesAndQuadrants),
       .tile(.concentricShapes)
     ]),
-    Index.Section(title: "Painting Styles", rows: [
+    IndexSection(title: "Painting Styles", rows: [
       .paintingStyle(.mondrian)
     ])
   ]
@@ -95,7 +95,7 @@ final class Application {
   }
 
   private func indexViewController(appearance: IndexAppearance) -> UIViewController {
-    IndexViewController(index: Index(sections: sections), appearance: appearance) { [weak self] in self?.update($0) }
+    IndexViewController(sections: sections, appearance: appearance) { [weak self] in self?.update($0) }
   }
 
   private func secondaryNavigationController(rootViewController: UIViewController) -> UINavigationController {

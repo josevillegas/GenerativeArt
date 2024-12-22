@@ -1,6 +1,6 @@
 import UIKit
 
-struct Path {
+struct GAPath {
   let fillColor: UIColor?
   let strokeColor: UIColor?
   let lineWidth: CGFloat
@@ -14,13 +14,13 @@ struct Path {
   }
 }
 
-extension Path {
+extension GAPath {
   enum Command {
     case moveTo(CGPoint)
     case addLineTo(CGPoint)
     case addArc(Arc)
     case addBezierCurve(BezierCurve)
-    case addShape(Shape)
+    case addShape(GAShape)
     case close
 
     static func moveTo(_ x: CGFloat, _ y: CGFloat) -> Command {
@@ -36,7 +36,7 @@ extension Path {
     }
   }
 
-  enum Shape {
+  enum GAShape {
     case oval(CGRect)
     case rect(CGRect)
     case roundedRect(CGRect, radius: CGFloat)
@@ -62,7 +62,7 @@ extension Path {
   }
 }
 
-extension Path {
+extension GAPath {
   func draw() {
     let bezierPath = UIBezierPath()
     for command in commands {
@@ -101,7 +101,7 @@ extension Path {
   }
 }
 
-extension Array where Element == Path {
+extension Array where Element == GAPath {
   func draw() {
     forEach { $0.draw() }
   }

@@ -63,12 +63,12 @@ enum TiledDrawingType {
     }
   }
 
-  var paths: (TiledDrawing.PathProperties) -> [Path] {
+  var paths: (TiledDrawing.PathProperties) -> [GAPath] {
     switch self {
     case .concentricShapes:
       let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
       return {
-        Path.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
+        GAPath.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
       }
     case .diagonals:
       return {[

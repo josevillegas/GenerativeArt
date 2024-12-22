@@ -3,12 +3,12 @@ import UIKit
 struct MondrianDrawing {
   private let colors: [UIColor] = [.red, .yellow, .blue]
 
-  func paths(frame: CGRect) -> [Path] {
+  func paths(frame: CGRect) -> [GAPath] {
     let count = Int.random(in: 4...10)
     let (frames, lines) = reduce(frames: [frame], lines: [], count: count)
-    let linePaths: [Path] = lines.map {
+    let linePaths: [GAPath] = lines.map {
       let width = Bool.random() ? 7 : 8
-      return Path(fillColor: nil, strokeColor: .black, lineWidth: CGFloat(width), commands: [
+      return GAPath(fillColor: nil, strokeColor: .black, lineWidth: CGFloat(width), commands: [
         .moveTo($0.start),
         .addLineTo($0.end),
         .close
@@ -33,7 +33,7 @@ struct MondrianDrawing {
     return reduce(frames: frames + split.frames, lines: lines + [split.line], count: count - 1)
   }
 
-  private func colorPaths(frames: [CGRect]) -> [Path] {
+  private func colorPaths(frames: [CGRect]) -> [GAPath] {
     guard !frames.isEmpty else { return [] }
 
     // If there is only one frame, return a color path for it.
@@ -60,8 +60,8 @@ struct MondrianDrawing {
     return returnFrames.map { self.colorPath($0) }
   }
 
-  private func colorPath(_ frame: CGRect) -> Path {
-    Path(fillColor: colors.randomElement(), strokeColor: nil, commands: [Path.Command.addRect(frame)])
+  private func colorPath(_ frame: CGRect) -> GAPath {
+    GAPath(fillColor: colors.randomElement(), strokeColor: nil, commands: [GAPath.Command.addRect(frame)])
   }
 }
 

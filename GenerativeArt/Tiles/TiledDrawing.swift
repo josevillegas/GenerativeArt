@@ -7,7 +7,7 @@ struct TiledDrawing {
     let backgroundColor: UIColor
   }
 
-  var paths: [Path] { return tilePaths.flatMap { $0 } }
+  var paths: [GAPath] { return tilePaths.flatMap { $0 } }
   var foregroundColor: UIColor
   var backgroundColor: UIColor
   var maxSize: CGSize = .zero {
@@ -20,10 +20,10 @@ struct TiledDrawing {
   private(set) var tileSize: CGSize = .zero
 
   private var frames: [CGRect] = []
-  private var tilePaths: [[Path]] = []
-  private let makePaths: (PathProperties) -> [Path]
+  private var tilePaths: [[GAPath]] = []
+  private let makePaths: (PathProperties) -> [GAPath]
 
-  init(unitSize: CGFloat, foregroundColor: UIColor, backgroundColor: UIColor, makePaths: @escaping (PathProperties) -> [Path]) {
+  init(unitSize: CGFloat, foregroundColor: UIColor, backgroundColor: UIColor, makePaths: @escaping (PathProperties) -> [GAPath]) {
     self.unitSize = unitSize
     self.foregroundColor = foregroundColor
     self.backgroundColor = backgroundColor
@@ -40,7 +40,7 @@ struct TiledDrawing {
     tilePaths[index] = makePaths(frame: frames[index])
   }
 
-  private func makePaths(frame: CGRect) -> [Path] {
+  private func makePaths(frame: CGRect) -> [GAPath] {
     makePaths(PathProperties(frame: frame, foregroundColor: foregroundColor, backgroundColor: backgroundColor))
   }
 

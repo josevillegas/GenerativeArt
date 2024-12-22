@@ -1,12 +1,8 @@
 import UIKit
 
-struct Index {
-  let sections: [Section]
-
-  struct Section: Hashable {
-    let title: String
-    let rows: [DrawingType]
-  }
+struct IndexSection: Hashable {
+  let title: String
+  let rows: [DrawingType]
 }
 
 enum IndexAppearance {
@@ -15,17 +11,17 @@ enum IndexAppearance {
 }
 
 class IndexViewController: UICollectionViewController {
-  typealias DataSource = UICollectionViewDiffableDataSource<Index.Section, DrawingType>
+  typealias DataSource = UICollectionViewDiffableDataSource<IndexSection, DrawingType>
   typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, DrawingType>
   typealias SupplementaryRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>
 
-  private let index: Index
+  private let sections: [IndexSection]
   private let send: (Message) -> ()
   private let appearance: IndexAppearance
   private lazy var dataSource: DataSource = { makeDataSource() }()
 
-  init(index: Index, appearance: IndexAppearance, send: @escaping (Message) -> ()) {
-    self.index = index
+  init(sections: [IndexSection], appearance: IndexAppearance, send: @escaping (Message) -> ()) {
+    self.sections = sections
     self.send = send
     self.appearance = appearance
 
@@ -48,12 +44,12 @@ class IndexViewController: UICollectionViewController {
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    send(.showDrawing(index[indexPath]))
+    send(.showDrawing(sections[indexPath.section].rows[indexPath.row]))
   }
 
   func applySnapshot() {
-    var snapshot = NSDiffableDataSourceSnapshot<Index.Section, DrawingType>()
-    for section in index.sections {
+    var snapshot = NSDiffableDataSourceSnapshot<IndexSection, DrawingType>()
+    for section in sections {
       snapshot.appendSections([section])
       snapshot.appendItems(section.rows)
     }
@@ -75,7 +71,7 @@ class IndexViewController: UICollectionViewController {
     let headerRegistration = SupplementaryRegistration(elementKind: headerKind) { [weak self] view, _, indexPath in
       guard let self = self else { return }
       var configuration = self.appearance.headerConfiguration()
-      configuration.text = self.index.sections[indexPath.section].title
+      configuration.text = self.sections[indexPath.section].title
       view.contentConfiguration = configuration
     }
     dataSource.supplementaryViewProvider = { [weak self] view, _, indexPath in
@@ -83,12 +79,6 @@ class IndexViewController: UICollectionViewController {
     }
 
     return dataSource
-  }
-}
-
-extension Index {
-  subscript(indexPath: IndexPath) -> DrawingType {
-    sections[indexPath.section].rows[indexPath.row]
   }
 }
 

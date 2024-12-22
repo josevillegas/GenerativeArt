@@ -10,7 +10,7 @@ struct TiledDrawingViewModel {
   var tileForegroundColor: Color
   var tileBackgroundColor: Color
   let defaultUnitSize: CGFloat
-  let paths: (TiledDrawing.PathProperties) -> [Path]
+  let paths: (TiledDrawing.PathProperties) -> [GAPath]
 }
 
 final class TiledDrawingView: UIView {
