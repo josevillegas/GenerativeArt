@@ -19,24 +19,6 @@ enum TiledDrawingType {
     }
   }
 
-  var defaultForegroundColor: Color {
-    switch self {
-    case .scribbles: .black
-    default: .red
-    }
-  }
-
-  var defaultBackgroundColor: Color {
-    .white
-  }
-
-  var backgroundColor: Color {
-    switch self {
-    case .scribbles: .lightGray
-    default: .white
-    }
-  }
-
   var defaultUnitSize: CGFloat {
     switch self {
     case .concentricShapes,

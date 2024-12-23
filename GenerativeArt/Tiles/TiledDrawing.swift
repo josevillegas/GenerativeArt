@@ -2,15 +2,10 @@ import SwiftUI
 
 struct TiledDrawing: Equatable {
   var paths: [GAPath] { return tilePaths.flatMap { $0 } }
-  var foregroundColor: Color
-  var backgroundColor: Color
+  var foregroundColor: Color = .red
+  var backgroundColor: Color = .white
 
-  var type: TiledDrawingType {
-    didSet {
-      foregroundColor = type.defaultForegroundColor
-      backgroundColor = type.defaultBackgroundColor
-    }
-  }
+  var type: TiledDrawingType
   var tiles: Tiles
 
   private var tilePaths: [[GAPath]] = []
@@ -18,8 +13,6 @@ struct TiledDrawing: Equatable {
   init(type: TiledDrawingType, tiles: Tiles) {
     self.type = type
     self.tiles = tiles
-    foregroundColor = type.defaultForegroundColor
-    backgroundColor = type.defaultBackgroundColor
   }
 
   mutating func updateVariations() {
