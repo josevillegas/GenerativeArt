@@ -46,7 +46,13 @@ final class TiledDrawingView: UIView {
 }
 
 final class DrawingPanelView: UIView {
-  var tiledDrawing: TiledDrawing
+  var tiledDrawing: TiledDrawing {
+    didSet {
+      guard tiledDrawing != oldValue else { return }
+      tiledDrawing.updateVariations()
+      setNeedsDisplay()
+    }
+  }
 
   private var lastSize: CGSize = .zero
 

@@ -1,12 +1,6 @@
 import SwiftUI
 
-struct TiledDrawing {
-  struct PathProperties {
-    let frame: CGRect
-    let foregroundColor: Color
-    let backgroundColor: Color
-  }
-
+struct TiledDrawing: Equatable {
   var paths: [GAPath] { return tilePaths.flatMap { $0 } }
   var foregroundColor: Color
   var backgroundColor: Color
@@ -21,13 +15,13 @@ struct TiledDrawing {
 
   private var frames: [CGRect] = []
   private var tilePaths: [[GAPath]] = []
-  private let makePaths: (PathProperties) -> [GAPath]
+  private let makePaths: MakePaths
 
   init(unitSize: CGFloat, foregroundColor: Color, backgroundColor: Color, makePaths: @escaping (PathProperties) -> [GAPath]) {
     self.unitSize = unitSize
     self.foregroundColor = foregroundColor
     self.backgroundColor = backgroundColor
-    self.makePaths = makePaths
+    self.makePaths = MakePaths(makePaths: makePaths)
   }
 
   init(type: TiledDrawingType) {
@@ -58,5 +52,21 @@ struct TiledDrawing {
     frames = tiles.frames
     size = tiles.size
     tileSize = tiles.tileSize
+  }
+}
+
+extension TiledDrawing {
+  struct PathProperties: Equatable {
+    let frame: CGRect
+    let foregroundColor: Color
+    let backgroundColor: Color
+  }
+
+  struct MakePaths: Equatable {
+    let makePaths: (PathProperties) -> [GAPath]
+    func callAsFunction(_ properties: PathProperties) -> [GAPath] {
+      makePaths(properties)
+    }
+    static func ==(_ lhs: MakePaths, _ rhs: MakePaths) -> Bool { true }
   }
 }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GAPath {
+struct GAPath: Equatable {
   let fillColor: Color?
   let strokeColor: Color?
   let lineWidth: CGFloat
@@ -15,7 +15,7 @@ struct GAPath {
 }
 
 extension GAPath {
-  enum Command {
+  enum Command: Equatable {
     case moveTo(CGPoint)
     case addLineTo(CGPoint)
     case addArc(Arc)
@@ -36,14 +36,14 @@ extension GAPath {
     }
   }
 
-  enum GAShape {
+  enum GAShape: Equatable {
     case oval(CGRect)
     case rect(CGRect)
     case roundedRect(CGRect, radius: CGFloat)
   }
 
   // `startAngle` and `endAngle` are in degrees.
-  struct Arc {
+  struct Arc: Equatable {
     let center: CGPoint
     let radius: CGFloat
     let startAngle: CGFloat
@@ -51,12 +51,12 @@ extension GAPath {
     let clockWise: Bool
   }
 
-  struct BezierPoint {
+  struct BezierPoint: Equatable {
     let position: CGPoint
     let control: CGPoint
   }
 
-  struct BezierCurve {
+  struct BezierCurve: Equatable {
     let start: BezierPoint
     let end: BezierPoint
   }

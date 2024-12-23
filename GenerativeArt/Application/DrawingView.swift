@@ -38,7 +38,7 @@ struct DrawingView: View {
 
   private func next() {
     switch drawingType {
-    case .tile: break
+    case let .tile(type): tiledDrawingType = type
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
@@ -51,7 +51,9 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
     TiledDrawingView(tiledDrawing: TiledDrawing(type: type))
   }
 
-  func updateUIView(_ view: TiledDrawingView, context: Context) {}
+  func updateUIView(_ view: TiledDrawingView, context: Context) {
+    view.panelView.tiledDrawing = TiledDrawing(type: type)
+  }
 }
 
 struct MondrianViewRepresentable: UIViewRepresentable {
