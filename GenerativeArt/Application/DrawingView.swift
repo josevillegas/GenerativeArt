@@ -3,13 +3,14 @@ import SwiftUI
 struct DrawingView: View {
   let drawingType: DrawingType
 
+  @State var tiledDrawingType: TiledDrawingType = .triangles
   @State var mondrianDrawing = MondrianDrawing()
 
   var body: some View {
     Group {
       switch drawingType {
       case .paintingStyle(.mondrian): MondrianViewRepresentable(drawing: $mondrianDrawing)
-      case let .tile(type): TiledDrawingViewRepresentable(type: type)
+      case .tile: TiledDrawingViewRepresentable(type: $tiledDrawingType)
       }
     }
     .toolbar {
@@ -27,6 +28,12 @@ struct DrawingView: View {
         Spacer()
       }
     }
+    .onChange(of: drawingType) { oldValue, newValue in
+      switch drawingType {
+      case let .tile(type): tiledDrawingType = type
+      case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
+      }
+    }
   }
 
   private func next() {
@@ -38,13 +45,13 @@ struct DrawingView: View {
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
-  let type: TiledDrawingType
+  @Binding var type: TiledDrawingType
 
-  func makeUIView(context: Context) -> UIView {
-    TiledDrawingView(viewModel: TiledDrawingViewModel(type: type)) { _ in }
+  func makeUIView(context: Context) -> TiledDrawingView {
+    TiledDrawingView(type: type) { _ in }
   }
 
-  func updateUIView(_ uiView: UIView, context: Context) {}
+  func updateUIView(_ view: TiledDrawingView, context: Context) {}
 }
 
 struct MondrianViewRepresentable: UIViewRepresentable {
@@ -54,7 +61,7 @@ struct MondrianViewRepresentable: UIViewRepresentable {
     MondrianView(drawing: drawing)
   }
 
-  func updateUIView(_ uiView: MondrianView, context: Context) {
-    uiView.drawing = drawing
+  func updateUIView(_ view: MondrianView, context: Context) {
+    view.drawing = drawing
   }
 }

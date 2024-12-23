@@ -13,6 +13,19 @@ struct TiledDrawingViewModel {
   let paths: (TiledDrawing.PathProperties) -> [GAPath]
 }
 
+extension TiledDrawingViewModel {
+  init(type: TiledDrawingType) {
+    self.init(
+      options: type.options,
+      backgroundColor: type.backgroundColor,
+      tileForegroundColor: type.defaultForegroundColor,
+      tileBackgroundColor: type.defaultBackgroundColor,
+      defaultUnitSize: type.defaultUnitSize,
+      paths: type.paths
+    )
+  }
+}
+
 final class TiledDrawingView: UIView {
   private enum ColorSelection {
     case none
@@ -37,8 +50,8 @@ final class TiledDrawingView: UIView {
   private var isSizeControlHidden = true
   private var isAnimating = false
 
-  init(viewModel: TiledDrawingViewModel, send: @escaping (TiledDrawingViewModel.Message) -> Void) {
-    self.viewModel = viewModel
+  init(type: TiledDrawingType, send: @escaping (TiledDrawingViewModel.Message) -> Void) {
+    viewModel = TiledDrawingViewModel(type: type)
     self.send = send
     let tiledDrawing = TiledDrawing(
       unitSize: viewModel.defaultUnitSize,

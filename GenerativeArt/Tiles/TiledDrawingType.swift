@@ -93,16 +93,3 @@ enum TiledDrawingType {
     }
   }
 }
-
-extension TiledDrawingViewModel {
-  init(type: TiledDrawingType) {
-    self.init(
-      options: type.options,
-      backgroundColor: type.backgroundColor,
-      tileForegroundColor: type.defaultForegroundColor,
-      tileBackgroundColor: type.defaultBackgroundColor,
-      defaultUnitSize: type.defaultUnitSize,
-      paths: type.paths
-    )
-  }
-}
