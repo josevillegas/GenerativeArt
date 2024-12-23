@@ -48,11 +48,11 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   @Binding var type: TiledDrawingType
 
   func makeUIView(context: Context) -> TiledDrawingView {
-    TiledDrawingView(tiledDrawing: TiledDrawing(type: type))
+    TiledDrawingView(type: type)
   }
 
   func updateUIView(_ view: TiledDrawingView, context: Context) {
-    view.panelView.tiledDrawing = TiledDrawing(type: type)
+    view.type = type
   }
 }
 

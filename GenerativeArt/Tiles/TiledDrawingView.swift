@@ -5,20 +5,26 @@ final class TiledDrawingView: UIView {
     case sizeDidChange(CGSize)
   }
 
-  let panelView: DrawingPanelView
-  var send: (Message) -> Void = { _ in }
+  var type: TiledDrawingType {
+    get { panelView.type }
+    set { panelView.type = newValue }
+  }
+
+  private let panelView: DrawingPanelView
+  private var send: (Message) -> Void = { _ in }
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(tiledDrawing: TiledDrawing) {
-    panelView = DrawingPanelView(tiledDrawing: tiledDrawing)
+  init(type: TiledDrawingType) {
+    panelView = DrawingPanelView(type: type)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
+    super.init(frame: .zero)
+
     panelWidthConstraint.isActive = true
     panelHeightConstraint.isActive = true
-    super.init(frame: .zero)
 
     addSubview(panelView)
     panelView.center(with: self)
@@ -46,18 +52,22 @@ final class TiledDrawingView: UIView {
 }
 
 final class DrawingPanelView: UIView {
-  var tiledDrawing: TiledDrawing {
+  var type: TiledDrawingType {
     didSet {
-      guard tiledDrawing != oldValue else { return }
+      guard type != oldValue else { return }
+      tiledDrawing = TiledDrawing(type: type)
       tiledDrawing.updateVariations()
       setNeedsDisplay()
     }
   }
 
+  var tiledDrawing: TiledDrawing
+
   private var lastSize: CGSize = .zero
 
-  init(tiledDrawing: TiledDrawing) {
-    self.tiledDrawing = tiledDrawing
+  init(type: TiledDrawingType) {
+    self.type = type
+    tiledDrawing = TiledDrawing(type: type)
     super.init(frame: .zero)
 
     backgroundColor = .white

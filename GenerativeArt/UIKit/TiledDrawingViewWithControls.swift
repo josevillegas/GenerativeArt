@@ -32,8 +32,7 @@ final class TiledDrawingViewWithControls: UIView {
 
   init(type: TiledDrawingType, send: @escaping (Message) -> Void) {
     self.send = send
-    let tiledDrawing = TiledDrawing(type: type)
-    boundsView = TiledDrawingView(tiledDrawing: tiledDrawing)
+    boundsView = TiledDrawingView(type: type)
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
 
@@ -59,7 +58,7 @@ final class TiledDrawingViewWithControls: UIView {
     sizeControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
 
     colorPickerView.didSelect = { [weak self] in self?.didSelectColor($0) }
-    boundsView.send = { [weak self] in self?.update($0) }
+//    boundsView.send = { [weak self] in self?.update($0) }
     sizeControl.send = { [weak self] in self?.update($0) }
     dismissControl.addTarget(self, action: #selector(didPressDismissControl), for: .touchUpInside)
   }
@@ -69,14 +68,14 @@ final class TiledDrawingViewWithControls: UIView {
   }
 
   func updateVariations() {
-    boundsView.panelView.tiledDrawing.updateVariations()
-    boundsView.panelView.setNeedsDisplay()
+//    boundsView.panelView.tiledDrawing.updateVariations()
+//    boundsView.panelView.setNeedsDisplay()
   }
 
   func updateRandomTiles(count: Int) {
-    guard count > 0 else { return }
-    for _ in 1...count { boundsView.panelView.tiledDrawing.updateRandomTile() }
-    boundsView.panelView.setNeedsDisplay()
+//    guard count > 0 else { return }
+//    for _ in 1...count { boundsView.panelView.tiledDrawing.updateRandomTile() }
+//    boundsView.panelView.setNeedsDisplay()
   }
 
   func showForegroundColorPicker() {
@@ -195,10 +194,10 @@ final class TiledDrawingViewWithControls: UIView {
     case .none: break
     case .foreground:
       tileForegroundColor = color
-      boundsView.panelView.tiledDrawing.foregroundColor = color.color()
+//      boundsView.panelView.tiledDrawing.foregroundColor = color.color()
     case .background:
       tileBackgroundColor = color
-      boundsView.panelView.tiledDrawing.backgroundColor = color.color()
+//      boundsView.panelView.tiledDrawing.backgroundColor = color.color()
     }
     colorSelection = .none
   }
@@ -209,10 +208,10 @@ final class TiledDrawingViewWithControls: UIView {
 
   private func update(_ message: SizeControl.Message) {
     switch message {
-    case let .valueDidChange(value):
-      let initialTileSize = boundsView.panelView.tiledDrawing.tileSize
-      boundsView.panelView.tiledDrawing.unitSize = tileSizeControl.widthForValue(value)
-      guard initialTileSize != boundsView.panelView.tiledDrawing.tileSize else { return }
+    case .valueDidChange:
+//      let initialTileSize = boundsView.panelView.tiledDrawing.tileSize
+//      boundsView.panelView.tiledDrawing.unitSize = tileSizeControl.widthForValue(value)
+//      guard initialTileSize != boundsView.panelView.tiledDrawing.tileSize else { return }
       boundsView.updatePanelSize()
       updateVariations()
     }
