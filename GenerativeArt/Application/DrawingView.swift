@@ -3,10 +3,12 @@ import SwiftUI
 struct DrawingView: View {
   let drawingType: DrawingType
 
+  @State var mondrianDrawing = MondrianDrawing()
+
   var body: some View {
     Group {
       switch drawingType {
-      case .paintingStyle(.mondrian): MondrianViewRepresentable()
+      case .paintingStyle(.mondrian): MondrianViewRepresentable(drawing: $mondrianDrawing)
       case let .tile(type): TiledDrawingViewRepresentable(type: type)
       }
     }
@@ -21,17 +23,22 @@ struct DrawingView: View {
         Spacer()
         Button(action: {}) { Image(systemName: "play") }
         Spacer()
-        Button(action: {}) { Image(systemName: "goforward") }
+        Button(action: { next() }) { Image(systemName: "goforward") }
         Spacer()
       }
+    }
+  }
+
+  private func next() {
+    switch drawingType {
+    case .tile: break
+    case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingType
-
-  typealias UIViewType = UIView
 
   func makeUIView(context: Context) -> UIView {
     TiledDrawingView(viewModel: TiledDrawingViewModel(type: type)) { _ in }
@@ -41,11 +48,13 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
 }
 
 struct MondrianViewRepresentable: UIViewRepresentable {
-  typealias UIViewControllerType = UIView
+  @Binding var drawing: MondrianDrawing
 
-  func makeUIView(context: Context) -> UIView {
-    MondrianView()
+  func makeUIView(context: Context) -> MondrianView {
+    MondrianView(drawing: drawing)
   }
 
-  func updateUIView(_ uiView: UIView, context: Context) {}
+  func updateUIView(_ uiView: MondrianView, context: Context) {
+    uiView.drawing = drawing
+  }
 }

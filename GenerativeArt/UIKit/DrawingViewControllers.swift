@@ -27,13 +27,10 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
 }
 
 final class MondrianViewController: UIViewController, ToolbarController {
-  private let mondrianView = MondrianView()
-  private let send: (Message) -> () = { _ in }
-
   private func update(_ message: DrawingControls.Message) {
     switch message {
-    case .dismiss: send(.dismissDrawing)
-    case .showNext, .showNextFromTimer: mondrianView.redraw()
+    case .dismiss: break // send(.dismissDrawing)
+    case .showNext, .showNextFromTimer: break // mondrianView.redraw()
     case .showBackgroundColors, .showForegroundColors, .showSizeSlider: break
     }
   }
