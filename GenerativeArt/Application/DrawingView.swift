@@ -7,6 +7,7 @@ struct DrawingView: View {
   @State var mondrianDrawing = MondrianDrawing()
   @State var foregroundColor: Color = .red
   @State var backgroundColor: Color = .white
+  @State var tileSize: CGFloat = 0.5 // A value from zero to one.
 
   var body: some View {
     Group {
@@ -16,7 +17,7 @@ struct DrawingView: View {
           .modifier(PaintingToolbarModifier(next: next))
       case .tile:
         TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
-          .modifier(ToolbarModifier(foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, next: next))
+          .modifier(ToolbarModifier(foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize, next: next))
       }
     }
     .onChange(of: drawingType) { _, _ in

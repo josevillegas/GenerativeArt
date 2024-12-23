@@ -16,7 +16,7 @@ final class TiledDrawingViewWithControls: UIView {
   }
 
   private let colorPickerView: UIView
-  private let sizeControl = SizeControl()
+  private let sizeControl = UISizeControl()
   private let boundsView: TiledDrawingView
   private let dismissControl = UIControl()
 
@@ -206,7 +206,7 @@ final class TiledDrawingViewWithControls: UIView {
     send(.dismissControl)
   }
 
-  private func update(_ message: SizeControl.Message) {
+  private func update(_ message: UISizeControl.Message) {
     switch message {
     case .valueDidChange:
 //      let initialTileSize = boundsView.panelView.tiledDrawing.tileSize

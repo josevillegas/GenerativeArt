@@ -3,10 +3,12 @@ import SwiftUI
 struct ToolbarModifier: ViewModifier {
   @Binding var foregroundColor: Color
   @Binding var backgroundColor: Color
+  @Binding var tileSize: CGFloat
   let next: () -> Void
 
   @State var isForegroundColorPopoverPresented = false
   @State var isBackgroundColorPopoverPresented = false
+  @State var isSizeControlPresented = false
 
   func body(content: Content) -> some View {
     content
@@ -25,7 +27,11 @@ struct ToolbarModifier: ViewModifier {
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
-          Button("Size") {}
+          Button("Size") { isSizeControlPresented = true }
+            .popover(isPresented: $isSizeControlPresented) {
+              SizeControl(size: $tileSize)
+                .presentationCompactAdaptation(.popover)
+            }
           Spacer()
           Button(action: {}) { Image(systemName: "play") }
           Spacer()
