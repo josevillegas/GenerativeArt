@@ -47,11 +47,11 @@ struct DrawingView: View {
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
   @Binding var type: TiledDrawingType
 
-  func makeUIView(context: Context) -> TiledDrawingView {
-    TiledDrawingView(type: type) { _ in }
+  func makeUIView(context: Context) -> DrawingBoundsView {
+    DrawingBoundsView(tiledDrawing: TiledDrawing(type: type))
   }
 
-  func updateUIView(_ view: TiledDrawingView, context: Context) {}
+  func updateUIView(_ view: DrawingBoundsView, context: Context) {}
 }
 
 struct MondrianViewRepresentable: UIViewRepresentable {
