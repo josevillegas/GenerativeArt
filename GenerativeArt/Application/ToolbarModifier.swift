@@ -12,7 +12,7 @@ struct ToolbarModifier: ViewModifier {
           Spacer()
           Button("Front") { isForegroundColorPopoverPresented = true }
             .popover(isPresented: $isForegroundColorPopoverPresented) {
-              Text("Ok now")
+              ColorPickerView()
             }
           Spacer()
           Button("Back") {}

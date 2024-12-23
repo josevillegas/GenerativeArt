@@ -15,7 +15,7 @@ final class TiledDrawingViewWithControls: UIView {
     return !isColorPickerHidden || !isSizeControlHidden
   }
 
-  private let colorPickerView: ColorPickerView
+  private let colorPickerView: UIView
   private let sizeControl = SizeControl()
   private let boundsView: TiledDrawingView
   private let dismissControl = UIControl()
@@ -33,7 +33,7 @@ final class TiledDrawingViewWithControls: UIView {
   init(type: TiledDrawingType, send: @escaping (Message) -> Void) {
     self.send = send
     boundsView = TiledDrawingView(type: type)
-    colorPickerView = ColorPickerView()
+    colorPickerView = UIView()
     super.init(frame: .zero)
 
     colorPickerView.isHidden = true
@@ -57,7 +57,7 @@ final class TiledDrawingViewWithControls: UIView {
     sizeControl.addHorizontalConstraints(to: self, margin: 12)
     sizeControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
 
-    colorPickerView.didSelect = { [weak self] in self?.didSelectColor($0) }
+//    colorPickerView.didSelect = { [weak self] in self?.didSelectColor($0) }
 //    boundsView.send = { [weak self] in self?.update($0) }
     sizeControl.send = { [weak self] in self?.update($0) }
     dismissControl.addTarget(self, action: #selector(didPressDismissControl), for: .touchUpInside)

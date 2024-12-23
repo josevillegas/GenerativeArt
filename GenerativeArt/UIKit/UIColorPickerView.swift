@@ -1,13 +1,13 @@
 import SwiftUI
 
-final class ColorPickerView: UIView {
+final class UIColorPickerView: UIView {
   var didSelect: (Color) -> Void = { _ in }
 
-  private let colorItems: [ColorPickerItem]
+  private let colorItems: [UIColorPickerItem]
 
   init() {
     let colors: [Color] = [.black, .white, .red, .orange, .green, .yellow, .blue, .purple]
-    colorItems = colors.map { ColorPickerItem(color: $0) }
+    colorItems = colors.map { UIColorPickerItem(color: $0) }
     super.init(frame: .zero)
 
     clipsToBounds = true
@@ -64,7 +64,7 @@ final class ColorPickerView: UIView {
   }
 }
 
-final class ColorPickerItem: UIControl {
+final class UIColorPickerItem: UIControl {
   let color: Color
   override var isSelected: Bool {
     didSet { selectionLayer.isHidden = !isSelected }
