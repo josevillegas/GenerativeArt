@@ -55,7 +55,7 @@ final class DrawingPanelView: UIView {
   var type: TiledDrawingType {
     didSet {
       guard type != oldValue else { return }
-      tiledDrawing = TiledDrawing(type: type)
+      tiledDrawing.type = type
       tiledDrawing.updateVariations()
       setNeedsDisplay()
     }

@@ -1,11 +1,17 @@
 import SwiftUI
 
 struct TiledDrawing: Equatable {
-  let type: TiledDrawingType
   var paths: [GAPath] { return tilePaths.flatMap { $0 } }
-  let foregroundColor: Color
-  let backgroundColor: Color
+  var foregroundColor: Color
+  var backgroundColor: Color
 
+  var type: TiledDrawingType {
+    didSet {
+      unitSize = type.defaultUnitSize
+      foregroundColor = type.defaultForegroundColor
+      backgroundColor = type.defaultBackgroundColor
+    }
+  }
   var maxSize: CGSize = .zero {
     didSet { updateSize() }
   }

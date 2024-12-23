@@ -15,7 +15,7 @@ struct Tiles {
     self.maxTileSize = maxTileSize
     self.scale = scale
 
-    guard maxTileSize > 0 else {
+    guard maxSize.width > 0, maxSize.height > 0, maxTileSize > 0 else {
       size = maxSize
       tileSize = maxSize
       frames = []
