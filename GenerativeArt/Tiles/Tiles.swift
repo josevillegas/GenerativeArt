@@ -1,6 +1,6 @@
 import Foundation
 
-struct Tiles {
+struct Tiles: Equatable {
   let maxSize: CGSize
   let maxTileSize: CGFloat
   let scale: CGFloat?
