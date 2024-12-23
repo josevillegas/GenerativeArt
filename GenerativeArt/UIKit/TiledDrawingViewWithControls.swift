@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 final class TiledDrawingViewWithControls: UIView {
   enum Message {
@@ -27,8 +27,8 @@ final class TiledDrawingViewWithControls: UIView {
   private var isSizeControlHidden = true
   private var isAnimating = false
 
-  private var tileForegroundColor: GAColor = .red
-  private var tileBackgroundColor: GAColor = .red
+  private var tileForegroundColor: Color = .red
+  private var tileBackgroundColor: Color = .red
 
   init(type: TiledDrawingType, send: @escaping (Message) -> Void) {
     self.send = send
@@ -188,7 +188,7 @@ final class TiledDrawingViewWithControls: UIView {
     )
   }
 
-  private func didSelectColor(_ color: GAColor) {
+  private func didSelectColor(_ color: Color) {
     toggleColorPicker()
     switch colorSelection {
     case .none: break

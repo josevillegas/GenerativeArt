@@ -21,8 +21,8 @@ struct TiledDrawing: Equatable {
   init(type: TiledDrawingType) {
     self.type = type
     unitSize = type.defaultUnitSize
-    foregroundColor = type.defaultForegroundColor.color()
-    backgroundColor = type.defaultBackgroundColor.color()
+    foregroundColor = type.defaultForegroundColor
+    backgroundColor = type.defaultBackgroundColor
   }
 
   mutating func updateVariations() {

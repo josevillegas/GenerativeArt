@@ -15,7 +15,7 @@
 		823928FB22D2751800F8B1B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 823928FA22D2751800F8B1B2 /* Assets.xcassets */; };
 		823928FE22D2751800F8B1B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 823928FC22D2751800F8B1B2 /* LaunchScreen.storyboard */; };
 		8239290622D2779500F8B1B2 /* DrawingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */; };
-		8239DD2D2338552A00652A46 /* GAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* GAColor.swift */; };
+		8239DD2D2338552A00652A46 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* Color.swift */; };
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
 		825B64CD26A2304D007727F6 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CC26A2304D007727F6 /* UIImage.swift */; };
 		825B64D226A25E56007727F6 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 825B64D126A25E56007727F6 /* Algorithms */; };
@@ -47,7 +47,7 @@
 		823928FD22D2751800F8B1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		823928FF22D2751800F8B1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewControllers.swift; sourceTree = "<group>"; };
-		8239DD2C2338552A00652A46 /* GAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAColor.swift; sourceTree = "<group>"; };
+		8239DD2C2338552A00652A46 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
 		825B64CC26A2304D007727F6 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* GAPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAPath.swift; sourceTree = "<group>"; };
@@ -96,7 +96,6 @@
 				826309D022E3AB88003E3F29 /* GAPath.swift */,
 				826309DC22E3CE2A003E3F29 /* Paths.swift */,
 				826309D822E3BC61003E3F29 /* Variations.swift */,
-				8239DD2C2338552A00652A46 /* GAColor.swift */,
 				820FBBDA26A35E070043FFD5 /* DrawingType.swift */,
 				82EF793C22ECE9610018AD6F /* DrawingControls.swift */,
 				82CBE77026ADECD00037EA4B /* DrawingTimer.swift */,
@@ -148,6 +147,7 @@
 		829CA41122D5AA9500453DA7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8239DD2C2338552A00652A46 /* Color.swift */,
 				825B64CC26A2304D007727F6 /* UIImage.swift */,
 				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
@@ -278,7 +278,7 @@
 				82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */,
 				82EF793F22ECED150018AD6F /* SizeControl.swift in Sources */,
 				826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */,
-				8239DD2D2338552A00652A46 /* GAColor.swift in Sources */,
+				8239DD2D2338552A00652A46 /* Color.swift in Sources */,
 				8239290622D2779500F8B1B2 /* DrawingViewControllers.swift in Sources */,
 				82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */,
 				826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */,

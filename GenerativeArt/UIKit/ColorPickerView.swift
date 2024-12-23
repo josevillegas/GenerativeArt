@@ -1,12 +1,12 @@
-import UIKit
+import SwiftUI
 
 final class ColorPickerView: UIView {
-  var didSelect: (GAColor) -> Void = { _ in }
+  var didSelect: (Color) -> Void = { _ in }
 
   private let colorItems: [ColorPickerItem]
 
   init() {
-    let colors: [GAColor] = [.black, .white, .red, .orange, .green, .yellow, .blue, .purple]
+    let colors: [Color] = [.black, .white, .red, .orange, .green, .yellow, .blue, .purple]
     colorItems = colors.map { ColorPickerItem(color: $0) }
     super.init(frame: .zero)
 
@@ -44,7 +44,7 @@ final class ColorPickerView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func select(_ color: GAColor) {
+  func select(_ color: Color) {
     guard let control = colorItems.first(where: { $0.color == color }) else { return }
     select(control)
   }
@@ -57,7 +57,7 @@ final class ColorPickerView: UIView {
     control.isSelected = true
   }
 
-  private func updateSelection(_ control: UIControl, color: GAColor) {
+  private func updateSelection(_ control: UIControl, color: Color) {
     guard !control.isSelected else { return }
     select(control)
     didSelect(color)
@@ -65,22 +65,22 @@ final class ColorPickerView: UIView {
 }
 
 final class ColorPickerItem: UIControl {
-  let color: GAColor
+  let color: Color
   override var isSelected: Bool {
     didSet { selectionLayer.isHidden = !isSelected }
   }
-  var didSelect: (GAColor) -> Void = { _ in }
+  var didSelect: (Color) -> Void = { _ in }
 
   private let colorLayer = CALayer()
   private let selectionLayer = CALayer()
 
-  init(color: GAColor) {
+  init(color: Color) {
     self.color = color
     super.init(frame: .zero)
 
-    selectionLayer.backgroundColor = GAColor.selection.color().cgColor
+    selectionLayer.backgroundColor = Color.selection.cgColor
     // The cgColor isn't correct if we get it from a Color.
-    colorLayer.backgroundColor = UIColor(color.color()).cgColor
+    colorLayer.backgroundColor = color.cgColor
 
     selectionLayer.isHidden = true
 

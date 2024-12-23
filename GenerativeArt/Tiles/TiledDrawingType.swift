@@ -1,4 +1,4 @@
-import CoreGraphics
+import SwiftUI
 
 enum TiledDrawingType {
   case concentricShapes
@@ -19,18 +19,18 @@ enum TiledDrawingType {
     }
   }
 
-  var defaultForegroundColor: GAColor {
+  var defaultForegroundColor: Color {
     switch self {
     case .scribbles: .black
     default: .red
     }
   }
 
-  var defaultBackgroundColor: GAColor {
+  var defaultBackgroundColor: Color {
     .white
   }
 
-  var backgroundColor: GAColor {
+  var backgroundColor: Color {
     switch self {
     case .scribbles: .lightGray
     default: .white
@@ -62,9 +62,9 @@ enum TiledDrawingType {
   var paths: (TiledDrawing.PathProperties) -> [GAPath] {
     switch self {
     case .concentricShapes:
-      let colors: [GAColor] = [.black, .lightGray, .red, .orange, .purple, .white]
+      let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
       return {
-        GAPath.concentricShapePaths(frame: $0.frame, colors: colors.map { $0.color() })
+        GAPath.concentricShapePaths(frame: $0.frame, colors: colors)
       }
     case .diagonals:
       return {[
