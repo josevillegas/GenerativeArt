@@ -1,16 +1,11 @@
-import UIKit
+import SwiftUI
 
 final class TiledDrawingView: UIView {
   enum Message {
     case sizeDidChange(CGSize)
   }
 
-  var type: TiledDrawingType {
-    get { panelView.type }
-    set { panelView.type = newValue }
-  }
-
-  private let panelView: DrawingPanelView
+  let panelView: DrawingPanelView
   private var send: (Message) -> Void = { _ in }
 
   private let panelWidthConstraint: NSLayoutConstraint
@@ -58,6 +53,13 @@ final class DrawingPanelView: UIView {
       tiledDrawing.updateVariations()
       setNeedsDisplay()
     }
+  }
+
+  var drawingForegroundColor: Color = .red {
+    didSet { tiledDrawing.foregroundColor = drawingForegroundColor }
+  }
+  var drawingBackgroundColor: Color = .white {
+    didSet { tiledDrawing.backgroundColor = drawingBackgroundColor }
   }
 
   var maxSize: CGSize {

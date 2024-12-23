@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct ToolbarModifier: ViewModifier {
-  @Binding var selectedForegroundColor: Color
-  @Binding var selectedBackgroundColor: Color
+  @Binding var foregroundColor: Color
+  @Binding var backgroundColor: Color
   let next: () -> Void
 
   @State var isForegroundColorPopoverPresented = false
@@ -15,13 +15,13 @@ struct ToolbarModifier: ViewModifier {
           Spacer()
           Button("Front") { isForegroundColorPopoverPresented = true }
             .popover(isPresented: $isForegroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $selectedForegroundColor)
+              ColorPickerView(selectedColor: $foregroundColor)
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button("Back") { isBackgroundColorPopoverPresented = true }
             .popover(isPresented: $isBackgroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $selectedBackgroundColor)
+              ColorPickerView(selectedColor: $backgroundColor)
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()

@@ -5,20 +5,18 @@ struct DrawingView: View {
 
   @State var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State var mondrianDrawing = MondrianDrawing()
-  @State var selectedForegroundColor: Color = .red
-  @State var selectedBackgroundColor: Color = .white
+  @State var foregroundColor: Color = .red
+  @State var backgroundColor: Color = .white
 
   var body: some View {
     Group {
       switch drawingType {
       case .paintingStyle(.mondrian):
-        MondrianViewRepresentable(drawing: $mondrianDrawing)
+        MondrianViewRepresentable(drawing: mondrianDrawing)
           .modifier(PaintingToolbarModifier(next: next))
       case .tile:
-        TiledDrawingViewRepresentable(type: $tiledDrawingType)
-          .modifier(
-            ToolbarModifier(selectedForegroundColor: $selectedForegroundColor, selectedBackgroundColor: $selectedBackgroundColor, next: next)
-          )
+        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
+          .modifier(ToolbarModifier(foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, next: next))
       }
     }
     .onChange(of: drawingType) { _, _ in
@@ -31,27 +29,30 @@ struct DrawingView: View {
 
   private func next() {
     switch drawingType {
-    case let .tile(type):
-      tiledDrawingType = TiledDrawingTypeWrapper(type: type)
+    case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
-  @Binding var type: TiledDrawingTypeWrapper
+  let type: TiledDrawingTypeWrapper
+  let foregroundColor: Color
+  let backgroundColor: Color
 
   func makeUIView(context: Context) -> TiledDrawingView {
     TiledDrawingView(type: type.type)
   }
 
   func updateUIView(_ view: TiledDrawingView, context: Context) {
-    view.type = type.type
+    view.panelView.drawingForegroundColor = foregroundColor
+    view.panelView.drawingBackgroundColor = backgroundColor
+    view.panelView.type = type.type
   }
 }
 
 struct MondrianViewRepresentable: UIViewRepresentable {
-  @Binding var drawing: MondrianDrawing
+  let drawing: MondrianDrawing
 
   func makeUIView(context: Context) -> MondrianView {
     MondrianView(drawing: drawing)
