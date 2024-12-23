@@ -5,6 +5,8 @@ struct DrawingView: View {
 
   @State var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State var mondrianDrawing = MondrianDrawing()
+  @State var selectedForegroundColor: Color = .red
+  @State var selectedBackgroundColor: Color = .white
 
   var body: some View {
     Group {
@@ -13,7 +15,7 @@ struct DrawingView: View {
       case .tile: TiledDrawingViewRepresentable(type: $tiledDrawingType)
       }
     }
-    .modifier(ToolbarModifier(next: next))
+    .modifier(ToolbarModifier(selectedForegroundColor: $selectedForegroundColor, selectedBackgroundColor: $selectedBackgroundColor, next: next))
     .onChange(of: drawingType) { oldValue, newValue in
       switch drawingType {
       case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
