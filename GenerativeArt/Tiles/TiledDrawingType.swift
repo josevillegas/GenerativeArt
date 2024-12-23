@@ -59,37 +59,35 @@ enum TiledDrawingType {
     }
   }
 
-  var paths: (TiledDrawing.PathProperties) -> [GAPath] {
+  func paths(frame: CGRect, foregroundColor: Color, backgroundColor: Color) -> [GAPath] {
     switch self {
     case .concentricShapes:
       let colors: [Color] = [.black, .lightGray, .red, .orange, .purple, .white]
-      return {
-        GAPath.concentricShapePaths(frame: $0.frame, colors: colors)
-      }
+      return GAPath.concentricShapePaths(frame: frame, colors: colors)
     case .diagonals:
-      return {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomDiagonal($0.frame, color: $0.foregroundColor)
-      ]}
+      return [
+        .fillRect(frame, color: backgroundColor),
+        .randomDiagonal(frame, color: foregroundColor)
+      ]
     case .triangles:
-      return {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomTriangle($0.frame, color: $0.foregroundColor)
-      ]}
+      return [
+        .fillRect(frame, color: backgroundColor),
+        .randomTriangle(frame, color: foregroundColor)
+      ]
     case .quadrants:
-      return {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomQuarterCircle($0.frame, color: $0.foregroundColor)
-      ]}
+      return [
+        .fillRect(frame, color: backgroundColor),
+        .randomQuarterCircle(frame, color: foregroundColor)
+      ]
     case .trianglesAndQuadrants:
-      return {[
-        .fillRect($0.frame, color: $0.backgroundColor),
-        .randomTrianglesAndQuarterCircles($0.frame, color: $0.foregroundColor)
-      ]}
+      return [
+        .fillRect(frame, color: backgroundColor),
+        .randomTrianglesAndQuarterCircles(frame, color: foregroundColor)
+      ]
     case .scribbles:
-      return {[
-        .scribble($0.frame, color: $0.foregroundColor)
-      ]}
+      return [
+        .scribble(frame, color: foregroundColor)
+      ]
     }
   }
 }

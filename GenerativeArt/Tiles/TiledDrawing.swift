@@ -36,7 +36,7 @@ struct TiledDrawing: Equatable {
   }
 
   private func makePaths(frame: CGRect) -> [GAPath] {
-    type.paths(PathProperties(frame: frame, foregroundColor: foregroundColor, backgroundColor: backgroundColor))
+    type.paths(frame: frame, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
   }
 
   private mutating func updateSize() {
@@ -44,13 +44,5 @@ struct TiledDrawing: Equatable {
     frames = tiles.frames
     size = tiles.size
     tileSize = tiles.tileSize
-  }
-}
-
-extension TiledDrawing {
-  struct PathProperties: Equatable {
-    let frame: CGRect
-    let foregroundColor: Color
-    let backgroundColor: Color
   }
 }
