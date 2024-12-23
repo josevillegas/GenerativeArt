@@ -1,14 +1,14 @@
 import UIKit
 
 final class TiledDrawingViewController: UIViewController, ToolbarController {
-  private var drawingView: TiledDrawingView { return view as! TiledDrawingView }
+  private var drawingView: TiledDrawingViewWithControls { return view as! TiledDrawingViewWithControls }
   private let send: (Message) -> () = { _ in }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .darkContent
   }
 
-  private func update(_ message: TiledDrawingView.Message) {
+  private func update(_ message: TiledDrawingViewWithControls.Message) {
     switch message {
     case .dismissControl: drawingView.hideControl()
     }

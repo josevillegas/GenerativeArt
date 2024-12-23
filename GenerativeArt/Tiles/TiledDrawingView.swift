@@ -1,6 +1,6 @@
 import UIKit
 
-final class DrawingBoundsView: UIView {
+final class TiledDrawingView: UIView {
   enum Message {
     case sizeDidChange(CGSize)
   }

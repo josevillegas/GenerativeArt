@@ -1,6 +1,6 @@
 import UIKit
 
-final class TiledDrawingView: UIView {
+final class TiledDrawingViewWithControls: UIView {
   enum Message {
     case dismissControl
   }
@@ -17,7 +17,7 @@ final class TiledDrawingView: UIView {
 
   private let colorPickerView: ColorPickerView
   private let sizeControl = SizeControl()
-  private let boundsView: DrawingBoundsView
+  private let boundsView: TiledDrawingView
   private let dismissControl = UIControl()
 
   private let send: (Message) -> Void
@@ -33,7 +33,7 @@ final class TiledDrawingView: UIView {
   init(type: TiledDrawingType, send: @escaping (Message) -> Void) {
     self.send = send
     let tiledDrawing = TiledDrawing(type: type)
-    boundsView = DrawingBoundsView(tiledDrawing: tiledDrawing)
+    boundsView = TiledDrawingView(tiledDrawing: tiledDrawing)
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
 
@@ -218,7 +218,7 @@ final class TiledDrawingView: UIView {
     }
   }
 
-  private func update(_ message: DrawingBoundsView.Message) {
+  private func update(_ message: TiledDrawingView.Message) {
     switch message {
     case let .sizeDidChange(size): tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
     }
