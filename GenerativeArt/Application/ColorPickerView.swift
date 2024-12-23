@@ -11,6 +11,7 @@ struct ColorPickerView: View {
     HStack(spacing: horizontalSizeClass == .compact ? 0 : 8) {
       ForEach(colors, id: \.hashValue) { color in
         ColorPickerItemView(color: color, isSelected: color == selectedColor, horizontalSizeClass: horizontalSizeClass)
+          .onTapGesture { selectedColor = color }
       }
     }
     .padding(.horizontal, 16)

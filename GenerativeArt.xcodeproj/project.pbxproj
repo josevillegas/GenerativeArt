@@ -33,7 +33,6 @@
 		82CBB0CC2D18057900FC7A78 /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0CB2D18057700FC7A78 /* DrawingView.swift */; };
 		82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBE77026ADECD00037EA4B /* DrawingTimer.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
-		82E606D622EBDBE8001EA30F /* UIColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E606D522EBDBE8001EA30F /* UIColorPickerView.swift */; };
 		82EF793D22ECE9610018AD6F /* DrawingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793C22ECE9610018AD6F /* DrawingControls.swift */; };
 		82EF793F22ECED150018AD6F /* SizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793E22ECED150018AD6F /* SizeControl.swift */; };
 /* End PBXBuildFile section */
@@ -66,7 +65,6 @@
 		82CBB0CB2D18057700FC7A78 /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		82CBE77026ADECD00037EA4B /* DrawingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingTimer.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
-		82E606D522EBDBE8001EA30F /* UIColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPickerView.swift; sourceTree = "<group>"; };
 		82EF793C22ECE9610018AD6F /* DrawingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingControls.swift; sourceTree = "<group>"; };
 		82EF793E22ECED150018AD6F /* SizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeControl.swift; sourceTree = "<group>"; };
 		82F53D4726A204A10089C0BC /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = GenerativeArt/Resources/Common.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -167,7 +165,6 @@
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 				8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */,
 				826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */,
-				82E606D522EBDBE8001EA30F /* UIColorPickerView.swift */,
 				82EF793E22ECED150018AD6F /* SizeControl.swift */,
 			);
 			path = UIKit;
@@ -289,7 +286,6 @@
 				8239290622D2779500F8B1B2 /* DrawingViewControllers.swift in Sources */,
 				82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */,
 				826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */,
-				82E606D622EBDBE8001EA30F /* UIColorPickerView.swift in Sources */,
 				8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */,
 				82CBB0CA2D18055C00FC7A78 /* SidebarView.swift in Sources */,
 				826309D922E3BC61003E3F29 /* Variations.swift in Sources */,

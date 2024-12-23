@@ -18,7 +18,6 @@ struct ToolbarModifier: ViewModifier {
               ColorPickerView(selectedColor: $selectedForegroundColor)
                 .presentationCompactAdaptation(.popover)
             }
-
           Spacer()
           Button("Back") { isBackgroundColorPopoverPresented = true }
             .popover(isPresented: $isBackgroundColorPopoverPresented) {
