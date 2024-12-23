@@ -4,9 +4,26 @@ struct DrawingView: View {
   let drawingType: DrawingType
 
   var body: some View {
-    switch drawingType {
-    case .paintingStyle(.mondrian): MondrianViewRepresentable()
-    case let .tile(type): TiledDrawingViewRepresentable(type: type)
+    Group {
+      switch drawingType {
+      case .paintingStyle(.mondrian): MondrianViewRepresentable()
+      case let .tile(type): TiledDrawingViewRepresentable(type: type)
+      }
+    }
+    .toolbar {
+      ToolbarItemGroup(placement: .bottomBar) {
+        Spacer()
+        Button("Front") {}
+        Spacer()
+        Button("Back") {}
+        Spacer()
+        Button("Size") {}
+        Spacer()
+        Button(action: {}) { Image(systemName: "play") }
+        Spacer()
+        Button(action: {}) { Image(systemName: "goforward") }
+        Spacer()
+      }
     }
   }
 }
