@@ -13,21 +13,7 @@ struct DrawingView: View {
       case .tile: TiledDrawingViewRepresentable(type: $tiledDrawingType)
       }
     }
-    .toolbar {
-      ToolbarItemGroup(placement: .bottomBar) {
-        Spacer()
-        Button("Front") {}
-        Spacer()
-        Button("Back") {}
-        Spacer()
-        Button("Size") {}
-        Spacer()
-        Button(action: {}) { Image(systemName: "play") }
-        Spacer()
-        Button(action: { next() }) { Image(systemName: "goforward") }
-        Spacer()
-      }
-    }
+    .modifier(ToolbarModifier(next: next))
     .onChange(of: drawingType) { oldValue, newValue in
       switch drawingType {
       case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)

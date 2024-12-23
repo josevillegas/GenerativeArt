@@ -25,6 +25,7 @@
 		826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309DC22E3CE2A003E3F29 /* Paths.swift */; };
 		826EE33A22EAA15200901EFF /* TiledDrawingViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */; };
 		827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C229026A14B6F004AAA61 /* AnchorProvider.swift */; };
+		82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */; };
 		82BFCB4C2D18E784007DD0B5 /* MondrianView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BFCB4B2D18E783007DD0B5 /* MondrianView.swift */; };
 		82BFCB4E2D19073D007DD0B5 /* TiledDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BFCB4D2D19073C007DD0B5 /* TiledDrawingView.swift */; };
 		82CBB0CA2D18055C00FC7A78 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBB0C92D18055B00FC7A78 /* SidebarView.swift */; };
@@ -56,6 +57,7 @@
 		826309DC22E3CE2A003E3F29 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingViewWithControls.swift; sourceTree = "<group>"; };
 		827C229026A14B6F004AAA61 /* AnchorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorProvider.swift; sourceTree = "<group>"; };
+		82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
 		82BFCB4B2D18E783007DD0B5 /* MondrianView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianView.swift; sourceTree = "<group>"; };
 		82BFCB4D2D19073C007DD0B5 /* TiledDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingView.swift; sourceTree = "<group>"; };
 		82CBB0C92D18055B00FC7A78 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */,
 				82CBB0C92D18055B00FC7A78 /* SidebarView.swift */,
 				82CBB0CB2D18057700FC7A78 /* DrawingView.swift */,
+				82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				825B64CD26A2304D007727F6 /* UIImage.swift in Sources */,
 				823928F622D2751700F8B1B2 /* IndexViewController.swift in Sources */,
 				82BFCB4C2D18E784007DD0B5 /* MondrianView.swift in Sources */,
+				82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */,
 				827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */,
 				823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */,
 				82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */,
