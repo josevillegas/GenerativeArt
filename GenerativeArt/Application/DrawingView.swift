@@ -11,12 +11,17 @@ struct DrawingView: View {
   var body: some View {
     Group {
       switch drawingType {
-      case .paintingStyle(.mondrian): MondrianViewRepresentable(drawing: $mondrianDrawing)
-      case .tile: TiledDrawingViewRepresentable(type: $tiledDrawingType)
+      case .paintingStyle(.mondrian):
+        MondrianViewRepresentable(drawing: $mondrianDrawing)
+          .modifier(PaintingToolbarModifier(next: next))
+      case .tile:
+        TiledDrawingViewRepresentable(type: $tiledDrawingType)
+          .modifier(
+            ToolbarModifier(selectedForegroundColor: $selectedForegroundColor, selectedBackgroundColor: $selectedBackgroundColor, next: next)
+          )
       }
     }
-    .modifier(ToolbarModifier(selectedForegroundColor: $selectedForegroundColor, selectedBackgroundColor: $selectedBackgroundColor, next: next))
-    .onChange(of: drawingType) { oldValue, newValue in
+    .onChange(of: drawingType) { _, _ in
       switch drawingType {
       case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
       case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()

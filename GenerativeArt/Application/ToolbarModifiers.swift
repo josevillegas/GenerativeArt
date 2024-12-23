@@ -35,3 +35,20 @@ struct ToolbarModifier: ViewModifier {
       }
   }
 }
+
+struct PaintingToolbarModifier: ViewModifier {
+  let next: () -> Void
+
+  func body(content: Content) -> some View {
+    content
+      .toolbar {
+        ToolbarItemGroup(placement: .bottomBar) {
+          Spacer()
+          Button(action: {}) { Image(systemName: "play") }
+          Spacer()
+          Button(action: { next() }) { Image(systemName: "goforward") }
+          Spacer()
+        }
+      }
+  }
+}
