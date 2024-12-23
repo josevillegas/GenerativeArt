@@ -161,6 +161,8 @@
 				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
 				8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */,
 				826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */,
+				82E606D522EBDBE8001EA30F /* ColorPickerView.swift */,
+				82EF793E22ECED150018AD6F /* SizeControl.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -171,8 +173,6 @@
 				82BFCB4D2D19073C007DD0B5 /* TiledDrawingView.swift */,
 				826309D422E3B7BE003E3F29 /* TiledDrawing.swift */,
 				8239DD2E2338556E00652A46 /* TiledDrawingType.swift */,
-				82E606D522EBDBE8001EA30F /* ColorPickerView.swift */,
-				82EF793E22ECED150018AD6F /* SizeControl.swift */,
 				8226935422D2D65200451E84 /* Tiles.swift */,
 			);
 			path = Tiles;
