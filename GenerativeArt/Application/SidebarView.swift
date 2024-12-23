@@ -1,5 +1,11 @@
 import SwiftUI
 
+struct IndexSection: Hashable, Identifiable {
+  var id: String { title }
+  let title: String
+  let rows: [DrawingType]
+}
+
 struct SidebarView: View {
   @Binding var selectedDrawingType: DrawingType?
 

@@ -1,12 +1,20 @@
 import UIKit
 
-enum Message {
-  case dismissDrawing
-  case showDrawing(DrawingType)
+class IndexViewController: UICollectionViewController {
+  init() {
+    let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+    super.init(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
+
+    title = "Generative Art"
+    navigationItem.largeTitleDisplayMode = .always
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }
 
 final class Application {
-
 //  private lazy var splitViewController: UISplitViewController = {
 //    let controller = UISplitViewController(style: .doubleColumn)
 //    // Set the display mode for the initial state only.

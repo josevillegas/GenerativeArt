@@ -30,17 +30,6 @@ enum TiledDrawingType {
     }
   }
 
-  var options: DrawingControls.Options {
-    switch self {
-    case .diagonals,
-         .triangles,
-         .quadrants,
-         .trianglesAndQuadrants: .all
-    case .concentricShapes,
-         .scribbles: [.size]
-    }
-  }
-
   func paths(frame: CGRect, foregroundColor: Color, backgroundColor: Color) -> [GAPath] {
     switch self {
     case .concentricShapes:

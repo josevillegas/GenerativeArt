@@ -11,13 +11,10 @@
 		8218A38B26A3398C00457FBE /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A38A26A3398C00457FBE /* Application.swift */; };
 		8226935522D2D65200451E84 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8226935422D2D65200451E84 /* Tiles.swift */; };
 		823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */; };
-		823928F622D2751700F8B1B2 /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F522D2751700F8B1B2 /* IndexViewController.swift */; };
 		823928FB22D2751800F8B1B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 823928FA22D2751800F8B1B2 /* Assets.xcassets */; };
 		823928FE22D2751800F8B1B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 823928FC22D2751800F8B1B2 /* LaunchScreen.storyboard */; };
-		8239290622D2779500F8B1B2 /* DrawingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */; };
 		8239DD2D2338552A00652A46 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* Color.swift */; };
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
-		825B64CD26A2304D007727F6 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825B64CC26A2304D007727F6 /* UIImage.swift */; };
 		825B64D226A25E56007727F6 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 825B64D126A25E56007727F6 /* Algorithms */; };
 		826309D122E3AB88003E3F29 /* GAPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* GAPath.swift */; };
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
@@ -35,7 +32,6 @@
 		82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CBE77026ADECD00037EA4B /* DrawingTimer.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
 		82EF793D22ECE9610018AD6F /* DrawingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793C22ECE9610018AD6F /* DrawingControls.swift */; };
-		82EF793F22ECED150018AD6F /* UISizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF793E22ECED150018AD6F /* UISizeControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,14 +40,11 @@
 		8226935422D2D65200451E84 /* Tiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		823928F022D2751700F8B1B2 /* GenerativeArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenerativeArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerativeArtApp.swift; sourceTree = "<group>"; };
-		823928F522D2751700F8B1B2 /* IndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexViewController.swift; sourceTree = "<group>"; };
 		823928FA22D2751800F8B1B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		823928FD22D2751800F8B1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		823928FF22D2751800F8B1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewControllers.swift; sourceTree = "<group>"; };
 		8239DD2C2338552A00652A46 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
-		825B64CC26A2304D007727F6 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* GAPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAPath.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
 		826309D822E3BC61003E3F29 /* Variations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variations.swift; sourceTree = "<group>"; };
@@ -68,7 +61,6 @@
 		82CBE77026ADECD00037EA4B /* DrawingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingTimer.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
 		82EF793C22ECE9610018AD6F /* DrawingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingControls.swift; sourceTree = "<group>"; };
-		82EF793E22ECED150018AD6F /* UISizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISizeControl.swift; sourceTree = "<group>"; };
 		82F53D4726A204A10089C0BC /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = GenerativeArt/Resources/Common.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -104,8 +96,6 @@
 				826309DC22E3CE2A003E3F29 /* Paths.swift */,
 				826309D822E3BC61003E3F29 /* Variations.swift */,
 				820FBBDA26A35E070043FFD5 /* DrawingType.swift */,
-				82EF793C22ECE9610018AD6F /* DrawingControls.swift */,
-				82CBE77026ADECD00037EA4B /* DrawingTimer.swift */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
@@ -155,8 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				8239DD2C2338552A00652A46 /* Color.swift */,
-				825B64CC26A2304D007727F6 /* UIImage.swift */,
-				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -165,10 +153,10 @@
 			isa = PBXGroup;
 			children = (
 				8218A38A26A3398C00457FBE /* Application.swift */,
-				823928F522D2751700F8B1B2 /* IndexViewController.swift */,
-				8239290522D2779500F8B1B2 /* DrawingViewControllers.swift */,
+				82EF793C22ECE9610018AD6F /* DrawingControls.swift */,
+				82CBE77026ADECD00037EA4B /* DrawingTimer.swift */,
 				826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */,
-				82EF793E22ECED150018AD6F /* UISizeControl.swift */,
+				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -277,17 +265,13 @@
 				82BFCB4E2D19073D007DD0B5 /* TiledDrawingView.swift in Sources */,
 				8226935522D2D65200451E84 /* Tiles.swift in Sources */,
 				82BBBD742D1A18D90034C98A /* SizeControl.swift in Sources */,
-				825B64CD26A2304D007727F6 /* UIImage.swift in Sources */,
-				823928F622D2751700F8B1B2 /* IndexViewController.swift in Sources */,
 				82BFCB4C2D18E784007DD0B5 /* MondrianView.swift in Sources */,
 				82BBBD702D19FBBD0034C98A /* ToolbarModifiers.swift in Sources */,
 				827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */,
 				823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */,
 				82CBE77126ADECD00037EA4B /* DrawingTimer.swift in Sources */,
-				82EF793F22ECED150018AD6F /* UISizeControl.swift in Sources */,
 				826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */,
 				8239DD2D2338552A00652A46 /* Color.swift in Sources */,
-				8239290622D2779500F8B1B2 /* DrawingViewControllers.swift in Sources */,
 				82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */,
 				826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */,
 				8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */,
