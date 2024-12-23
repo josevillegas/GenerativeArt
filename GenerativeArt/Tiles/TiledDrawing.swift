@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct TiledDrawing: Equatable {
+  let type: TiledDrawingType
   var paths: [GAPath] { return tilePaths.flatMap { $0 } }
-  var foregroundColor: Color
-  var backgroundColor: Color
+  let foregroundColor: Color
+  let backgroundColor: Color
+
   var maxSize: CGSize = .zero {
     didSet { updateSize() }
   }
@@ -15,22 +17,12 @@ struct TiledDrawing: Equatable {
 
   private var frames: [CGRect] = []
   private var tilePaths: [[GAPath]] = []
-  private let makePaths: MakePaths
-
-  init(unitSize: CGFloat, foregroundColor: Color, backgroundColor: Color, makePaths: @escaping (PathProperties) -> [GAPath]) {
-    self.unitSize = unitSize
-    self.foregroundColor = foregroundColor
-    self.backgroundColor = backgroundColor
-    self.makePaths = MakePaths(makePaths: makePaths)
-  }
 
   init(type: TiledDrawingType) {
-    self.init(
-      unitSize: type.defaultUnitSize,
-      foregroundColor: type.defaultForegroundColor.color(),
-      backgroundColor: type.defaultBackgroundColor.color(),
-      makePaths: type.paths
-    )
+    self.type = type
+    unitSize = type.defaultUnitSize
+    foregroundColor = type.defaultForegroundColor.color()
+    backgroundColor = type.defaultBackgroundColor.color()
   }
 
   mutating func updateVariations() {
@@ -44,7 +36,7 @@ struct TiledDrawing: Equatable {
   }
 
   private func makePaths(frame: CGRect) -> [GAPath] {
-    makePaths(PathProperties(frame: frame, foregroundColor: foregroundColor, backgroundColor: backgroundColor))
+    type.paths(PathProperties(frame: frame, foregroundColor: foregroundColor, backgroundColor: backgroundColor))
   }
 
   private mutating func updateSize() {
@@ -60,13 +52,5 @@ extension TiledDrawing {
     let frame: CGRect
     let foregroundColor: Color
     let backgroundColor: Color
-  }
-
-  struct MakePaths: Equatable {
-    let makePaths: (PathProperties) -> [GAPath]
-    func callAsFunction(_ properties: PathProperties) -> [GAPath] {
-      makePaths(properties)
-    }
-    static func ==(_ lhs: MakePaths, _ rhs: MakePaths) -> Bool { true }
   }
 }
