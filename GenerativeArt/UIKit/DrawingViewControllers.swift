@@ -8,7 +8,7 @@ final class TiledDrawingViewController: UIViewController, ToolbarController {
     .darkContent
   }
 
-  private func update(_ message: TiledDrawingViewModel.Message) {
+  private func update(_ message: TiledDrawingView.Message) {
     switch message {
     case .dismissControl: drawingView.hideControl()
     }

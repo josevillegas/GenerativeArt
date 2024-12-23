@@ -1,32 +1,10 @@
 import UIKit
 
-struct TiledDrawingViewModel {
+final class TiledDrawingView: UIView {
   enum Message {
     case dismissControl
   }
 
-  let options: DrawingControls.Options
-  let backgroundColor: GAColor
-  var tileForegroundColor: GAColor
-  var tileBackgroundColor: GAColor
-  let defaultUnitSize: CGFloat
-  let paths: (TiledDrawing.PathProperties) -> [GAPath]
-}
-
-extension TiledDrawingViewModel {
-  init(type: TiledDrawingType) {
-    self.init(
-      options: type.options,
-      backgroundColor: type.backgroundColor,
-      tileForegroundColor: type.defaultForegroundColor,
-      tileBackgroundColor: type.defaultBackgroundColor,
-      defaultUnitSize: type.defaultUnitSize,
-      paths: type.paths
-    )
-  }
-}
-
-final class TiledDrawingView: UIView {
   private enum ColorSelection {
     case none
     case foreground
@@ -41,24 +19,23 @@ final class TiledDrawingView: UIView {
   private let sizeControl = SizeControl()
   private let boundsView: DrawingBoundsView
   private let dismissControl = UIControl()
-  private var viewModel: TiledDrawingViewModel
 
-  private let send: (TiledDrawingViewModel.Message) -> Void
+  private let send: (Message) -> Void
   private var colorSelection: ColorSelection = .none
   private var tileSizeControl: TileSizeControl = .empty
   private var isColorPickerHidden = true
   private var isSizeControlHidden = true
   private var isAnimating = false
 
-  init(type: TiledDrawingType, send: @escaping (TiledDrawingViewModel.Message) -> Void) {
-    viewModel = TiledDrawingViewModel(type: type)
+  private var tileForegroundColor: GAColor = .red
+  private var tileBackgroundColor: GAColor = .red
+
+  init(type: TiledDrawingType, send: @escaping (Message) -> Void) {
     self.send = send
     let tiledDrawing = TiledDrawing(type: type)
     boundsView = DrawingBoundsView(tiledDrawing: tiledDrawing)
     colorPickerView = ColorPickerView()
     super.init(frame: .zero)
-
-    backgroundColor = UIColor(viewModel.backgroundColor.color())
 
     colorPickerView.isHidden = true
     sizeControl.isHidden = true
@@ -108,7 +85,7 @@ final class TiledDrawingView: UIView {
       return
     }
     colorSelection = .foreground
-    colorPickerView.select(viewModel.tileForegroundColor)
+    colorPickerView.select(tileForegroundColor)
     showColorPicker()
   }
 
@@ -118,7 +95,7 @@ final class TiledDrawingView: UIView {
       return
     }
     colorSelection = .background
-    colorPickerView.select(viewModel.tileBackgroundColor)
+    colorPickerView.select(tileBackgroundColor)
     showColorPicker()
   }
 
@@ -217,10 +194,10 @@ final class TiledDrawingView: UIView {
     switch colorSelection {
     case .none: break
     case .foreground:
-      viewModel.tileForegroundColor = color
+      tileForegroundColor = color
       boundsView.panelView.tiledDrawing.foregroundColor = color.color()
     case .background:
-      viewModel.tileBackgroundColor = color
+      tileBackgroundColor = color
       boundsView.panelView.tiledDrawing.backgroundColor = color.color()
     }
     colorSelection = .none
