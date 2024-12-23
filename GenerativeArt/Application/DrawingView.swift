@@ -3,7 +3,7 @@ import SwiftUI
 struct DrawingView: View {
   let drawingType: DrawingType
 
-  @State var tiledDrawingType: TiledDrawingType = .triangles
+  @State var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State var mondrianDrawing = MondrianDrawing()
 
   var body: some View {
@@ -30,7 +30,7 @@ struct DrawingView: View {
     }
     .onChange(of: drawingType) { oldValue, newValue in
       switch drawingType {
-      case let .tile(type): tiledDrawingType = type
+      case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
       case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
       }
     }
@@ -38,21 +38,22 @@ struct DrawingView: View {
 
   private func next() {
     switch drawingType {
-    case let .tile(type): tiledDrawingType = type
+    case let .tile(type):
+      tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
-  @Binding var type: TiledDrawingType
+  @Binding var type: TiledDrawingTypeWrapper
 
   func makeUIView(context: Context) -> TiledDrawingView {
-    TiledDrawingView(type: type)
+    TiledDrawingView(type: type.type)
   }
 
   func updateUIView(_ view: TiledDrawingView, context: Context) {
-    view.type = type
+    view.type = type.type
   }
 }
 
@@ -66,4 +67,10 @@ struct MondrianViewRepresentable: UIViewRepresentable {
   func updateUIView(_ view: MondrianView, context: Context) {
     view.drawing = drawing
   }
+}
+
+// This is needed so that the UIViewRepresentable registers changes.
+struct TiledDrawingTypeWrapper: Equatable {
+  let id = UUID()
+  let type: TiledDrawingType
 }
