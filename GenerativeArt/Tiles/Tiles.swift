@@ -1,6 +1,9 @@
 import Foundation
 
 struct Tiles {
+  let maxSize: CGSize
+  let maxTileSize: CGFloat
+  let scale: CGFloat?
   let size: CGSize
   let tileSize: CGSize
   let frames: [CGRect]
@@ -8,6 +11,10 @@ struct Tiles {
   /// Use the `scale` property to align the tiles to the screen pixels.
   /// The `scale` value represents the number of pixels per point.
   init(maxSize: CGSize, maxTileSize: CGFloat, scale: CGFloat? = nil) {
+    self.maxSize = maxSize
+    self.maxTileSize = maxTileSize
+    self.scale = scale
+
     guard maxTileSize > 0 else {
       size = maxSize
       tileSize = maxSize

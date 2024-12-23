@@ -44,8 +44,8 @@ final class TiledDrawingView: UIView {
   }
 
   func updatePanelSize() {
-    panelView.tiledDrawing.maxSize = bounds.size
-    let panelSize = panelView.tiledDrawing.size
+    panelView.maxSize = bounds.size
+    let panelSize = panelView.size
     panelWidthConstraint.constant = panelSize.width
     panelHeightConstraint.constant = panelSize.height
   }
@@ -61,8 +61,16 @@ final class DrawingPanelView: UIView {
     }
   }
 
-  var tiledDrawing: TiledDrawing
+  var maxSize: CGSize {
+    get { tiledDrawing.maxSize }
+    set { tiledDrawing.maxSize = newValue }
+  }
 
+  var size: CGSize {
+    tiledDrawing.size
+  }
+
+  private var tiledDrawing: TiledDrawing
   private var lastSize: CGSize = .zero
 
   init(type: TiledDrawingType) {
