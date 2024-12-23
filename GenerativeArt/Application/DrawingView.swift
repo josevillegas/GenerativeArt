@@ -28,24 +28,24 @@ struct DrawingView: View {
   }
 }
 
-struct TiledDrawingViewRepresentable: UIViewControllerRepresentable {
+struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingType
 
-  typealias UIViewControllerType = UIViewController
+  typealias UIViewType = UIView
 
-  func makeUIViewController(context: Context) -> UIViewController {
-    TiledDrawingViewController(viewModel: TiledDrawingViewModel(type: type), presentationMode: .secondary) { _ in }
+  func makeUIView(context: Context) -> UIView {
+    TiledDrawingView(viewModel: TiledDrawingViewModel(type: type)) { _ in }
   }
 
-  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+  func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
-struct MondrianViewRepresentable: UIViewControllerRepresentable {
-  typealias UIViewControllerType = UIViewController
+struct MondrianViewRepresentable: UIViewRepresentable {
+  typealias UIViewControllerType = UIView
 
-  func makeUIViewController(context: Context) -> UIViewController {
-    MondrianViewController(presentationMode: .secondary) { _ in }
+  func makeUIView(context: Context) -> UIView {
+    MondrianView()
   }
 
-  func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+  func updateUIView(_ uiView: UIView, context: Context) {}
 }
