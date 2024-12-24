@@ -11,25 +11,28 @@ struct GenerativeArtApp: App {
 
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
-  @State private var selectedDrawingType: DrawingType?
+  @State private var selectedDrawingType: DrawingType? = Self.defaultDrawingType
+  @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
+
+  static let defaultDrawingType: DrawingType = .tile(.triangles)
 
   var body: some View {
     if horizontalSizeClass == .compact {
       NavigationStack {
         SidebarView(selectedDrawingType: $selectedDrawingType)
           .navigationDestination(item: $selectedDrawingType) { drawingType in
-            DrawingView(drawingType: drawingType)
+            DrawingView(drawingType: drawingType, splitViewVisibility: $splitViewVisibility)
+              .toolbarVisibility(.hidden, for: .navigationBar)
           }
       }
     } else {
-      NavigationSplitView {
+      NavigationSplitView(columnVisibility: $splitViewVisibility) {
         SidebarView(selectedDrawingType: $selectedDrawingType)
+          .navigationTitle("Generative Art")
+          .toolbar(removing: .sidebarToggle)
       } detail: {
-        if let selectedDrawingType {
-          DrawingView(drawingType: selectedDrawingType)
-        } else {
-          Text("Select an item")
-        }
+        DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, splitViewVisibility: $splitViewVisibility)
+          .toolbarVisibility(.hidden, for: .navigationBar)
       }
     }
   }

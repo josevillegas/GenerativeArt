@@ -2,7 +2,10 @@ import SwiftUI
 
 struct DrawingView: View {
   let drawingType: DrawingType
+  @Binding var splitViewVisibility: NavigationSplitViewVisibility
 
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  @Environment(\.dismiss) private var dismiss
   @State var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State var mondrianDrawing = MondrianDrawing()
   @State var foregroundColor: Color = .red
@@ -14,10 +17,11 @@ struct DrawingView: View {
       switch drawingType {
       case .paintingStyle(.mondrian):
         MondrianViewRepresentable(drawing: mondrianDrawing)
-          .modifier(PaintingToolbarModifier(next: next))
+          .modifier(PaintingToolbarModifier(dismissImageName: dismissImageName, toggleSidebar: toggleSidebar, next: next))
       case .tile:
         TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
-          .modifier(ToolbarModifier(foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize, next: next))
+          .modifier(ToolbarModifier(foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize,
+                                    dismissImageName: dismissImageName, toggleSidebar: toggleSidebar, next: next))
       }
     }
     .onChange(of: drawingType) { _, _ in
@@ -28,11 +32,27 @@ struct DrawingView: View {
     }
   }
 
+  private func toggleSidebar() {
+    if horizontalSizeClass == .compact {
+      dismiss()
+      return
+    }
+    switch splitViewVisibility {
+    case .all: splitViewVisibility = .detailOnly
+    case .detailOnly: splitViewVisibility = .all
+    default: break
+    }
+  }
+
   private func next() {
     switch drawingType {
     case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
+  }
+
+  private var dismissImageName: String {
+    horizontalSizeClass == .compact ?  "chevron.backward" : "sidebar.leading"
   }
 }
 
