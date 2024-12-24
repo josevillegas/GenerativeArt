@@ -11,6 +11,7 @@ struct DrawingView: View {
   @State private var foregroundColor: Color = .red
   @State private var backgroundColor: Color = .white
   @State private var tileSizeControl: TileSizeControl = .empty
+  @State private var unitSize: CGFloat = 30
   @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
   @State private var isPlaying: Bool = false
 
@@ -20,7 +21,8 @@ struct DrawingView: View {
       case .paintingStyle(.mondrian):
         MondrianViewRepresentable(drawing: mondrianDrawing)
       case .tile:
-        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, perform: update)
+        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                      unitSize: unitSize, perform: update)
       }
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
@@ -35,7 +37,9 @@ struct DrawingView: View {
 
   private func update(action: TiledDrawingView.Action) {
     switch action {
-    case let .sizeDidChange(size): tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
+    case let .sizeDidChange(size):
+      tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
+      unitSize = tileSizeControl.widthForValue(tileSize)
     }
   }
 
@@ -44,7 +48,9 @@ struct DrawingView: View {
     case .next: next()
     case let .setBackgroundColor(color): backgroundColor = color
     case let .setForegroundColor(color): foregroundColor = color
-    case let .setTileSize(size): tileSize = size
+    case let .setTileSize(size):
+      tileSize = size
+      unitSize = tileSizeControl.widthForValue(size)
     case .togglePlaying: isPlaying.toggle()
     case .toggleSidebarOrDismiss: toggleSidebar()
     }
@@ -82,6 +88,7 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
   let foregroundColor: Color
   let backgroundColor: Color
+  let unitSize: CGFloat
   let perform: (TiledDrawingView.Action) -> Void
 
   func makeUIView(context: Context) -> TiledDrawingView {
@@ -91,6 +98,7 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   func updateUIView(_ view: TiledDrawingView, context: Context) {
     view.panelView.drawingForegroundColor = foregroundColor
     view.panelView.drawingBackgroundColor = backgroundColor
+    view.panelView.unitSize = unitSize
     view.panelView.type = type.type
   }
 }

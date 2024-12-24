@@ -63,11 +63,18 @@ final class DrawingPanelView: UIView {
     didSet { tiledDrawing.backgroundColor = drawingBackgroundColor }
   }
 
+  var unitSize: CGFloat {
+    didSet {
+      guard unitSize != oldValue else { return }
+      tiledDrawing.tiles = Tiles(maxSize: maxSize, maxTileSize: unitSize, scale: tiledDrawing.tiles.scale)
+    }
+  }
+
   var maxSize: CGSize {
     get { tiledDrawing.tiles.maxSize }
     set {
       guard maxSize != newValue else { return }
-      tiledDrawing.tiles = Tiles(maxSize: newValue, maxTileSize: tiledDrawing.tiles.maxTileSize, scale: tiledDrawing.tiles.scale)
+      tiledDrawing.tiles = Tiles(maxSize: newValue, maxTileSize: unitSize, scale: tiledDrawing.tiles.scale)
     }
   }
 
@@ -80,7 +87,8 @@ final class DrawingPanelView: UIView {
 
   init(type: TiledDrawingType) {
     self.type = type
-    tiledDrawing = TiledDrawing(type: type, tiles: Tiles(maxSize: .zero, maxTileSize: type.defaultUnitSize, scale: UIScreen.main.scale))
+    self.unitSize = type.defaultUnitSize
+    tiledDrawing = TiledDrawing(type: type, tiles: Tiles(maxSize: .zero, maxTileSize: unitSize, scale: UIScreen.main.scale))
     super.init(frame: .zero)
 
     backgroundColor = .white
