@@ -22,7 +22,7 @@ struct ContentView: View {
         SidebarView(selectedDrawingType: $selectedDrawingType)
           .navigationDestination(item: $selectedDrawingType) { drawingType in
             DrawingView(drawingType: drawingType, splitViewVisibility: $splitViewVisibility)
-              .toolbarVisibility(.hidden, for: .navigationBar)
+              .modifier(NavigationBarModifier())
           }
       }
     } else {
@@ -32,9 +32,21 @@ struct ContentView: View {
           .toolbar(removing: .sidebarToggle)
       } detail: {
         DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, splitViewVisibility: $splitViewVisibility)
-          .toolbarVisibility(.hidden, for: .navigationBar)
+          .modifier(NavigationBarModifier())
       }
       .navigationSplitViewStyle(.prominentDetail)
+    }
+  }
+}
+
+struct NavigationBarModifier: ViewModifier {
+  func body(content: Content) -> some View {
+    if #available(iOS 18, *) {
+      content
+        .toolbarVisibility(.hidden, for: .navigationBar)
+    } else {
+      content
+        .navigationBarHidden(true)
     }
   }
 }
