@@ -1,12 +1,19 @@
 import SwiftUI
 
+enum ToolbarAction {
+  case next
+  case setBackgroundColor(Color)
+  case setForegroundColor(Color)
+  case setTileSize(CGFloat)
+  case toggleSidebarOrDismiss
+}
+
 struct ToolbarModifier: ViewModifier {
-  @Binding var foregroundColor: Color
-  @Binding var backgroundColor: Color
-  @Binding var tileSize: CGFloat
+  let foregroundColor: Color
+  let backgroundColor: Color
+  let tileSize: CGFloat
   let dismissImageName: String
-  let toggleSidebar: () -> Void
-  let next: () -> Void
+  let perform: (ToolbarAction) -> Void
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State var isForegroundColorPopoverPresented = false
@@ -18,29 +25,29 @@ struct ToolbarModifier: ViewModifier {
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
           Spacer()
-          Button(action: { toggleSidebar() }) { Image(systemName: dismissImageName) }
+          Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
           Spacer()
           Button("Front") { isForegroundColorPopoverPresented = true }
             .popover(isPresented: $isForegroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { foregroundColor = $0 }
+              ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setForegroundColor($0)) }
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button("Back") { isBackgroundColorPopoverPresented = true }
             .popover(isPresented: $isBackgroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { backgroundColor = $0 }
+              ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setBackgroundColor($0)) }
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button("Size") { isSizeControlPresented = true }
             .popover(isPresented: $isSizeControlPresented) {
-              SizeControl(size: $tileSize)
+              SizeControl(size: Binding(get: { tileSize }, set: { value, transaction in perform(.setTileSize(value)) }))
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button(action: {}) { Image(systemName: "play") }
           Spacer()
-          Button(action: { next() }) { Image(systemName: "goforward") }
+          Button(action: { perform(.next) }) { Image(systemName: "goforward") }
           Spacer()
         }
       }
@@ -49,19 +56,18 @@ struct ToolbarModifier: ViewModifier {
 
 struct PaintingToolbarModifier: ViewModifier {
   let dismissImageName: String
-  let toggleSidebar: () -> Void
-  let next: () -> Void
+  let perform: (ToolbarAction) -> Void
 
   func body(content: Content) -> some View {
     content
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
           Spacer()
-          Button(action: { toggleSidebar() }) { Image(systemName: dismissImageName) }
+          Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
           Spacer()
           Button(action: {}) { Image(systemName: "play") }
           Spacer()
-          Button(action: { next() }) { Image(systemName: "goforward") }
+          Button(action: { perform(.next) }) { Image(systemName: "goforward") }
           Spacer()
         }
       }
