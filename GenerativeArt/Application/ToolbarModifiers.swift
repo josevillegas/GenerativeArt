@@ -8,6 +8,7 @@ struct ToolbarModifier: ViewModifier {
   let toggleSidebar: () -> Void
   let next: () -> Void
 
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State var isForegroundColorPopoverPresented = false
   @State var isBackgroundColorPopoverPresented = false
   @State var isSizeControlPresented = false
@@ -21,13 +22,13 @@ struct ToolbarModifier: ViewModifier {
           Spacer()
           Button("Front") { isForegroundColorPopoverPresented = true }
             .popover(isPresented: $isForegroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $foregroundColor)
+              ColorPickerView(selectedColor: $foregroundColor, horizontalSizeClass: horizontalSizeClass)
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button("Back") { isBackgroundColorPopoverPresented = true }
             .popover(isPresented: $isBackgroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $backgroundColor)
+              ColorPickerView(selectedColor: $backgroundColor, horizontalSizeClass: horizontalSizeClass)
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()

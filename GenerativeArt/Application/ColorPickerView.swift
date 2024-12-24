@@ -2,8 +2,7 @@ import SwiftUI
 
 struct ColorPickerView: View {
   @Binding var selectedColor: Color
-
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  let horizontalSizeClass: UserInterfaceSizeClass?
 
   private let colors: [Color] = [.black, .white, .red, .orange, .green, .yellow, .blue, .purple]
 
@@ -26,21 +25,36 @@ struct ColorPickerItemView: View {
   var body: some View {
     ZStack {
       Circle()
-        .fill(selectionColor)
-        .frame(width: selectionSize, height: selectionSize)
-      Circle()
         .fill(color)
         .stroke(strokeColor, style: StrokeStyle(lineWidth: 1))
-        .frame(width: itemSize, height: itemSize)
+        .frame(width: fillCircleSize, height: fillCircleSize)
+      Circle()
+        .fill(.clear)
+        .strokeBorder(lineWidth: selectionBorderWidth)
+        .foregroundStyle(selectionColor)
+        .frame(width: strokeCircleSize, height: strokeCircleSize)
     }
+  }
+
+  private var fillCircleSize: CGFloat {
+    itemSize + selectionPadding
+  }
+
+  private var strokeCircleSize: CGFloat {
+    itemSize + selectionBorderWidth * 2
   }
 
   private var itemSize: CGFloat {
     horizontalSizeClass == .compact ? 34 : 44
   }
 
-  private var selectionSize: CGFloat {
-    itemSize + (horizontalSizeClass == .compact ? 6 : 8)
+  // Prevents artifacts from appearing between color circle and selection border.
+  private var selectionPadding: CGFloat {
+    isSelected ? 4 : 0
+  }
+
+  private var selectionBorderWidth: CGFloat {
+    horizontalSizeClass == .compact ? 3 : 4
   }
 
   private var selectionColor: Color {
