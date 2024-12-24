@@ -16,15 +16,12 @@ struct DrawingView: View {
   var body: some View {
     Group {
       switch drawingType {
-      case .paintingStyle(.mondrian):
-        MondrianViewRepresentable(drawing: mondrianDrawing)
-          .modifier(PaintingToolbarModifier(dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
-      case .tile:
-        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
-          .modifier(ToolbarModifier(type: tiledDrawingType.type, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                    tileSize: tileSize, dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
+      case .paintingStyle(.mondrian): MondrianViewRepresentable(drawing: mondrianDrawing)
+      case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
       }
     }
+    .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
+                              dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
     .onChange(of: drawingType) { _, _ in
       switch drawingType {
       case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)

@@ -10,7 +10,7 @@ enum ToolbarAction {
 }
 
 struct ToolbarModifier: ViewModifier {
-  let type: TiledDrawingType
+  let type: DrawingType
   let foregroundColor: Color
   let backgroundColor: Color
   let tileSize: CGFloat
@@ -45,12 +45,14 @@ struct ToolbarModifier: ViewModifier {
                 }
             }
           }
-          Spacer()
-          Button("Size") { isSizeControlPresented = true }
-            .popover(isPresented: $isSizeControlPresented) {
-              SizeControl(size: Binding(get: { tileSize }, set: { value, transaction in perform(.setTileSize(value)) }))
-                .presentationCompactAdaptation(.popover)
-            }
+          if showSizeOption {
+            Spacer()
+            Button("Size") { isSizeControlPresented = true }
+              .popover(isPresented: $isSizeControlPresented) {
+                SizeControl(size: Binding(get: { tileSize }, set: { value, transaction in perform(.setTileSize(value)) }))
+                  .presentationCompactAdaptation(.popover)
+              }
+          }
           Spacer()
           Button(action: { perform(.togglePlaying) }) { Image(systemName: playImageName) }
             .frame(width: 44) // Keep width consistent when image changes.
@@ -63,37 +65,22 @@ struct ToolbarModifier: ViewModifier {
 
   private var showColorOptions: Bool {
     switch type {
-    case .concentricShapes: false
-    default: true
+    case .tile(.concentricShapes), .paintingStyle(.mondrian): false
+    case .tile(_): true
     }
   }
 
   private var showBackgroundColorOption: Bool {
     switch type {
-    case .scribbles: false
-    default: true
+    case .tile(.scribbles), .paintingStyle(.mondrian): false
+    case .tile: true
     }
   }
-}
 
-struct PaintingToolbarModifier: ViewModifier {
-  let dismissImageName: String
-  let playImageName: String
-  let perform: (ToolbarAction) -> Void
-
-  func body(content: Content) -> some View {
-    content
-      .toolbar {
-        ToolbarItemGroup(placement: .bottomBar) {
-          Spacer()
-          Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
-          Spacer()
-          Button(action: { perform(.togglePlaying) }) { Image(systemName: playImageName) }
-            .frame(width: 44) // Keep width consistent when image changes.
-          Spacer()
-          Button(action: { perform(.next) }) { Image(systemName: "goforward") }
-          Spacer()
-        }
-      }
+  private var showSizeOption: Bool {
+    switch type {
+    case .tile: true
+    case .paintingStyle(.mondrian): false
+    }
   }
 }
