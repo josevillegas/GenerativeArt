@@ -10,6 +10,7 @@ enum ToolbarAction {
 }
 
 struct ToolbarModifier: ViewModifier {
+  let type: TiledDrawingType
   let foregroundColor: Color
   let backgroundColor: Color
   let tileSize: CGFloat
@@ -28,18 +29,22 @@ struct ToolbarModifier: ViewModifier {
         ToolbarItemGroup(placement: .bottomBar) {
           Spacer()
           Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
-          Spacer()
-          Button("Front") { isForegroundColorPopoverPresented = true }
-            .popover(isPresented: $isForegroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setForegroundColor($0)) }
-                .presentationCompactAdaptation(.popover)
+          if showColorOptions {
+            Spacer()
+            Button("Front") { isForegroundColorPopoverPresented = true }
+              .popover(isPresented: $isForegroundColorPopoverPresented) {
+                ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setForegroundColor($0)) }
+                  .presentationCompactAdaptation(.popover)
+              }
+            if showBackgroundColorOption {
+              Spacer()
+              Button("Back") { isBackgroundColorPopoverPresented = true }
+                .popover(isPresented: $isBackgroundColorPopoverPresented) {
+                  ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setBackgroundColor($0)) }
+                    .presentationCompactAdaptation(.popover)
+                }
             }
-          Spacer()
-          Button("Back") { isBackgroundColorPopoverPresented = true }
-            .popover(isPresented: $isBackgroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setBackgroundColor($0)) }
-                .presentationCompactAdaptation(.popover)
-            }
+          }
           Spacer()
           Button("Size") { isSizeControlPresented = true }
             .popover(isPresented: $isSizeControlPresented) {
@@ -54,6 +59,20 @@ struct ToolbarModifier: ViewModifier {
           Spacer()
         }
       }
+  }
+
+  private var showColorOptions: Bool {
+    switch type {
+    case .concentricShapes: false
+    default: true
+    }
+  }
+
+  private var showBackgroundColorOption: Bool {
+    switch type {
+    case .scribbles: false
+    default: true
+    }
   }
 }
 

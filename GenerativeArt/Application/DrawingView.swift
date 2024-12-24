@@ -21,8 +21,8 @@ struct DrawingView: View {
           .modifier(PaintingToolbarModifier(dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
       case .tile:
         TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
-          .modifier(ToolbarModifier(foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
-                                    dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
+          .modifier(ToolbarModifier(type: tiledDrawingType.type, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                    tileSize: tileSize, dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
       }
     }
     .onChange(of: drawingType) { _, _ in
