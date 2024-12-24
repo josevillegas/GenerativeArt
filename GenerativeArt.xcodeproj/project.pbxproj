@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820FBBDA26A35E070043FFD5 /* DrawingType.swift */; };
-		8218A38B26A3398C00457FBE /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218A38A26A3398C00457FBE /* Application.swift */; };
 		8226935522D2D65200451E84 /* Tiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8226935422D2D65200451E84 /* Tiles.swift */; };
 		823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */; };
 		823928FB22D2751800F8B1B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 823928FA22D2751800F8B1B2 /* Assets.xcassets */; };
@@ -32,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		820FBBDA26A35E070043FFD5 /* DrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingType.swift; sourceTree = "<group>"; };
-		8218A38A26A3398C00457FBE /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		8226935422D2D65200451E84 /* Tiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiles.swift; sourceTree = "<group>"; };
 		823928F022D2751700F8B1B2 /* GenerativeArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenerativeArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerativeArtApp.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 				82E0238F230CD7A200F32857 /* Mondrian */,
 				8218A38E26A35A4300457FBE /* Drawing */,
 				829CA41122D5AA9500453DA7 /* Extensions */,
-				82CBB0CD2D180B6200FC7A78 /* UIKit */,
 				8218A38F26A35B1600457FBE /* Resources */,
 			);
 			path = GenerativeArt;
@@ -139,14 +136,6 @@
 				8239DD2C2338552A00652A46 /* Color.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		82CBB0CD2D180B6200FC7A78 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				8218A38A26A3398C00457FBE /* Application.swift */,
-			);
-			path = UIKit;
 			sourceTree = "<group>";
 		};
 		82E0238E230CD68F00F32857 /* Tiles */ = {
@@ -262,7 +251,6 @@
 				8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */,
 				82CBB0CA2D18055C00FC7A78 /* SidebarView.swift in Sources */,
 				826309D922E3BC61003E3F29 /* Variations.swift in Sources */,
-				8218A38B26A3398C00457FBE /* Application.swift in Sources */,
 				82BBBD722D1A036D0034C98A /* ColorPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

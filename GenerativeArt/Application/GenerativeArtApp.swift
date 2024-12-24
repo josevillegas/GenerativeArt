@@ -34,6 +34,7 @@ struct ContentView: View {
         DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, splitViewVisibility: $splitViewVisibility)
           .toolbarVisibility(.hidden, for: .navigationBar)
       }
+      .navigationSplitViewStyle(.prominentDetail)
     }
   }
 }

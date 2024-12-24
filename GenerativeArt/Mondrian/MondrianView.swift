@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 final class MondrianView: UIView {
   var drawing: MondrianDrawing {
