@@ -11,17 +11,18 @@ struct DrawingView: View {
   @State var foregroundColor: Color = .red
   @State var backgroundColor: Color = .white
   @State var tileSize: CGFloat = 0.5 // A value from zero to one.
+  @State var isPlaying: Bool = false
 
   var body: some View {
     Group {
       switch drawingType {
       case .paintingStyle(.mondrian):
         MondrianViewRepresentable(drawing: mondrianDrawing)
-          .modifier(PaintingToolbarModifier(dismissImageName: dismissImageName, perform: update))
+          .modifier(PaintingToolbarModifier(dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
       case .tile:
         TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
           .modifier(ToolbarModifier(foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
-                                    dismissImageName: dismissImageName, perform: update))
+                                    dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
       }
     }
     .onChange(of: drawingType) { _, _ in
@@ -38,6 +39,7 @@ struct DrawingView: View {
     case let .setBackgroundColor(color): backgroundColor = color
     case let .setForegroundColor(color): foregroundColor = color
     case let .setTileSize(size): tileSize = size
+    case .togglePlaying: isPlaying.toggle()
     case .toggleSidebarOrDismiss: toggleSidebar()
     }
   }
@@ -63,6 +65,10 @@ struct DrawingView: View {
 
   private var dismissImageName: String {
     horizontalSizeClass == .compact ?  "chevron.backward" : "sidebar.leading"
+  }
+
+  private var playImageName: String {
+    isPlaying ? "pause" : "play"
   }
 }
 

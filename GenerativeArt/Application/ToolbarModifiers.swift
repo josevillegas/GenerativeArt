@@ -5,6 +5,7 @@ enum ToolbarAction {
   case setBackgroundColor(Color)
   case setForegroundColor(Color)
   case setTileSize(CGFloat)
+  case togglePlaying
   case toggleSidebarOrDismiss
 }
 
@@ -13,6 +14,7 @@ struct ToolbarModifier: ViewModifier {
   let backgroundColor: Color
   let tileSize: CGFloat
   let dismissImageName: String
+  let playImageName: String
   let perform: (ToolbarAction) -> Void
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -45,7 +47,8 @@ struct ToolbarModifier: ViewModifier {
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
-          Button(action: {}) { Image(systemName: "play") }
+          Button(action: { perform(.togglePlaying) }) { Image(systemName: playImageName) }
+            .frame(width: 44) // Keep width consistent when image changes.
           Spacer()
           Button(action: { perform(.next) }) { Image(systemName: "goforward") }
           Spacer()
@@ -56,6 +59,7 @@ struct ToolbarModifier: ViewModifier {
 
 struct PaintingToolbarModifier: ViewModifier {
   let dismissImageName: String
+  let playImageName: String
   let perform: (ToolbarAction) -> Void
 
   func body(content: Content) -> some View {
@@ -65,7 +69,8 @@ struct PaintingToolbarModifier: ViewModifier {
           Spacer()
           Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
           Spacer()
-          Button(action: {}) { Image(systemName: "play") }
+          Button(action: { perform(.togglePlaying) }) { Image(systemName: playImageName) }
+            .frame(width: 44) // Keep width consistent when image changes.
           Spacer()
           Button(action: { perform(.next) }) { Image(systemName: "goforward") }
           Spacer()
