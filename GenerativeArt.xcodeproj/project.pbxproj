@@ -20,8 +20,6 @@
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
 		826309D922E3BC61003E3F29 /* Variations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D822E3BC61003E3F29 /* Variations.swift */; };
 		826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309DC22E3CE2A003E3F29 /* Paths.swift */; };
-		826EE33A22EAA15200901EFF /* TiledDrawingViewWithControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */; };
-		827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C229026A14B6F004AAA61 /* AnchorProvider.swift */; };
 		82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */; };
 		82BBBD722D1A036D0034C98A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD712D1A036C0034C98A /* ColorPickerView.swift */; };
 		82BBBD742D1A18D90034C98A /* SizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD732D1A18D70034C98A /* SizeControl.swift */; };
@@ -47,8 +45,6 @@
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
 		826309D822E3BC61003E3F29 /* Variations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variations.swift; sourceTree = "<group>"; };
 		826309DC22E3CE2A003E3F29 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
-		826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingViewWithControls.swift; sourceTree = "<group>"; };
-		827C229026A14B6F004AAA61 /* AnchorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorProvider.swift; sourceTree = "<group>"; };
 		82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
 		82BBBD712D1A036C0034C98A /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		82BBBD732D1A18D70034C98A /* SizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeControl.swift; sourceTree = "<group>"; };
@@ -149,8 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				8218A38A26A3398C00457FBE /* Application.swift */,
-				826EE33922EAA15200901EFF /* TiledDrawingViewWithControls.swift */,
-				827C229026A14B6F004AAA61 /* AnchorProvider.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -255,13 +249,11 @@
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
 				82CBB0CC2D18057900FC7A78 /* DrawingView.swift in Sources */,
 				826309D122E3AB88003E3F29 /* GAPath.swift in Sources */,
-				826EE33A22EAA15200901EFF /* TiledDrawingViewWithControls.swift in Sources */,
 				82BFCB4E2D19073D007DD0B5 /* TiledDrawingView.swift in Sources */,
 				8226935522D2D65200451E84 /* Tiles.swift in Sources */,
 				82BBBD742D1A18D90034C98A /* SizeControl.swift in Sources */,
 				82BFCB4C2D18E784007DD0B5 /* MondrianView.swift in Sources */,
 				82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */,
-				827C229126A14B6F004AAA61 /* AnchorProvider.swift in Sources */,
 				823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */,
 				826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */,
 				8239DD2D2338552A00652A46 /* Color.swift in Sources */,

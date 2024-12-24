@@ -53,7 +53,11 @@ final class TiledDrawingView: UIView {
     panelHeightConstraint.isActive = true
 
     addSubview(panelView)
-    panelView.center(with: self)
+    panelView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      panelView.centerXAnchor.constraint(equalTo: centerXAnchor),
+      panelView.centerYAnchor.constraint(equalTo: centerYAnchor)
+    ])
   }
 
   required init?(coder aDecoder: NSCoder) {

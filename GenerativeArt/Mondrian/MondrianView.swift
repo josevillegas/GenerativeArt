@@ -15,7 +15,14 @@ final class MondrianView: UIView {
     backgroundColor = UIColor(white: 0.9, alpha: 1)
 
     addSubview(drawingView)
-    drawingView.addEdgeConstraints(to: safeAreaLayoutGuide, margin: 24)
+    drawingView.translatesAutoresizingMaskIntoConstraints = false
+    let margin: CGFloat = 24
+    NSLayoutConstraint.activate([
+      drawingView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: margin),
+      drawingView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -margin),
+      drawingView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: margin),
+      drawingView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -margin)
+    ])
 
     drawingView.drawing = drawing
   }
