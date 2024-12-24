@@ -5,7 +5,7 @@ final class TiledDrawingViewWithControls: UIView {
   private var tileSizeControl: TileSizeControl = .empty
 
   init(type: TiledDrawingType) {
-    boundsView = TiledDrawingView(type: type)
+    boundsView = TiledDrawingView(type: type) { _ in }
     super.init(frame: .zero)
 
     addSubview(boundsView)
@@ -26,18 +26,18 @@ final class TiledDrawingViewWithControls: UIView {
 //    boundsView.panelView.setNeedsDisplay()
   }
 
-  private func update() { // (_ message: UISizeControl.Message) {
+//  private func update(_ message: UISizeControl.Message) {
 //    switch message {
-//    case .valueDidChange:
+//    case let .valueDidChange(value):
 //      let initialTileSize = boundsView.panelView.tiledDrawing.tileSize
 //      boundsView.panelView.tiledDrawing.unitSize = tileSizeControl.widthForValue(value)
 //      guard initialTileSize != boundsView.panelView.tiledDrawing.tileSize else { return }
-      boundsView.updatePanelSize()
-      updateVariations()
+//      boundsView.updatePanelSize()
+//      updateVariations()
 //    }
-  }
+//  }
 
-  private func update(_ message: TiledDrawingView.Message) {
+  private func update(_ message: TiledDrawingView.Action) {
     switch message {
     case let .sizeDidChange(size): tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
     }

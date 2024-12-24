@@ -1,18 +1,19 @@
 import SwiftUI
 
 final class TiledDrawingView: UIView {
-  enum Message {
+  enum Action {
     case sizeDidChange(CGSize)
   }
 
   let panelView: DrawingPanelView
-  private var send: (Message) -> Void = { _ in }
+  private let perform: (Action) -> Void
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType) {
+  init(type: TiledDrawingType, perform: @escaping (Action) -> Void) {
+    self.perform = perform
     panelView = DrawingPanelView(type: type)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
@@ -35,7 +36,7 @@ final class TiledDrawingView: UIView {
     guard lastSize != bounds.size else { return }
     lastSize = bounds.size
     updatePanelSize()
-    send(.sizeDidChange(bounds.size))
+    perform(.sizeDidChange(bounds.size))
   }
 
   func updatePanelSize() {

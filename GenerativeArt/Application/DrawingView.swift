@@ -6,18 +6,21 @@ struct DrawingView: View {
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @Environment(\.dismiss) private var dismiss
-  @State var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
-  @State var mondrianDrawing = MondrianDrawing()
-  @State var foregroundColor: Color = .red
-  @State var backgroundColor: Color = .white
-  @State var tileSize: CGFloat = 0.5 // A value from zero to one.
-  @State var isPlaying: Bool = false
+  @State private var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
+  @State private var mondrianDrawing = MondrianDrawing()
+  @State private var foregroundColor: Color = .red
+  @State private var backgroundColor: Color = .white
+  @State private var tileSizeControl: TileSizeControl = .empty
+  @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
+  @State private var isPlaying: Bool = false
 
   var body: some View {
     Group {
       switch drawingType {
-      case .paintingStyle(.mondrian): MondrianViewRepresentable(drawing: mondrianDrawing)
-      case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
+      case .paintingStyle(.mondrian):
+        MondrianViewRepresentable(drawing: mondrianDrawing)
+      case .tile:
+        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, perform: update)
       }
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
@@ -27,6 +30,12 @@ struct DrawingView: View {
       case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
       case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
       }
+    }
+  }
+
+  private func update(action: TiledDrawingView.Action) {
+    switch action {
+    case let .sizeDidChange(size): tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
     }
   }
 
@@ -73,9 +82,10 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
   let foregroundColor: Color
   let backgroundColor: Color
+  let perform: (TiledDrawingView.Action) -> Void
 
   func makeUIView(context: Context) -> TiledDrawingView {
-    TiledDrawingView(type: type.type)
+    TiledDrawingView(type: type.type, perform: perform)
   }
 
   func updateUIView(_ view: TiledDrawingView, context: Context) {
