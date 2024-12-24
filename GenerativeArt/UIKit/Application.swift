@@ -1,19 +1,5 @@
 import UIKit
 
-class IndexViewController: UICollectionViewController {
-  init() {
-    let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-    super.init(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: configuration))
-
-    title = "Generative Art"
-    navigationItem.largeTitleDisplayMode = .always
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-}
-
 final class Application {
 //  private lazy var splitViewController: UISplitViewController = {
 //    let controller = UISplitViewController(style: .doubleColumn)
@@ -21,11 +7,6 @@ final class Application {
 //    controller.preferredDisplayMode = .oneOverSecondary
 //    controller.preferredSplitBehavior = .overlay
 //    controller.delegate = self
-//
-//    controller.setViewController(indexViewController(appearance: .sidebar), for: .primary)
-//    controller.setViewController(detailViewController, for: .secondary)
-//    controller.setViewController(compactNavigationController, for: .compact)
-//
 //    return controller
 //  }()
 
@@ -68,30 +49,3 @@ extension Application: UISplitViewControllerDelegate {
     .oneOverSecondary
   }
 }
-
-final class MainNavigationController: UINavigationController, UINavigationControllerDelegate {
-  override init(rootViewController: UIViewController) {
-    super.init(rootViewController: rootViewController)
-
-    delegate = self
-    isNavigationBarHidden = true
-    isToolbarHidden = false
-    navigationBar.prefersLargeTitles = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-    if viewController is ToolbarController {
-      isToolbarHidden = false
-      isNavigationBarHidden = true
-    } else {
-      isToolbarHidden = true
-      isNavigationBarHidden = false
-    }
-  }
-}
-
-protocol ToolbarController {}
