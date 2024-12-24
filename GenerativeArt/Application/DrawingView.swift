@@ -96,10 +96,10 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   }
 
   func updateUIView(_ view: TiledDrawingView, context: Context) {
-    view.panelView.drawingForegroundColor = foregroundColor
-    view.panelView.drawingBackgroundColor = backgroundColor
-    view.panelView.unitSize = unitSize
-    view.panelView.type = type.type
+    view.drawingForegroundColor = foregroundColor
+    view.drawingBackgroundColor = backgroundColor
+    view.unitSize = unitSize
+    view.type = type.type
   }
 }
 

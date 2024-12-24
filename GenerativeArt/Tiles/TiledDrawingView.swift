@@ -5,7 +5,37 @@ final class TiledDrawingView: UIView {
     case sizeDidChange(CGSize)
   }
 
-  let panelView: DrawingPanelView
+  var type: TiledDrawingType {
+    get { panelView.type }
+    set { panelView.type = newValue }
+  }
+
+  var drawingForegroundColor: Color {
+    get { panelView.drawingForegroundColor }
+    set {
+      guard newValue != panelView.drawingForegroundColor else { return }
+      panelView.drawingForegroundColor = newValue
+    }
+  }
+
+  var drawingBackgroundColor: Color {
+    get { panelView.drawingBackgroundColor }
+    set {
+      guard newValue != panelView.drawingBackgroundColor else { return }
+      panelView.drawingBackgroundColor = newValue
+    }
+  }
+
+  var unitSize: CGFloat {
+    get { panelView.unitSize }
+    set {
+      guard newValue != panelView.unitSize else { return }
+      panelView.unitSize = newValue
+      updatePanelSize()
+    }
+  }
+
+  private let panelView: DrawingPanelView
   private let perform: (Action) -> Void
 
   private let panelWidthConstraint: NSLayoutConstraint
@@ -59,6 +89,7 @@ final class DrawingPanelView: UIView {
   var drawingForegroundColor: Color = .red {
     didSet { tiledDrawing.foregroundColor = drawingForegroundColor }
   }
+
   var drawingBackgroundColor: Color = .white {
     didSet { tiledDrawing.backgroundColor = drawingBackgroundColor }
   }
