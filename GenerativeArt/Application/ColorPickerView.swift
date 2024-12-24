@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct ColorPickerView: View {
-  @Binding var selectedColor: Color
+  let selectedColor: Color
   let horizontalSizeClass: UserInterfaceSizeClass?
+  let selectColor: (Color) -> Void
 
   private let colors1: [Color] = [.black, .white, .red, .orange]
   private let colors2: [Color] = [.green, .yellow, .blue, .purple]
@@ -11,11 +12,11 @@ struct ColorPickerView: View {
     Group {
       if horizontalSizeClass == .compact {
         VStack(spacing: 8) {
-          ColorPickerRow(colors: colors1, selectedColor: $selectedColor)
-          ColorPickerRow(colors: colors2, selectedColor: $selectedColor)
+          ColorPickerRow(colors: colors1, selectedColor: selectedColor, selectColor: selectColor)
+          ColorPickerRow(colors: colors2, selectedColor: selectedColor, selectColor: selectColor)
         }
       } else {
-        ColorPickerRow(colors: colors1 + colors2, selectedColor: $selectedColor)
+        ColorPickerRow(colors: colors1 + colors2, selectedColor: selectedColor, selectColor: selectColor)
       }
     }
     .padding(16)
@@ -24,13 +25,14 @@ struct ColorPickerView: View {
 
 struct ColorPickerRow: View {
   let colors: [Color]
-  @Binding var selectedColor: Color
+  let selectedColor: Color
+  let selectColor: (Color) -> Void
 
   var body: some View {
     HStack(spacing: 8) {
       ForEach(colors, id: \.hashValue) { color in
         ColorPickerItemView(color: color, isSelected: color == selectedColor)
-          .onTapGesture { selectedColor = color }
+          .onTapGesture { selectColor(color) }
       }
     }
   }

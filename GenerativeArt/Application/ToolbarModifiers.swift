@@ -22,13 +22,13 @@ struct ToolbarModifier: ViewModifier {
           Spacer()
           Button("Front") { isForegroundColorPopoverPresented = true }
             .popover(isPresented: $isForegroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $foregroundColor, horizontalSizeClass: horizontalSizeClass)
+              ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { foregroundColor = $0 }
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
           Button("Back") { isBackgroundColorPopoverPresented = true }
             .popover(isPresented: $isBackgroundColorPopoverPresented) {
-              ColorPickerView(selectedColor: $backgroundColor, horizontalSizeClass: horizontalSizeClass)
+              ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { backgroundColor = $0 }
                 .presentationCompactAdaptation(.popover)
             }
           Spacer()
