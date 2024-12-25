@@ -24,8 +24,8 @@ struct DrawingView: View {
     Group {
       switch drawingType {
       case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
-      case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                                unitSize: unitSize, perform: update)
+      case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                   unitSize: unitSize, perform: update)
       }
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
@@ -90,24 +90,5 @@ struct DrawingView: View {
       timer = Timer.publish(every: timerDuration, on: .main, in: .common)
       timerCancellable = timer.connect()
     }
-  }
-}
-
-struct TiledDrawingViewRepresentable: UIViewRepresentable {
-  let type: TiledDrawingTypeWrapper
-  let foregroundColor: Color
-  let backgroundColor: Color
-  let unitSize: CGFloat
-  let perform: (TiledDrawingView.Action) -> Void
-
-  func makeUIView(context: Context) -> TiledDrawingView {
-    TiledDrawingView(type: type.type, perform: perform)
-  }
-
-  func updateUIView(_ view: TiledDrawingView, context: Context) {
-    view.drawingForegroundColor = foregroundColor
-    view.drawingBackgroundColor = backgroundColor
-    view.unitSize = unitSize
-    view.type = type.type
   }
 }

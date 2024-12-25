@@ -1,10 +1,42 @@
 import SwiftUI
 
-final class TiledDrawingView: UIView {
+struct TiledDrawingView: View {
   enum Action {
     case sizeDidChange(CGSize)
   }
 
+  let type: TiledDrawingTypeWrapper
+  let foregroundColor: Color
+  let backgroundColor: Color
+  let unitSize: CGFloat
+  let perform: (TiledDrawingView.Action) -> Void
+
+  var body: some View {
+    TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize,
+                                  perform: perform)
+  }
+}
+
+struct TiledDrawingViewRepresentable: UIViewRepresentable {
+  let type: TiledDrawingTypeWrapper
+  let foregroundColor: Color
+  let backgroundColor: Color
+  let unitSize: CGFloat
+  let perform: (TiledDrawingView.Action) -> Void
+
+  func makeUIView(context: Context) -> TiledDrawingUIView {
+    TiledDrawingUIView(type: type.type, perform: perform)
+  }
+
+  func updateUIView(_ view: TiledDrawingUIView, context: Context) {
+    view.drawingForegroundColor = foregroundColor
+    view.drawingBackgroundColor = backgroundColor
+    view.unitSize = unitSize
+    view.type = type.type
+  }
+}
+
+final class TiledDrawingUIView: UIView {
   var type: TiledDrawingType {
     get { panelView.type }
     set { panelView.type = newValue }
@@ -36,13 +68,13 @@ final class TiledDrawingView: UIView {
   }
 
   private let panelView: DrawingPanelView
-  private let perform: (Action) -> Void
+  private let perform: (TiledDrawingView.Action) -> Void
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType, perform: @escaping (Action) -> Void) {
+  init(type: TiledDrawingType, perform: @escaping (TiledDrawingView.Action) -> Void) {
     self.perform = perform
     panelView = DrawingPanelView(type: type)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
