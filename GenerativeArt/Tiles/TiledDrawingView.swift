@@ -42,7 +42,10 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
     view.panelView.tiledDrawing.backgroundColor = backgroundColor
     view.viewSize = viewSize
     view.panelView.type = type.type
-    view.updatePanelSize()
+    view.panelView.maxSize = viewSize
+    let panelSize = view.panelView.tiledDrawing.tiles.size
+    view.panelWidthConstraint.constant = panelSize.width
+    view.panelHeightConstraint.constant = panelSize.height
   }
 }
 
@@ -50,8 +53,8 @@ final class TiledDrawingUIView: UIView {
   let panelView: DrawingPanelView
   var viewSize: CGSize
 
-  private let panelWidthConstraint: NSLayoutConstraint
-  private let panelHeightConstraint: NSLayoutConstraint
+  let panelWidthConstraint: NSLayoutConstraint
+  let panelHeightConstraint: NSLayoutConstraint
 
   init(type: TiledDrawingType, viewSize: CGSize, scale: CGFloat) {
     panelView = DrawingPanelView(type: type, scale: scale)
@@ -73,13 +76,6 @@ final class TiledDrawingUIView: UIView {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  func updatePanelSize() {
-    panelView.maxSize = viewSize
-    let panelSize = panelView.tiledDrawing.tiles.size
-    panelWidthConstraint.constant = panelSize.width
-    panelHeightConstraint.constant = panelSize.height
   }
 }
 
