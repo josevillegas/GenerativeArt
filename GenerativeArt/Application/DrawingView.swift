@@ -29,11 +29,19 @@ struct DrawingView: View {
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
                               isPlaying: isPlaying, perform: update))
     .onChange(of: drawingType) { _, _ in updateForDrawingType() }
-    .onReceive(timer) { _ in updateForDrawingType() }
+    .onReceive(timer) { _ in updateDrawing() }
     .onDisappear { timerCancellable?.cancel() }
+    .onChange(of: isPlaying) { _, _ in updateForIsPlaying() }
   }
 
   private func updateForDrawingType() {
+    if isPlaying {
+      isPlaying = false
+    }
+    updateDrawing()
+  }
+
+  private func updateDrawing() {
     switch drawingType {
     case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
@@ -46,7 +54,7 @@ struct DrawingView: View {
     case let .setBackgroundColor(color): backgroundColor = color
     case let .setForegroundColor(color): foregroundColor = color
     case let .setTileSize(newTileSize): tileSize = newTileSize
-    case .togglePlaying: togglePlaying()
+    case .togglePlaying: isPlaying.toggle()
     case .toggleSidebarOrDismiss: toggleSidebar()
     }
   }
@@ -70,10 +78,9 @@ struct DrawingView: View {
     }
   }
 
-  private func togglePlaying() {
-    isPlaying.toggle()
-
+  private func updateForIsPlaying() {
     timerCancellable?.cancel()
+    timerCancellable = nil
     if isPlaying {
       timer = Timer.publish(every: timerDuration, on: .main, in: .common)
       timerCancellable = timer.connect()
