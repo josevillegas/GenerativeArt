@@ -12,7 +12,8 @@ struct TiledDrawingView: View {
 
   var body: some View {
     GeometryReader { proxy in
-      TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize)
+      TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize,
+                                    viewSize: viewSize)
     }
     .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
     .onChange(of: viewSize) { _, _ in
@@ -27,16 +28,18 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let foregroundColor: Color
   let backgroundColor: Color
   let unitSize: CGFloat
+  let viewSize: CGSize
 
   private let scale = UIScreen.main.scale
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
-    TiledDrawingUIView(type: type.type, scale: scale)
+    TiledDrawingUIView(type: type.type, viewSize: viewSize, scale: scale)
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
     view.panelView.tiledDrawing.foregroundColor = foregroundColor
     view.panelView.tiledDrawing.backgroundColor = backgroundColor
+    view.viewSize = viewSize
     view.unitSize = unitSize
     view.panelView.type = type.type
   }
@@ -53,13 +56,15 @@ final class TiledDrawingUIView: UIView {
   }
 
   let panelView: DrawingPanelView
+  var viewSize: CGSize
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType, scale: CGFloat) {
+  init(type: TiledDrawingType, viewSize: CGSize, scale: CGFloat) {
     panelView = DrawingPanelView(type: type, scale: scale)
+    self.viewSize = viewSize
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: .zero)
