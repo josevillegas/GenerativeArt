@@ -1,18 +1,11 @@
 import SwiftUI
 
-struct TiledDrawingSizePreferenceKey: PreferenceKey {
-  static var defaultValue: CGSize = .zero
-
-  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-    value = nextValue()
-  }
-}
-
 struct TiledDrawingView: View {
   let type: TiledDrawingTypeWrapper
   let foregroundColor: Color
   let backgroundColor: Color
   let tileSize: CGFloat
+  let viewSize: CGSize
 
   @State private var tileSizeControl: TileSizeControl = .empty
   @State private var unitSize: CGFloat = 30
@@ -20,11 +13,10 @@ struct TiledDrawingView: View {
   var body: some View {
     GeometryReader { proxy in
       TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize)
-        .preference(key: TiledDrawingSizePreferenceKey.self, value: proxy.size)
     }
     .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
-    .onPreferenceChange(TiledDrawingSizePreferenceKey.self) { size in
-      tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
+    .onChange(of: viewSize) { _, _ in
+      tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
       unitSize = tileSizeControl.widthForValue(tileSize)
     }
   }

@@ -32,7 +32,7 @@ struct DrawingView: View {
         switch drawingType {
         case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
         case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                     tileSize: tileSize)
+                                     tileSize: tileSize, viewSize: proxy.size)
         }
       }
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
