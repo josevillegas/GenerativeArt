@@ -36,8 +36,10 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let backgroundColor: Color
   let unitSize: CGFloat
 
+  private let scale = UIScreen.main.scale
+
   func makeUIView(context: Context) -> TiledDrawingUIView {
-    TiledDrawingUIView(type: type.type)
+    TiledDrawingUIView(type: type.type, scale: scale)
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
@@ -85,8 +87,8 @@ final class TiledDrawingUIView: UIView {
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType) {
-    panelView = DrawingPanelView(type: type)
+  init(type: TiledDrawingType, scale: CGFloat) {
+    panelView = DrawingPanelView(type: type, scale: scale)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: .zero)
@@ -159,12 +161,14 @@ final class DrawingPanelView: UIView {
   }
 
   private var tiledDrawing: TiledDrawing
+  private let scale: CGFloat
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType) {
+  init(type: TiledDrawingType, scale: CGFloat) {
     self.type = type
+    self.scale = scale
     self.unitSize = type.defaultUnitSize
-    tiledDrawing = TiledDrawing(type: type, tiles: Tiles(maxSize: .zero, maxTileSize: unitSize, scale: UIScreen.main.scale))
+    tiledDrawing = TiledDrawing(type: type, tiles: Tiles(maxSize: .zero, maxTileSize: unitSize, scale: scale))
     super.init(frame: .zero)
 
     backgroundColor = .white
