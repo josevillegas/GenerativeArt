@@ -11,8 +11,6 @@ struct DrawingView: View {
   @State private var mondrianDrawing = MondrianDrawing()
   @State private var foregroundColor: Color = .red
   @State private var backgroundColor: Color = .white
-  @State private var tileSizeControl: TileSizeControl = .empty
-  @State private var unitSize: CGFloat = 30
   @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
   @State private var isPlaying: Bool = false
   @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
@@ -25,7 +23,7 @@ struct DrawingView: View {
       switch drawingType {
       case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
       case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                   unitSize: unitSize, perform: update)
+                                   tileSize: tileSize)
       }
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
@@ -42,22 +40,12 @@ struct DrawingView: View {
     }
   }
 
-  private func update(action: TiledDrawingView.Action) {
-    switch action {
-    case let .sizeDidChange(size):
-      tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
-      unitSize = tileSizeControl.widthForValue(tileSize)
-    }
-  }
-
   private func update(action: ToolbarAction) {
     switch action {
     case .next: next()
     case let .setBackgroundColor(color): backgroundColor = color
     case let .setForegroundColor(color): foregroundColor = color
-    case let .setTileSize(size):
-      tileSize = size
-      unitSize = tileSizeControl.widthForValue(size)
+    case let .setTileSize(newTileSize): tileSize = newTileSize
     case .togglePlaying: togglePlaying()
     case .toggleSidebarOrDismiss: toggleSidebar()
     }

@@ -8,12 +8,23 @@ struct TiledDrawingView: View {
   let type: TiledDrawingTypeWrapper
   let foregroundColor: Color
   let backgroundColor: Color
-  let unitSize: CGFloat
-  let perform: (TiledDrawingView.Action) -> Void
+  let tileSize: CGFloat
+
+  @State private var tileSizeControl: TileSizeControl = .empty
+  @State private var unitSize: CGFloat = 30
 
   var body: some View {
     TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize,
-                                  perform: perform)
+                                  perform: update)
+    .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
+  }
+
+  private func update(action: TiledDrawingView.Action) {
+    switch action {
+    case let .sizeDidChange(size):
+      tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
+      unitSize = tileSizeControl.widthForValue(tileSize)
+    }
   }
 }
 
