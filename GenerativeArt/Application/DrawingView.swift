@@ -24,13 +24,12 @@ struct DrawingView: View {
     Group {
       switch drawingType {
       case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
-      case .tile:
-        TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                      unitSize: unitSize, perform: update)
+      case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                                unitSize: unitSize, perform: update)
       }
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
-                              dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
+                              isPlaying: isPlaying, perform: update))
     .onChange(of: drawingType) { _, _ in updateForDrawingType() }
     .onReceive(timer) { _ in updateForDrawingType() }
     .onDisappear { timerCancellable?.cancel() }
@@ -92,14 +91,6 @@ struct DrawingView: View {
       timerCancellable = timer.connect()
     }
   }
-
-  private var dismissImageName: String {
-    horizontalSizeClass == .compact ?  "chevron.backward" : "sidebar.leading"
-  }
-
-  private var playImageName: String {
-    isPlaying ? "pause" : "play"
-  }
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
@@ -119,10 +110,4 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
     view.unitSize = unitSize
     view.type = type.type
   }
-}
-
-// This is needed so that the UIViewRepresentable registers changes.
-struct TiledDrawingTypeWrapper: Equatable {
-  let id = UUID()
-  let type: TiledDrawingType
 }

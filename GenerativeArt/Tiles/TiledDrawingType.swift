@@ -1,5 +1,11 @@
 import SwiftUI
 
+// This is needed so that the UIViewRepresentable registers changes.
+struct TiledDrawingTypeWrapper: Equatable {
+  let id = UUID()
+  let type: TiledDrawingType
+}
+
 enum TiledDrawingType {
   case concentricShapes
   case diagonals

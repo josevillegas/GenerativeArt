@@ -14,8 +14,7 @@ struct ToolbarModifier: ViewModifier {
   let foregroundColor: Color
   let backgroundColor: Color
   let tileSize: CGFloat
-  let dismissImageName: String
-  let playImageName: String
+  let isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -82,5 +81,13 @@ struct ToolbarModifier: ViewModifier {
     case .tile: true
     case .paintingStyle(.mondrian): false
     }
+  }
+
+  private var dismissImageName: String {
+    horizontalSizeClass == .compact ?  "chevron.backward" : "sidebar.leading"
+  }
+
+  private var playImageName: String {
+    isPlaying ? "pause" : "play"
   }
 }
