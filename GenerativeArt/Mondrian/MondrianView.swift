@@ -1,34 +1,24 @@
 import SwiftUI
 
-final class MondrianView: UIView {
-  var drawing: MondrianDrawing {
-    get { drawingView.drawing }
-    set { drawingView.drawing = newValue }
+struct MondrianView: View {
+  let drawing: MondrianDrawing
+
+  var body: some View {
+    MondrianViewRepresentable(drawing: drawing)
+      .padding(24)
+      .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
+  }
+}
+
+struct MondrianViewRepresentable: UIViewRepresentable {
+  let drawing: MondrianDrawing
+
+  func makeUIView(context: Context) -> MondrianDrawingView {
+    MondrianDrawingView(drawing: drawing)
   }
 
-  private let drawingView: MondrianDrawingView
-
-  init(drawing: MondrianDrawing) {
-    drawingView = MondrianDrawingView(drawing: drawing)
-    super.init(frame: .zero)
-
-    backgroundColor = UIColor(white: 0.9, alpha: 1)
-
-    addSubview(drawingView)
-    drawingView.translatesAutoresizingMaskIntoConstraints = false
-    let margin: CGFloat = 24
-    NSLayoutConstraint.activate([
-      drawingView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: margin),
-      drawingView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -margin),
-      drawingView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: margin),
-      drawingView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -margin)
-    ])
-
-    drawingView.drawing = drawing
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  func updateUIView(_ view: MondrianDrawingView, context: Context) {
+    view.drawing = drawing
   }
 }
 

@@ -23,8 +23,7 @@ struct DrawingView: View {
   var body: some View {
     Group {
       switch drawingType {
-      case .paintingStyle(.mondrian):
-        MondrianViewRepresentable(drawing: mondrianDrawing)
+      case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
       case .tile:
         TiledDrawingViewRepresentable(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
                                       unitSize: unitSize, perform: update)
@@ -119,18 +118,6 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
     view.drawingBackgroundColor = backgroundColor
     view.unitSize = unitSize
     view.type = type.type
-  }
-}
-
-struct MondrianViewRepresentable: UIViewRepresentable {
-  let drawing: MondrianDrawing
-
-  func makeUIView(context: Context) -> MondrianView {
-    MondrianView(drawing: drawing)
-  }
-
-  func updateUIView(_ view: MondrianView, context: Context) {
-    view.drawing = drawing
   }
 }
 
