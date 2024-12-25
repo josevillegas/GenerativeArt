@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct DrawingView: View {
   let drawingType: DrawingType
@@ -14,6 +15,10 @@ struct DrawingView: View {
   @State private var unitSize: CGFloat = 30
   @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
   @State private var isPlaying: Bool = false
+  @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
+  @State private var timerCancellable: (any Cancellable)?
+
+  private let timerDuration: TimeInterval = 2
 
   var body: some View {
     Group {
@@ -27,11 +32,15 @@ struct DrawingView: View {
     }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
                               dismissImageName: dismissImageName, playImageName: playImageName, perform: update))
-    .onChange(of: drawingType) { _, _ in
-      switch drawingType {
-      case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
-      case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
-      }
+    .onChange(of: drawingType) { _, _ in updateForDrawingType() }
+    .onReceive(timer) { _ in updateForDrawingType() }
+    .onDisappear { timerCancellable?.cancel() }
+  }
+
+  private func updateForDrawingType() {
+    switch drawingType {
+    case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
+    case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
 
@@ -51,7 +60,7 @@ struct DrawingView: View {
     case let .setTileSize(size):
       tileSize = size
       unitSize = tileSizeControl.widthForValue(size)
-    case .togglePlaying: isPlaying.toggle()
+    case .togglePlaying: togglePlaying()
     case .toggleSidebarOrDismiss: toggleSidebar()
     }
   }
@@ -72,6 +81,16 @@ struct DrawingView: View {
     switch drawingType {
     case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
+    }
+  }
+
+  private func togglePlaying() {
+    isPlaying.toggle()
+
+    timerCancellable?.cancel()
+    if isPlaying {
+      timer = Timer.publish(every: timerDuration, on: .main, in: .common)
+      timerCancellable = timer.connect()
     }
   }
 
