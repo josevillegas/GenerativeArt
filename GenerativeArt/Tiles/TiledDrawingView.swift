@@ -41,7 +41,9 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
     view.panelView.tiledDrawing.foregroundColor = foregroundColor
     view.panelView.tiledDrawing.backgroundColor = backgroundColor
     view.viewSize = viewSize
-    view.panelView.type = type.type
+    view.panelView.tiledDrawing.type = type.type
+    view.panelView.tiledDrawing.updateVariations()
+    view.panelView.setNeedsDisplay()
     view.panelView.maxSize = viewSize
     let panelSize = view.panelView.tiledDrawing.tiles.size
     view.panelWidthConstraint.constant = panelSize.width
@@ -80,18 +82,10 @@ final class TiledDrawingUIView: UIView {
 }
 
 final class DrawingPanelView: UIView {
-  var type: TiledDrawingType {
-    didSet {
-      tiledDrawing.type = type
-      tiledDrawing.updateVariations()
-      setNeedsDisplay()
-    }
-  }
-
   var unitSize: CGFloat {
     didSet {
       guard unitSize != oldValue else { return }
-      tiledDrawing.tiles = Tiles(maxSize: maxSize, maxTileSize: unitSize, scale: tiledDrawing.tiles.scale)
+      tiledDrawing.tiles = Tiles(maxSize: maxSize, maxTileSize: unitSize, scale: scale)
     }
   }
 
@@ -99,7 +93,7 @@ final class DrawingPanelView: UIView {
     get { tiledDrawing.tiles.maxSize }
     set {
       guard maxSize != newValue else { return }
-      tiledDrawing.tiles = Tiles(maxSize: newValue, maxTileSize: unitSize, scale: tiledDrawing.tiles.scale)
+      tiledDrawing.tiles = Tiles(maxSize: newValue, maxTileSize: unitSize, scale: scale)
     }
   }
 
@@ -108,7 +102,6 @@ final class DrawingPanelView: UIView {
   private var lastSize: CGSize = .zero
 
   init(type: TiledDrawingType, scale: CGFloat) {
-    self.type = type
     self.scale = scale
     self.unitSize = type.defaultUnitSize
     tiledDrawing = TiledDrawing(type: type, tiles: Tiles(maxSize: .zero, maxTileSize: unitSize, scale: scale))
