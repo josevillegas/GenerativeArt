@@ -43,35 +43,14 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    view.drawingForegroundColor = foregroundColor
-    view.drawingBackgroundColor = backgroundColor
+    view.panelView.tiledDrawing.foregroundColor = foregroundColor
+    view.panelView.tiledDrawing.backgroundColor = backgroundColor
     view.unitSize = unitSize
-    view.type = type.type
+    view.panelView.type = type.type
   }
 }
 
 final class TiledDrawingUIView: UIView {
-  var type: TiledDrawingType {
-    get { panelView.type }
-    set { panelView.type = newValue }
-  }
-
-  var drawingForegroundColor: Color {
-    get { panelView.drawingForegroundColor }
-    set {
-      guard newValue != panelView.drawingForegroundColor else { return }
-      panelView.drawingForegroundColor = newValue
-    }
-  }
-
-  var drawingBackgroundColor: Color {
-    get { panelView.drawingBackgroundColor }
-    set {
-      guard newValue != panelView.drawingBackgroundColor else { return }
-      panelView.drawingBackgroundColor = newValue
-    }
-  }
-
   var unitSize: CGFloat {
     get { panelView.unitSize }
     set {
@@ -81,7 +60,7 @@ final class TiledDrawingUIView: UIView {
     }
   }
 
-  private let panelView: DrawingPanelView
+  let panelView: DrawingPanelView
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
@@ -118,7 +97,7 @@ final class TiledDrawingUIView: UIView {
 
   func updatePanelSize() {
     panelView.maxSize = bounds.size
-    let panelSize = panelView.size
+    let panelSize = panelView.tiledDrawing.tiles.size
     panelWidthConstraint.constant = panelSize.width
     panelHeightConstraint.constant = panelSize.height
   }
@@ -131,14 +110,6 @@ final class DrawingPanelView: UIView {
       tiledDrawing.updateVariations()
       setNeedsDisplay()
     }
-  }
-
-  var drawingForegroundColor: Color = .red {
-    didSet { tiledDrawing.foregroundColor = drawingForegroundColor }
-  }
-
-  var drawingBackgroundColor: Color = .white {
-    didSet { tiledDrawing.backgroundColor = drawingBackgroundColor }
   }
 
   var unitSize: CGFloat {
@@ -156,11 +127,7 @@ final class DrawingPanelView: UIView {
     }
   }
 
-  var size: CGSize {
-    tiledDrawing.tiles.size
-  }
-
-  private var tiledDrawing: TiledDrawing
+  var tiledDrawing: TiledDrawing
   private let scale: CGFloat
   private var lastSize: CGSize = .zero
 
