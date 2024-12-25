@@ -1,6 +1,14 @@
 import SwiftUI
 import Combine
 
+struct DrawingViewSizePreferenceKey: PreferenceKey {
+  static var defaultValue: CGSize = .zero
+
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+    value = nextValue()
+  }
+}
+
 struct DrawingView: View {
   let drawingType: DrawingType
   @Binding var splitViewVisibility: NavigationSplitViewVisibility
@@ -19,13 +27,17 @@ struct DrawingView: View {
   private let timerDuration: TimeInterval = 2
 
   var body: some View {
-    Group {
-      switch drawingType {
-      case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
-      case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                   tileSize: tileSize)
+    GeometryReader { proxy in
+      Group {
+        switch drawingType {
+        case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
+        case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                     tileSize: tileSize)
+        }
       }
+      .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
+    .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
     .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
                               isPlaying: isPlaying, perform: update))
     .onChange(of: drawingType) { _, _ in updateForDrawingType() }

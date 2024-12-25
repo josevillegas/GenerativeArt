@@ -41,8 +41,4 @@ final class MondrianDrawingView: UIView {
   override func draw(_ rect: CGRect) {
     drawing.paths(frame: bounds).draw()
   }
-
-  override func layoutSubviews() {
-    setNeedsDisplay()
-  }
 }
