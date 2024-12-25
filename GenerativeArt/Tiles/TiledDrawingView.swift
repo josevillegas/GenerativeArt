@@ -1,10 +1,14 @@
 import SwiftUI
 
-struct TiledDrawingView: View {
-  enum Action {
-    case sizeDidChange(CGSize)
-  }
+struct TiledDrawingSizePreferenceKey: PreferenceKey {
+  static var defaultValue: CGSize = .zero
 
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+    value = nextValue()
+  }
+}
+
+struct TiledDrawingView: View {
   let type: TiledDrawingTypeWrapper
   let foregroundColor: Color
   let backgroundColor: Color
@@ -14,14 +18,12 @@ struct TiledDrawingView: View {
   @State private var unitSize: CGFloat = 30
 
   var body: some View {
-    TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize,
-                                  perform: update)
+    GeometryReader { proxy in
+      TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize)
+        .preference(key: TiledDrawingSizePreferenceKey.self, value: proxy.size)
+    }
     .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
-  }
-
-  private func update(action: TiledDrawingView.Action) {
-    switch action {
-    case let .sizeDidChange(size):
+    .onPreferenceChange(TiledDrawingSizePreferenceKey.self) { size in
       tileSizeControl = TileSizeControl(boundsSize: size, minWidth: 20)
       unitSize = tileSizeControl.widthForValue(tileSize)
     }
@@ -33,10 +35,9 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let foregroundColor: Color
   let backgroundColor: Color
   let unitSize: CGFloat
-  let perform: (TiledDrawingView.Action) -> Void
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
-    TiledDrawingUIView(type: type.type, perform: perform)
+    TiledDrawingUIView(type: type.type)
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
@@ -79,14 +80,12 @@ final class TiledDrawingUIView: UIView {
   }
 
   private let panelView: DrawingPanelView
-  private let perform: (TiledDrawingView.Action) -> Void
 
   private let panelWidthConstraint: NSLayoutConstraint
   private let panelHeightConstraint: NSLayoutConstraint
   private var lastSize: CGSize = .zero
 
-  init(type: TiledDrawingType, perform: @escaping (TiledDrawingView.Action) -> Void) {
-    self.perform = perform
+  init(type: TiledDrawingType) {
     panelView = DrawingPanelView(type: type)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
@@ -113,7 +112,6 @@ final class TiledDrawingUIView: UIView {
     guard lastSize != bounds.size else { return }
     lastSize = bounds.size
     updatePanelSize()
-    perform(.sizeDidChange(bounds.size))
   }
 
   func updatePanelSize() {
