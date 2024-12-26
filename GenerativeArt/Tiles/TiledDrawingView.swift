@@ -87,7 +87,6 @@ final class TiledDrawingUIView: UIView {
 
 final class DrawingPanelView: UIView {
   var tiledDrawing: TiledDrawing
-  private var lastSize: CGSize = .zero
 
   init(tiledDrawing: TiledDrawing) {
     self.tiledDrawing = tiledDrawing
@@ -96,16 +95,6 @@ final class DrawingPanelView: UIView {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-
-    if lastSize != bounds.size {
-      lastSize = bounds.size
-      tiledDrawing.updateVariations()
-      setNeedsDisplay()
-    }
   }
 
   override func draw(_: CGRect) {
