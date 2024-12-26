@@ -8,8 +8,9 @@ struct DrawingView: View {
   let backgroundColor: Color
   let tileSize: CGFloat
 
-  @State private var viewSize: CGSize = .zero
+  @State private var tiledDrawing = TiledDrawing()
   @State private var tileSizeControl: TileSizeControl = .empty
+  @State private var viewSize: CGSize = .zero
   @State private var unitSize: CGFloat = 30
 
   private let scale = UIScreen.main.scale
@@ -29,19 +30,25 @@ struct DrawingView: View {
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
-    .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
+    .onChange(of: tiledDrawingType) { _, _ in updateTiledDrawing() }
+    .onChange(of: foregroundColor) { _, _ in updateTiledDrawing() }
+    .onChange(of: backgroundColor) { _, _ in updateTiledDrawing() }
+    .onChange(of: tileSize) { _, _ in
+      unitSize = tileSizeControl.widthForValue(tileSize)
+      updateTiledDrawing()
+    }
     .onChange(of: viewSize) { _, _ in
       tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
       unitSize = tileSizeControl.widthForValue(tileSize)
+      updateTiledDrawing()
     }
   }
 
-  private var tiledDrawing: TiledDrawing {
-    var tiledDrawing = TiledDrawing(type: tiledDrawingType.type, tiles: tiles)
-    tiledDrawing.backgroundColor = backgroundColor
+  private func updateTiledDrawing() {
+    tiledDrawing = TiledDrawing(type: tiledDrawingType.type, tiles: tiles)
     tiledDrawing.foregroundColor = foregroundColor
+    tiledDrawing.backgroundColor = backgroundColor
     tiledDrawing.updateVariations()
-    return tiledDrawing
   }
 
   private var tiles: Tiles {

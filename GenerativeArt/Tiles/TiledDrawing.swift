@@ -15,6 +15,11 @@ struct TiledDrawing: Equatable {
     self.tiles = tiles
   }
 
+  init() {
+    type = .triangles
+    tiles = Tiles(maxSize: .zero, maxTileSize: 0)
+  }
+
   mutating func updateVariations() {
     tilePaths = tiles.frames.map { makePaths(frame: $0) }
   }
