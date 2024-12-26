@@ -6,6 +6,7 @@ struct ContentView: View {
   @State private var selectedDrawingType: DrawingType? = DrawingNavigationView.defaultDrawingType
   @State private var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State private var mondrianDrawing = MondrianDrawing()
+  @State private var viewSize: CGSize = .zero
   @State private var foregroundColor: Color = .red
   @State private var backgroundColor: Color = .white
   @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
@@ -20,11 +21,12 @@ struct ContentView: View {
     DrawingNavigationView(selectedDrawingType: $selectedDrawingType, splitViewVisibility: $splitViewVisibility,
                           tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing, foregroundColor: foregroundColor,
                           backgroundColor: backgroundColor, tileSize: tileSize, isPlaying: isPlaying, perform: update)
-      .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
-      .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
-      .onReceive(timer) { _ in updateDrawing() }
-      .onDisappear { timerCancellable?.cancel() }
-      .onChange(of: isPlaying) { _, _ in updateForIsPlaying() }
+    .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
+    .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
+    .onChange(of: viewSize) { _, _ in updateForDrawingType() }
+    .onReceive(timer) { _ in updateDrawing() }
+    .onDisappear { timerCancellable?.cancel() }
+    .onChange(of: isPlaying) { _, _ in updateForIsPlaying() }
   }
 
   private func update(action: ToolbarAction) {
