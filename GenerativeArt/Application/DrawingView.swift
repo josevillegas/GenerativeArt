@@ -11,15 +11,15 @@ struct DrawingViewSizePreferenceKey: PreferenceKey {
 
 struct DrawingView: View {
   let drawingType: DrawingType
+  @Binding var tiledDrawingType: TiledDrawingTypeWrapper
+  @Binding var mondrianDrawing: MondrianDrawing
+  @Binding var foregroundColor: Color
+  @Binding var backgroundColor: Color
+  @Binding var tileSize: CGFloat
   @Binding var splitViewVisibility: NavigationSplitViewVisibility
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @Environment(\.dismiss) private var dismiss
-  @State private var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
-  @State private var mondrianDrawing = MondrianDrawing()
-  @State private var foregroundColor: Color = .red
-  @State private var backgroundColor: Color = .white
-  @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
   @State private var isPlaying: Bool = false
   @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
   @State private var timerCancellable: (any Cancellable)?
