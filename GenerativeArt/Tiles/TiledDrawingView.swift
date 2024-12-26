@@ -1,33 +1,5 @@
 import SwiftUI
 
-struct TiledDrawingView: View {
-  let type: TiledDrawingTypeWrapper
-  let foregroundColor: Color
-  let backgroundColor: Color
-  let tileSize: CGFloat
-  let viewSize: CGSize
-
-  @State private var tileSizeControl: TileSizeControl = .empty
-  @State private var unitSize: CGFloat = 30
-
-  private let scale = UIScreen.main.scale
-
-  var body: some View {
-    GeometryReader { proxy in
-      TiledDrawingViewRepresentable(type: type, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
-    }
-    .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
-    .onChange(of: viewSize) { _, _ in
-      tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
-      unitSize = tileSizeControl.widthForValue(tileSize)
-    }
-  }
-
-  private var tiles: Tiles {
-    Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
-  }
-}
-
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
   let tiles: Tiles

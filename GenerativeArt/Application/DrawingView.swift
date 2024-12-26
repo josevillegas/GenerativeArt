@@ -8,20 +8,33 @@ struct DrawingView: View {
   let backgroundColor: Color
   let tileSize: CGFloat
 
-  @State var viewSize: CGSize = .zero
+  @State private var viewSize: CGSize = .zero
+  @State private var tileSizeControl: TileSizeControl = .empty
+  @State private var unitSize: CGFloat = 30
+
+  private let scale = UIScreen.main.scale
 
   var body: some View {
     GeometryReader { proxy in
       Group {
         switch drawingType {
         case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
-        case .tile: TiledDrawingView(type: tiledDrawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                     tileSize: tileSize, viewSize: proxy.size)
+        case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, tiles: tiles, foregroundColor: foregroundColor,
+                                                  backgroundColor: backgroundColor)
         }
       }
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
+    .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
+    .onChange(of: viewSize) { _, _ in
+      tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
+      unitSize = tileSizeControl.widthForValue(tileSize)
+    }
+  }
+
+  private var tiles: Tiles {
+    Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
   }
 }
 
