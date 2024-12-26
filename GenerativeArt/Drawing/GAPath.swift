@@ -5,13 +5,6 @@ struct GAPath: Equatable {
   let strokeColor: Color?
   let lineWidth: CGFloat
   let commands: [Command]
-
-  init(fillColor: Color? = nil, strokeColor: Color? = nil, lineWidth: CGFloat = 1, commands: [Command]) {
-    self.fillColor = fillColor
-    self.strokeColor = strokeColor
-    self.lineWidth = lineWidth
-    self.commands = commands
-  }
 }
 
 extension GAPath {
@@ -20,7 +13,7 @@ extension GAPath {
     case addLineTo(CGPoint)
     case addArc(Arc)
     case addBezierCurve(BezierCurve)
-    case addShape(GAShape)
+    case addShape(Shape)
     case close
 
     static func moveTo(_ x: CGFloat, _ y: CGFloat) -> Command {
@@ -36,7 +29,7 @@ extension GAPath {
     }
   }
 
-  enum GAShape: Equatable {
+  enum Shape: Equatable {
     case oval(CGRect)
     case rect(CGRect)
     case roundedRect(CGRect, radius: CGFloat)

@@ -62,7 +62,7 @@ struct MondrianDrawing {
   }
 
   private func colorPath(_ frame: CGRect) -> GAPath {
-    GAPath(fillColor: colors.randomElement(), strokeColor: nil, commands: [GAPath.Command.addRect(frame)])
+    GAPath(fillColor: colors.randomElement(), strokeColor: nil, lineWidth: 1, commands: [GAPath.Command.addRect(frame)])
   }
 }
 

@@ -14,9 +14,9 @@ struct ToolbarModifier: ViewModifier {
   let perform: (ToolbarAction) -> Void
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @State var isForegroundColorPopoverPresented = false
-  @State var isBackgroundColorPopoverPresented = false
-  @State var isSizeControlPresented = false
+  @State private var isForegroundColorPopoverPresented = false
+  @State private var isBackgroundColorPopoverPresented = false
+  @State private var isSizeControlPresented = false
 
   func body(content: Content) -> some View {
     content

@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 @main
 struct GenerativeArtApp: App {

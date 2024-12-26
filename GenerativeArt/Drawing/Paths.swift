@@ -6,19 +6,19 @@ extension GAPath {
   }
 
   static func fillRect(_ frame: CGRect, color: Color) -> GAPath {
-    GAPath(fillColor: color, strokeColor: nil, commands: [.addRect(frame)])
+    GAPath(fillColor: color, strokeColor: nil, lineWidth: 1, commands: [.addRect(frame)])
   }
 
   static func randomDiagonal(_ frame: CGRect, color: Color) -> GAPath {
-    GAPath(fillColor: nil, strokeColor: color, commands: randomDiagonalCommands(frame: frame))
+    GAPath(fillColor: nil, strokeColor: color, lineWidth: 1, commands: randomDiagonalCommands(frame: frame))
   }
 
   static func randomTriangle(_ frame: CGRect, color: Color) -> GAPath {
-    GAPath(fillColor: color, strokeColor: nil, commands: randomTriangleCommands(frame: frame))
+    GAPath(fillColor: color, strokeColor: nil, lineWidth: 1, commands: randomTriangleCommands(frame: frame))
   }
 
   static func randomQuarterCircle(_ frame: CGRect, color: Color) -> GAPath {
-    GAPath(fillColor: color, strokeColor: nil, commands: randomQuarterCircleCommands(frame: frame))
+    GAPath(fillColor: color, strokeColor: nil, lineWidth: 1, commands: randomQuarterCircleCommands(frame: frame))
   }
 
   static func randomTrianglesAndQuarterCircles(_ frame: CGRect, color: Color) -> GAPath {
@@ -29,7 +29,7 @@ extension GAPath {
   }
 
   static func scribble(_ frame: CGRect, color: Color) -> GAPath {
-    GAPath(fillColor: nil, strokeColor: color, commands: scribble(frame: frame))
+    GAPath(fillColor: nil, strokeColor: color, lineWidth: 1, commands: scribble(frame: frame))
   }
 }
 
@@ -154,10 +154,10 @@ extension GAPath {
     let cornerRadius3 = min(frame3.width, frame3.height) * 0.32
 
     return [
-      GAPath(fillColor: color1, strokeColor: nil, commands: [.addRect(frame)]),
-      GAPath(fillColor: color2, strokeColor: nil, commands: [.addShape(.roundedRect(frame2, radius: cornerRadius2))]),
-      GAPath(fillColor: color3, strokeColor: nil, commands: [.addShape(.roundedRect(frame3, radius: cornerRadius3))]),
-      GAPath(fillColor: color4, strokeColor: nil, commands: [.addShape(.oval(frame4))])
+      GAPath(fillColor: color1, strokeColor: nil, lineWidth: 1, commands: [.addRect(frame)]),
+      GAPath(fillColor: color2, strokeColor: nil, lineWidth: 1, commands: [.addShape(.roundedRect(frame2, radius: cornerRadius2))]),
+      GAPath(fillColor: color3, strokeColor: nil, lineWidth: 1, commands: [.addShape(.roundedRect(frame3, radius: cornerRadius3))]),
+      GAPath(fillColor: color4, strokeColor: nil, lineWidth: 1, commands: [.addShape(.oval(frame4))])
     ]
   }
 }

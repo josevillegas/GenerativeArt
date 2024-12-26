@@ -12,7 +12,6 @@
 		823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823928F322D2751700F8B1B2 /* GenerativeArtApp.swift */; };
 		823928FB22D2751800F8B1B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 823928FA22D2751800F8B1B2 /* Assets.xcassets */; };
 		823928FE22D2751800F8B1B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 823928FC22D2751800F8B1B2 /* LaunchScreen.storyboard */; };
-		8239DD2D2338552A00652A46 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2C2338552A00652A46 /* Color.swift */; };
 		8239DD2F2338556E00652A46 /* TiledDrawingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DD2E2338556E00652A46 /* TiledDrawingType.swift */; };
 		826309D122E3AB88003E3F29 /* GAPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D022E3AB88003E3F29 /* GAPath.swift */; };
 		826309D522E3B7BE003E3F29 /* TiledDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826309D422E3B7BE003E3F29 /* TiledDrawing.swift */; };
@@ -36,7 +35,6 @@
 		823928FA22D2751800F8B1B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		823928FD22D2751800F8B1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		823928FF22D2751800F8B1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8239DD2C2338552A00652A46 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		8239DD2E2338556E00652A46 /* TiledDrawingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawingType.swift; sourceTree = "<group>"; };
 		826309D022E3AB88003E3F29 /* GAPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GAPath.swift; sourceTree = "<group>"; };
 		826309D422E3B7BE003E3F29 /* TiledDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiledDrawing.swift; sourceTree = "<group>"; };
@@ -126,18 +124,9 @@
 			children = (
 				8218A38926A3394000457FBE /* Application */,
 				8218A38E26A35A4300457FBE /* Drawing */,
-				829CA41122D5AA9500453DA7 /* Extensions */,
 				8218A38F26A35B1600457FBE /* Resources */,
 			);
 			path = GenerativeArt;
-			sourceTree = "<group>";
-		};
-		829CA41122D5AA9500453DA7 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				8239DD2C2338552A00652A46 /* Color.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,7 +212,6 @@
 				82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */,
 				823928F422D2751700F8B1B2 /* GenerativeArtApp.swift in Sources */,
 				826309DD22E3CE2A003E3F29 /* Paths.swift in Sources */,
-				8239DD2D2338552A00652A46 /* Color.swift in Sources */,
 				82815C702D1CDFA500980397 /* DrawingView.swift in Sources */,
 				82815C722D1D246000980397 /* DrawingNavigationView.swift in Sources */,
 				82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */,

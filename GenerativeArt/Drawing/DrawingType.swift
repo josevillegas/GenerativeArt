@@ -23,8 +23,3 @@ enum PaintingStyle {
     }
   }
 }
-
-enum DrawingPresentationMode {
-  case pushed
-  case secondary
-}

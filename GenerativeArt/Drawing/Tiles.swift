@@ -40,7 +40,7 @@ struct Tiles: Equatable {
   }
 
   static func roundedForScale(_ value: CGFloat, scale: CGFloat?) -> CGFloat {
-    guard let scale = scale else { return value }
+    guard let scale else { return value }
     return floor(value * scale) / scale
   }
 }
