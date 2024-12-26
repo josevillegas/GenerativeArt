@@ -14,7 +14,6 @@ struct DrawingNavigationView: View {
   static let defaultDrawingType: DrawingType = .tile(.triangles)
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @State private var viewSize: CGSize = .zero
 
   var body: some View {
     if horizontalSizeClass == .compact {
@@ -23,7 +22,6 @@ struct DrawingNavigationView: View {
           .navigationDestination(item: $selectedDrawingType) { drawingType in
             DrawingView(drawingType: drawingType, tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing,
                         foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize)
-            .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize } // Has to be inside toolbar.
             .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
                                       tileSize: tileSize, isPlaying: isPlaying, perform: perform))
             .modifier(NavigationBarModifier())
@@ -38,7 +36,6 @@ struct DrawingNavigationView: View {
         DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, tiledDrawingType: tiledDrawingType,
                     mondrianDrawing: mondrianDrawing, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
                     tileSize: tileSize)
-        .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize } // Has to be inside toolbar.
         .modifier(ToolbarModifier(type: selectedDrawingType ?? Self.defaultDrawingType, foregroundColor: foregroundColor,
                                   backgroundColor: backgroundColor, tileSize: tileSize, isPlaying: isPlaying, perform: perform))
         .modifier(NavigationBarModifier())
@@ -56,6 +53,8 @@ struct DrawingView: View {
   let backgroundColor: Color
   let tileSize: CGFloat
 
+  @State var viewSize: CGSize = .zero
+
   var body: some View {
     GeometryReader { proxy in
       Group {
@@ -67,6 +66,7 @@ struct DrawingView: View {
       }
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
+    .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
   }
 }
 
