@@ -19,6 +19,7 @@ struct DrawingNavigationView: View {
     if horizontalSizeClass == .compact {
       NavigationStack {
         SidebarView(selectedDrawingType: $selectedDrawingType)
+          .navigationTitle("Generative Art")
           .navigationDestination(item: $selectedDrawingType) { drawingType in
             DrawingView(drawingType: drawingType, tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing,
                         foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize)
