@@ -10,10 +10,12 @@ struct TiledDrawingView: View {
   @State private var tileSizeControl: TileSizeControl = .empty
   @State private var unitSize: CGFloat = 30
 
+  private let scale = UIScreen.main.scale
+
   var body: some View {
     GeometryReader { proxy in
-      TiledDrawingViewRepresentable(type: type, foregroundColor: foregroundColor, backgroundColor: backgroundColor, unitSize: unitSize,
-                                    viewSize: viewSize)
+      TiledDrawingViewRepresentable(type: type, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
+                                    unitSize: unitSize, viewSize: viewSize)
     }
     .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
     .onChange(of: viewSize) { _, _ in
@@ -21,32 +23,32 @@ struct TiledDrawingView: View {
       unitSize = tileSizeControl.widthForValue(tileSize)
     }
   }
+
+  private var tiles: Tiles {
+    Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
+  }
 }
 
 struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
+  let tiles: Tiles
   let foregroundColor: Color
   let backgroundColor: Color
   let unitSize: CGFloat
   let viewSize: CGSize
 
-  private let scale = UIScreen.main.scale
-
   func makeUIView(context: Context) -> TiledDrawingUIView {
-    let tiledDrawing = TiledDrawing(type: type.type, tiles: Tiles(maxSize: .zero, maxTileSize: type.type.defaultUnitSize, scale: scale))
+    let tiledDrawing = TiledDrawing(type: type.type, tiles: tiles)
     return TiledDrawingUIView(tiledDrawing: tiledDrawing)
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    view.panelView.tiledDrawing.tiles = Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
-
+    view.panelView.tiledDrawing.tiles = tiles
     view.panelView.tiledDrawing.foregroundColor = foregroundColor
     view.panelView.tiledDrawing.backgroundColor = backgroundColor
     view.panelView.tiledDrawing.type = type.type
     view.panelView.tiledDrawing.updateVariations()
     view.panelView.setNeedsDisplay()
-
-    view.panelView.tiledDrawing.tiles = Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
 
     let panelSize = view.panelView.tiledDrawing.tiles.size
     view.panelWidthConstraint.constant = panelSize.width
