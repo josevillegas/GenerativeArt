@@ -20,12 +20,12 @@ struct DrawingView: View {
       Group {
         switch drawingType {
         case .paintingStyle(.mondrian):
-          DrawingCanvasRepresentable(paths: mondrianDrawing.paths(frame: CGRect(origin: .zero, size: viewSize)))
+          DrawingCanvas(paths: mondrianDrawing.paths(frame: CGRect(origin: .zero, size: viewSize)))
             .padding(24)
             .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
 
         case .tile:
-          DrawingCanvasRepresentable(paths: tiledDrawing.paths)
+          DrawingCanvas(paths: tiledDrawing.paths)
             .frame(width: tiledDrawing.tiles.size.width, height: tiledDrawing.tiles.size.height)
         }
       }

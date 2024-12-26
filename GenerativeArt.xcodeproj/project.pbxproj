@@ -24,7 +24,7 @@
 		82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */; };
 		82BBBD722D1A036D0034C98A /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD712D1A036C0034C98A /* ColorPickerView.swift */; };
 		82BBBD742D1A18D90034C98A /* SizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BBBD732D1A18D70034C98A /* SizeControl.swift */; };
-		82BFCB4E2D19073D007DD0B5 /* DrawingCanvasRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BFCB4D2D19073C007DD0B5 /* DrawingCanvasRepresentable.swift */; };
+		82BFCB4E2D19073D007DD0B5 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BFCB4D2D19073C007DD0B5 /* DrawingCanvas.swift */; };
 		82E02395230CDCD900F32857 /* MondrianDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E02394230CDCD900F32857 /* MondrianDrawing.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +48,7 @@
 		82BBBD6F2D19FBBD0034C98A /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
 		82BBBD712D1A036C0034C98A /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		82BBBD732D1A18D70034C98A /* SizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeControl.swift; sourceTree = "<group>"; };
-		82BFCB4D2D19073C007DD0B5 /* DrawingCanvasRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvasRepresentable.swift; sourceTree = "<group>"; };
+		82BFCB4D2D19073C007DD0B5 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
 		82E02394230CDCD900F32857 /* MondrianDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondrianDrawing.swift; sourceTree = "<group>"; };
 		82F53D4726A204A10089C0BC /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = GenerativeArt/Resources/Common.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -81,7 +81,7 @@
 		8218A38E26A35A4300457FBE /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
-				82BFCB4D2D19073C007DD0B5 /* DrawingCanvasRepresentable.swift */,
+				82BFCB4D2D19073C007DD0B5 /* DrawingCanvas.swift */,
 				826309D422E3B7BE003E3F29 /* TiledDrawing.swift */,
 				8239DD2E2338556E00652A46 /* TiledDrawingType.swift */,
 				8226935422D2D65200451E84 /* Tiles.swift */,
@@ -217,7 +217,7 @@
 			files = (
 				820FBBDB26A35E070043FFD5 /* DrawingType.swift in Sources */,
 				826309D122E3AB88003E3F29 /* GAPath.swift in Sources */,
-				82BFCB4E2D19073D007DD0B5 /* DrawingCanvasRepresentable.swift in Sources */,
+				82BFCB4E2D19073D007DD0B5 /* DrawingCanvas.swift in Sources */,
 				8226935522D2D65200451E84 /* Tiles.swift in Sources */,
 				82BBBD742D1A18D90034C98A /* SizeControl.swift in Sources */,
 				82BBBD702D19FBBD0034C98A /* ToolbarModifier.swift in Sources */,
