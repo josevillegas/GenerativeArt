@@ -2,18 +2,15 @@ import SwiftUI
 
 enum ToolbarAction {
   case next
-  case setBackgroundColor(Color)
-  case setForegroundColor(Color)
-  case setTileSize(CGFloat)
   case togglePlaying
   case toggleSidebarOrDismiss
 }
 
 struct ToolbarModifier: ViewModifier {
   let type: DrawingType
-  let foregroundColor: Color
-  let backgroundColor: Color
-  let tileSize: CGFloat
+  @Binding var foregroundColor: Color
+  @Binding var  backgroundColor: Color
+  @Binding var  tileSize: CGFloat
   let isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
@@ -32,14 +29,14 @@ struct ToolbarModifier: ViewModifier {
             Spacer()
             Button("Front") { isForegroundColorPopoverPresented = true }
               .popover(isPresented: $isForegroundColorPopoverPresented) {
-                ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setForegroundColor($0)) }
+                ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { foregroundColor = $0 }
                   .presentationCompactAdaptation(.popover)
               }
             if showBackgroundColorOption {
               Spacer()
               Button("Back") { isBackgroundColorPopoverPresented = true }
                 .popover(isPresented: $isBackgroundColorPopoverPresented) {
-                  ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { perform(.setBackgroundColor($0)) }
+                  ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { backgroundColor = $0 }
                     .presentationCompactAdaptation(.popover)
                 }
             }
@@ -48,7 +45,7 @@ struct ToolbarModifier: ViewModifier {
             Spacer()
             Button("Size") { isSizeControlPresented = true }
               .popover(isPresented: $isSizeControlPresented) {
-                SizeControl(size: Binding(get: { tileSize }, set: { value, transaction in perform(.setTileSize(value)) }))
+                SizeControl(size: $tileSize)
                   .presentationCompactAdaptation(.popover)
               }
           }

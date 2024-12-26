@@ -5,9 +5,9 @@ struct DrawingNavigationView: View {
   @Binding var splitViewVisibility: NavigationSplitViewVisibility
   let tiledDrawingType: TiledDrawingTypeWrapper
   let mondrianDrawing: MondrianDrawing
-  let foregroundColor: Color
-  let backgroundColor: Color
-  let tileSize: CGFloat
+  @Binding var foregroundColor: Color
+  @Binding var  backgroundColor: Color
+  @Binding var  tileSize: CGFloat
   let isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
@@ -22,8 +22,8 @@ struct DrawingNavigationView: View {
           .navigationDestination(item: $selectedDrawingType) { drawingType in
             DrawingView(drawingType: drawingType, tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing,
                         foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize)
-            .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                      tileSize: tileSize, isPlaying: isPlaying, perform: perform))
+            .modifier(ToolbarModifier(type: drawingType, foregroundColor: $foregroundColor, backgroundColor: $backgroundColor,
+                                      tileSize: $tileSize, isPlaying: isPlaying, perform: perform))
             .modifier(NavigationBarModifier())
           }
       }
@@ -36,8 +36,8 @@ struct DrawingNavigationView: View {
         DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, tiledDrawingType: tiledDrawingType,
                     mondrianDrawing: mondrianDrawing, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
                     tileSize: tileSize)
-        .modifier(ToolbarModifier(type: selectedDrawingType ?? Self.defaultDrawingType, foregroundColor: foregroundColor,
-                                  backgroundColor: backgroundColor, tileSize: tileSize, isPlaying: isPlaying, perform: perform))
+        .modifier(ToolbarModifier(type: selectedDrawingType ?? Self.defaultDrawingType, foregroundColor: $foregroundColor,
+                                  backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: isPlaying, perform: perform))
         .modifier(NavigationBarModifier())
       }
       .navigationSplitViewStyle(.prominentDetail)
