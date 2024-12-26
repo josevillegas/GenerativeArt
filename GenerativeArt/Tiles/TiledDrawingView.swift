@@ -1,20 +1,19 @@
 import SwiftUI
 
 struct TiledDrawingView: UIViewRepresentable {
-  let tiledDrawing: TiledDrawing
+  let paths: [GAPath]
+  let canvasSize: CGSize
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
     let view = TiledDrawingUIView()
-    view.canvas.paths = tiledDrawing.paths
+    view.canvas.paths = paths
     return view
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    view.canvas.paths = tiledDrawing.paths
-    let panelSize = tiledDrawing.tiles.size
-    view.panelWidthConstraint.constant = panelSize.width
-    view.panelHeightConstraint.constant = panelSize.height
-    view.canvas.setNeedsDisplay()
+    view.canvas.paths = paths
+    view.panelWidthConstraint.constant = canvasSize.width
+    view.panelHeightConstraint.constant = canvasSize.height
   }
 }
 
@@ -47,7 +46,9 @@ final class TiledDrawingUIView: UIView {
 }
 
 final class TiledDrawingCanvas: UIView {
-  var paths: [GAPath] = []
+  var paths: [GAPath] = [] {
+    didSet { setNeedsDisplay() }
+  }
 
   override func draw(_: CGRect) {
     paths.draw()
