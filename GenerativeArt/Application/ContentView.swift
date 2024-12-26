@@ -19,7 +19,7 @@ struct ContentView: View {
   var body: some View {
     DrawingNavigationView(selectedDrawingType: $selectedDrawingType, splitViewVisibility: $splitViewVisibility,
                           tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing, foregroundColor: $foregroundColor,
-                          backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: isPlaying, perform: update)
+                          backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: $isPlaying, perform: update)
     .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
     .onReceive(timer) { _ in updateDrawing() }
     .onDisappear { timerCancellable?.cancel() }
@@ -29,8 +29,7 @@ struct ContentView: View {
   private func update(action: ToolbarAction) {
     switch action {
     case .next: next()
-    case .togglePlaying: isPlaying.toggle()
-    case .toggleSidebarOrDismiss: toggleSidebar()
+    case .toggleSidebar: toggleSidebar()
     }
   }
 

@@ -6,9 +6,9 @@ struct DrawingNavigationView: View {
   let tiledDrawingType: TiledDrawingTypeWrapper
   let mondrianDrawing: MondrianDrawing
   @Binding var foregroundColor: Color
-  @Binding var  backgroundColor: Color
-  @Binding var  tileSize: CGFloat
-  let isPlaying: Bool
+  @Binding var backgroundColor: Color
+  @Binding var tileSize: CGFloat
+  @Binding var isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
   static let defaultDrawingType: DrawingType = .tile(.triangles)
@@ -23,7 +23,7 @@ struct DrawingNavigationView: View {
             DrawingView(drawingType: drawingType, tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing,
                         foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize)
             .modifier(ToolbarModifier(type: drawingType, foregroundColor: $foregroundColor, backgroundColor: $backgroundColor,
-                                      tileSize: $tileSize, isPlaying: isPlaying, perform: perform))
+                                      tileSize: $tileSize, isPlaying: $isPlaying, perform: perform))
             .modifier(NavigationBarModifier())
           }
       }
@@ -37,7 +37,7 @@ struct DrawingNavigationView: View {
                     mondrianDrawing: mondrianDrawing, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
                     tileSize: tileSize)
         .modifier(ToolbarModifier(type: selectedDrawingType ?? Self.defaultDrawingType, foregroundColor: $foregroundColor,
-                                  backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: isPlaying, perform: perform))
+                                  backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: $isPlaying, perform: perform))
         .modifier(NavigationBarModifier())
       }
       .navigationSplitViewStyle(.prominentDetail)

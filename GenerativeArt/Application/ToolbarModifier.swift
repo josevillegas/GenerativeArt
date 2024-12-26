@@ -2,8 +2,7 @@ import SwiftUI
 
 enum ToolbarAction {
   case next
-  case togglePlaying
-  case toggleSidebarOrDismiss
+  case toggleSidebar
 }
 
 struct ToolbarModifier: ViewModifier {
@@ -11,7 +10,7 @@ struct ToolbarModifier: ViewModifier {
   @Binding var foregroundColor: Color
   @Binding var  backgroundColor: Color
   @Binding var  tileSize: CGFloat
-  let isPlaying: Bool
+  @Binding var isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -24,7 +23,7 @@ struct ToolbarModifier: ViewModifier {
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
           Spacer()
-          Button(action: { perform(.toggleSidebarOrDismiss) }) { Image(systemName: dismissImageName) }
+          Button(action: { perform(.toggleSidebar) }) { Image(systemName: dismissImageName) }
           if showColorOptions {
             Spacer()
             Button("Front") { isForegroundColorPopoverPresented = true }
@@ -50,7 +49,7 @@ struct ToolbarModifier: ViewModifier {
               }
           }
           Spacer()
-          Button(action: { perform(.togglePlaying) }) { Image(systemName: playImageName) }
+          Button(action: { isPlaying.toggle() }) { Image(systemName: playImageName) }
             .frame(width: 44) // Keep width consistent when image changes.
           Spacer()
           Button(action: { perform(.next) }) { Image(systemName: "goforward") }
