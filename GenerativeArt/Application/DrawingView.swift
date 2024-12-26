@@ -24,9 +24,12 @@ struct DrawingView: View {
             .padding(24)
             .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
 
-        case .tile: TiledDrawingView(paths: tiledDrawing.paths, canvasSize: tiledDrawing.tiles.size)
+        case .tile:
+          TiledDrawingView(paths: tiledDrawing.paths, canvasSize: tiledDrawing.tiles.size)
+            .frame(width: tiledDrawing.tiles.size.width, height: tiledDrawing.tiles.size.height)
         }
       }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
