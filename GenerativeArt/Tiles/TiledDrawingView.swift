@@ -1,51 +1,50 @@
 import SwiftUI
 
-struct TiledDrawingViewRepresentable: UIViewRepresentable {
+struct TiledDrawingView: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
   let tiles: Tiles
   let foregroundColor: Color
   let backgroundColor: Color
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
-    let tiledDrawing = TiledDrawing(type: type.type, tiles: tiles)
-    return TiledDrawingUIView(tiledDrawing: tiledDrawing)
+    TiledDrawingUIView(tiledDrawing: TiledDrawing(type: type.type, tiles: tiles))
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    view.panelView.tiledDrawing.tiles = tiles
-    view.panelView.tiledDrawing.foregroundColor = foregroundColor
-    view.panelView.tiledDrawing.backgroundColor = backgroundColor
-    view.panelView.tiledDrawing.type = type.type
-    view.panelView.tiledDrawing.updateVariations()
-    view.panelView.setNeedsDisplay()
+    view.canvas.tiledDrawing.tiles = tiles
+    view.canvas.tiledDrawing.foregroundColor = foregroundColor
+    view.canvas.tiledDrawing.backgroundColor = backgroundColor
+    view.canvas.tiledDrawing.type = type.type
+    view.canvas.tiledDrawing.updateVariations()
+    view.canvas.setNeedsDisplay()
 
-    let panelSize = view.panelView.tiledDrawing.tiles.size
+    let panelSize = view.canvas.tiledDrawing.tiles.size
     view.panelWidthConstraint.constant = panelSize.width
     view.panelHeightConstraint.constant = panelSize.height
   }
 }
 
 final class TiledDrawingUIView: UIView {
-  let panelView: DrawingPanelView
+  let canvas: TiledDrawingCanvas
   let panelWidthConstraint: NSLayoutConstraint
   let panelHeightConstraint: NSLayoutConstraint
 
   init(tiledDrawing: TiledDrawing) {
-    panelView = DrawingPanelView(tiledDrawing: tiledDrawing)
-    panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
-    panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
+    canvas = TiledDrawingCanvas(tiledDrawing: tiledDrawing)
+    panelWidthConstraint = canvas.widthAnchor.constraint(equalToConstant: 0)
+    panelHeightConstraint = canvas.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: .zero)
 
-    panelView.backgroundColor = .white
+    canvas.backgroundColor = .white
 
     panelWidthConstraint.isActive = true
     panelHeightConstraint.isActive = true
 
-    addSubview(panelView)
-    panelView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(canvas)
+    canvas.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      panelView.centerXAnchor.constraint(equalTo: centerXAnchor),
-      panelView.centerYAnchor.constraint(equalTo: centerYAnchor)
+      canvas.centerXAnchor.constraint(equalTo: centerXAnchor),
+      canvas.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
   }
 
@@ -54,7 +53,7 @@ final class TiledDrawingUIView: UIView {
   }
 }
 
-final class DrawingPanelView: UIView {
+final class TiledDrawingCanvas: UIView {
   var tiledDrawing: TiledDrawing
 
   init(tiledDrawing: TiledDrawing) {

@@ -18,9 +18,12 @@ struct DrawingView: View {
     GeometryReader { proxy in
       Group {
         switch drawingType {
-        case .paintingStyle(.mondrian): MondrianView(drawing: mondrianDrawing)
-        case .tile: TiledDrawingViewRepresentable(type: tiledDrawingType, tiles: tiles, foregroundColor: foregroundColor,
-                                                  backgroundColor: backgroundColor)
+        case .paintingStyle(.mondrian):
+          MondrianView(drawing: mondrianDrawing)
+            .padding(24)
+            .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
+
+        case .tile: TiledDrawingView(type: tiledDrawingType, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
         }
       }
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
