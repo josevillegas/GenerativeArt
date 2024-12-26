@@ -10,11 +10,11 @@ struct DrawingViewSizePreferenceKey: PreferenceKey {
 
 struct DrawingView: View {
   let drawingType: DrawingType
-  @Binding var tiledDrawingType: TiledDrawingTypeWrapper
-  @Binding var mondrianDrawing: MondrianDrawing
-  @Binding var foregroundColor: Color
-  @Binding var backgroundColor: Color
-  @Binding var tileSize: CGFloat
+  let tiledDrawingType: TiledDrawingTypeWrapper
+  let mondrianDrawing: MondrianDrawing
+  let foregroundColor: Color
+  let backgroundColor: Color
+  let tileSize: CGFloat
 
   var body: some View {
     GeometryReader { proxy in
