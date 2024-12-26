@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct TiledDrawingView: UIViewRepresentable {
-  let type: TiledDrawingTypeWrapper
   let tiledDrawing: TiledDrawing
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
