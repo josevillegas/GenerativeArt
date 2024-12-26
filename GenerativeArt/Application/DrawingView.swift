@@ -16,10 +16,7 @@ struct DrawingView: View {
   @Binding var foregroundColor: Color
   @Binding var backgroundColor: Color
   @Binding var tileSize: CGFloat
-  @Binding var splitViewVisibility: NavigationSplitViewVisibility
 
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @Environment(\.dismiss) private var dismiss
   @State private var isPlaying: Bool = false
   @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
   @State private var timerCancellable: (any Cancellable)?
@@ -38,8 +35,6 @@ struct DrawingView: View {
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
-    .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor, tileSize: tileSize,
-                              isPlaying: isPlaying, perform: update))
     .onChange(of: drawingType) { _, _ in updateForDrawingType() }
     .onReceive(timer) { _ in updateDrawing() }
     .onDisappear { timerCancellable?.cancel() }
@@ -54,36 +49,6 @@ struct DrawingView: View {
   }
 
   private func updateDrawing() {
-    switch drawingType {
-    case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
-    case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
-    }
-  }
-
-  private func update(action: ToolbarAction) {
-    switch action {
-    case .next: next()
-    case let .setBackgroundColor(color): backgroundColor = color
-    case let .setForegroundColor(color): foregroundColor = color
-    case let .setTileSize(newTileSize): tileSize = newTileSize
-    case .togglePlaying: isPlaying.toggle()
-    case .toggleSidebarOrDismiss: toggleSidebar()
-    }
-  }
-
-  private func toggleSidebar() {
-    if horizontalSizeClass == .compact {
-      dismiss()
-      return
-    }
-    switch splitViewVisibility {
-    case .all: splitViewVisibility = .detailOnly
-    case .detailOnly: splitViewVisibility = .all
-    default: break
-    }
-  }
-
-  private func next() {
     switch drawingType {
     case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
