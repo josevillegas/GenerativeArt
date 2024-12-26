@@ -2,30 +2,19 @@ import SwiftUI
 
 struct TiledDrawingView: UIViewRepresentable {
   let type: TiledDrawingTypeWrapper
-  let tiles: Tiles
-  let foregroundColor: Color
-  let backgroundColor: Color
+  let tiledDrawing: TiledDrawing
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
     let view = TiledDrawingUIView()
-    view.canvas.tiledDrawing = TiledDrawing(type: type.type, tiles: tiles)
+    view.canvas.tiledDrawing = tiledDrawing
     return view
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    guard var tiledDrawing = view.canvas.tiledDrawing else { return }
-
-    tiledDrawing.tiles = tiles
-    tiledDrawing.foregroundColor = foregroundColor
-    tiledDrawing.backgroundColor = backgroundColor
-    tiledDrawing.type = type.type
-    tiledDrawing.updateVariations()
     view.canvas.tiledDrawing = tiledDrawing
-
     let panelSize = tiledDrawing.tiles.size
     view.panelWidthConstraint.constant = panelSize.width
     view.panelHeightConstraint.constant = panelSize.height
-
     view.canvas.setNeedsDisplay()
   }
 }

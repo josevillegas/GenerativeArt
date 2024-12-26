@@ -23,7 +23,7 @@ struct DrawingView: View {
             .padding(24)
             .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
 
-        case .tile: TiledDrawingView(type: tiledDrawingType, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
+        case .tile: TiledDrawingView(type: tiledDrawingType, tiledDrawing: tiledDrawing)
         }
       }
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
@@ -34,6 +34,14 @@ struct DrawingView: View {
       tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
       unitSize = tileSizeControl.widthForValue(tileSize)
     }
+  }
+
+  private var tiledDrawing: TiledDrawing {
+    var tiledDrawing = TiledDrawing(type: tiledDrawingType.type, tiles: tiles)
+    tiledDrawing.backgroundColor = backgroundColor
+    tiledDrawing.foregroundColor = foregroundColor
+    tiledDrawing.updateVariations()
+    return tiledDrawing
   }
 
   private var tiles: Tiles {
