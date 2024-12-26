@@ -2,13 +2,13 @@ import SwiftUI
 
 struct DrawingNavigationView: View {
   @Binding var selectedDrawingType: DrawingType?
-  @Binding var tiledDrawingType: TiledDrawingTypeWrapper
-  @Binding var mondrianDrawing: MondrianDrawing
-  @Binding var foregroundColor: Color
-  @Binding var backgroundColor: Color
-  @Binding var tileSize: CGFloat
   @Binding var splitViewVisibility: NavigationSplitViewVisibility
-  @Binding var isPlaying: Bool
+  let tiledDrawingType: TiledDrawingTypeWrapper
+  let mondrianDrawing: MondrianDrawing
+  let foregroundColor: Color
+  let backgroundColor: Color
+  let tileSize: CGFloat
+  let isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
   static let defaultDrawingType: DrawingType = .tile(.triangles)

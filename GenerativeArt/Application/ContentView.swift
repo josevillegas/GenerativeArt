@@ -17,9 +17,9 @@ struct ContentView: View {
   private let timerDuration: TimeInterval = 2
 
   var body: some View {
-    DrawingNavigationView(selectedDrawingType: $selectedDrawingType, tiledDrawingType: $tiledDrawingType, mondrianDrawing: $mondrianDrawing,
-                          foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize,
-                          splitViewVisibility: $splitViewVisibility, isPlaying: $isPlaying, perform: update)
+    DrawingNavigationView(selectedDrawingType: $selectedDrawingType, splitViewVisibility: $splitViewVisibility,
+                          tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing, foregroundColor: foregroundColor,
+                          backgroundColor: backgroundColor, tileSize: tileSize, isPlaying: isPlaying, perform: update)
       .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
       .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
       .onReceive(timer) { _ in updateDrawing() }
