@@ -2,14 +2,10 @@ import SwiftUI
 
 struct MondrianDrawing {
   private let id = UUID() // This will make every drawing unique.
-  private let count: Int
   private let colors: [Color] = [.red, .yellow, .blue]
 
-  init() {
-    count = Int.random(in: 4...10)
-  }
-
   func paths(frame: CGRect) -> [GAPath] {
+    let count = Int.random(in: 4...10)
     let (frames, lines) = reduce(frames: [frame], lines: [], count: count)
     let linePaths: [GAPath] = lines.map {
       let width = Bool.random() ? 7 : 8
