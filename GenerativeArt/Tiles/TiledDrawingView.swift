@@ -14,8 +14,7 @@ struct TiledDrawingView: View {
 
   var body: some View {
     GeometryReader { proxy in
-      TiledDrawingViewRepresentable(type: type, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                    unitSize: unitSize, viewSize: viewSize)
+      TiledDrawingViewRepresentable(type: type, tiles: tiles, foregroundColor: foregroundColor, backgroundColor: backgroundColor)
     }
     .onChange(of: tileSize) { _, newValue in unitSize = tileSizeControl.widthForValue(newValue) }
     .onChange(of: viewSize) { _, _ in
@@ -34,8 +33,6 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
   let tiles: Tiles
   let foregroundColor: Color
   let backgroundColor: Color
-  let unitSize: CGFloat
-  let viewSize: CGSize
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
     let tiledDrawing = TiledDrawing(type: type.type, tiles: tiles)
