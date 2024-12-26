@@ -2,10 +2,8 @@ import SwiftUI
 import Combine
 
 struct ContentView: View {
-  static private let defaultDrawingType: DrawingType = .tile(.triangles)
-
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @State private var selectedDrawingType: DrawingType? = Self.defaultDrawingType
+  @State private var selectedDrawingType: DrawingType? = DrawingNavigationView.defaultDrawingType
   @State private var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
   @State private var mondrianDrawing = MondrianDrawing()
   @State private var foregroundColor: Color = .red
@@ -19,39 +17,14 @@ struct ContentView: View {
   private let timerDuration: TimeInterval = 2
 
   var body: some View {
-    Group {
-      if horizontalSizeClass == .compact {
-        NavigationStack {
-          SidebarView(selectedDrawingType: $selectedDrawingType)
-            .navigationDestination(item: $selectedDrawingType) { drawingType in
-              DrawingView(drawingType: drawingType, tiledDrawingType: $tiledDrawingType, mondrianDrawing: $mondrianDrawing,
-                          foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize)
-              .modifier(ToolbarModifier(type: drawingType, foregroundColor: foregroundColor, backgroundColor: backgroundColor,
-                                        tileSize: tileSize, isPlaying: isPlaying, perform: update))
-              .modifier(NavigationBarModifier())
-            }
-        }
-      } else {
-        NavigationSplitView(columnVisibility: $splitViewVisibility) {
-          SidebarView(selectedDrawingType: $selectedDrawingType)
-            .navigationTitle("Generative Art")
-            .toolbar(removing: .sidebarToggle)
-        } detail: {
-          DrawingView(drawingType: selectedDrawingType ?? Self.defaultDrawingType, tiledDrawingType: $tiledDrawingType,
-                      mondrianDrawing: $mondrianDrawing, foregroundColor: $foregroundColor, backgroundColor: $backgroundColor,
-                      tileSize: $tileSize)
-          .modifier(ToolbarModifier(type: selectedDrawingType ?? Self.defaultDrawingType, foregroundColor: foregroundColor,
-                                    backgroundColor: backgroundColor, tileSize: tileSize, isPlaying: isPlaying, perform: update))
-          .modifier(NavigationBarModifier())
-        }
-        .navigationSplitViewStyle(.prominentDetail)
-      }
-    }
-    .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
-    .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
-    .onReceive(timer) { _ in updateDrawing() }
-    .onDisappear { timerCancellable?.cancel() }
-    .onChange(of: isPlaying) { _, _ in updateForIsPlaying() }
+    DrawingNavigationView(selectedDrawingType: $selectedDrawingType, tiledDrawingType: $tiledDrawingType, mondrianDrawing: $mondrianDrawing,
+                          foregroundColor: $foregroundColor, backgroundColor: $backgroundColor, tileSize: $tileSize,
+                          splitViewVisibility: $splitViewVisibility, isPlaying: $isPlaying, perform: update)
+      .onPreferenceChange(DrawingViewSizePreferenceKey.self) { _ in updateDrawing() }
+      .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
+      .onReceive(timer) { _ in updateDrawing() }
+      .onDisappear { timerCancellable?.cancel() }
+      .onChange(of: isPlaying) { _, _ in updateForIsPlaying() }
   }
 
   private func update(action: ToolbarAction) {
