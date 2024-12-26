@@ -1,26 +1,26 @@
 import SwiftUI
 
 struct MondrianView: UIViewRepresentable {
-  let drawing: MondrianDrawing
+  let paths: [GAPath]
 
   func makeUIView(context: Context) -> MondrianCanvas {
     let view = MondrianCanvas()
-    view.drawing = drawing
     view.backgroundColor = .white
+    view.paths = paths
     return view
   }
 
   func updateUIView(_ view: MondrianCanvas, context: Context) {
-    view.drawing = drawing
+    view.paths = paths
   }
 }
 
 final class MondrianCanvas: UIView {
-  var drawing: MondrianDrawing? {
+  var paths: [GAPath] = [] {
     didSet { setNeedsDisplay() }
   }
 
   override func draw(_ rect: CGRect) {
-    drawing?.paths(frame: bounds).draw()
+    paths.draw()
   }
 }

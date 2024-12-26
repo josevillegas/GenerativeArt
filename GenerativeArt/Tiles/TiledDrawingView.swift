@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TiledDrawingView: UIViewRepresentable {
   let paths: [GAPath]
-  let canvasSize: CGSize
 
   func makeUIView(context: Context) -> TiledDrawingCanvas {
     let view = TiledDrawingCanvas()
