@@ -48,7 +48,6 @@ extension GAPath {
     let radius: CGFloat
     let startAngle: CGFloat
     let endAngle: CGFloat
-    let clockWise: Bool
   }
 
   struct BezierPoint: Equatable {
@@ -75,7 +74,7 @@ extension GAPath {
             radius: arc.radius,
             startAngle: .radians(arc.startAngle * CGFloat.pi * 2.0 / 360),
             endAngle: .radians(arc.endAngle * CGFloat.pi * 2.0 / 360),
-            clockwise: !arc.clockWise
+            clockwise: false
           )
         case let .addBezierCurve(curve):
           path.move(to: curve.start.position)

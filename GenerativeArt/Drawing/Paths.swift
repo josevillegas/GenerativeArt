@@ -101,28 +101,28 @@ extension GAPath {
     case .a:
       return [
         .moveTo(origin),
-        .addArc(GAPath.Arc(center: origin, radius: width, startAngle: 0, endAngle: 90, clockWise: true)),
+        .addArc(GAPath.Arc(center: origin, radius: width, startAngle: 0, endAngle: 90)),
         .close
       ]
     case .b:
       let center = CGPoint(x: x + width, y: y)
       return [
         .moveTo(center),
-        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 90, endAngle: 180, clockWise: true)),
+        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 90, endAngle: 180)),
         .close
       ]
     case .c:
       let center = CGPoint(x: x + width, y: y + height)
       return [
         .moveTo(center),
-        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 180, endAngle: 270, clockWise: true)),
+        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 180, endAngle: 270)),
         .close
       ]
     case .d:
       let center = CGPoint(x: x, y: y + height)
       return [
         .moveTo(center),
-        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 270, endAngle: 360, clockWise: true)),
+        .addArc(GAPath.Arc(center: center, radius: width, startAngle: 270, endAngle: 360)),
         .close
       ]
     }
