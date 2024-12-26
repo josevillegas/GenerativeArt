@@ -34,17 +34,20 @@ struct TiledDrawingViewRepresentable: UIViewRepresentable {
 
   func makeUIView(context: Context) -> TiledDrawingUIView {
     let tiledDrawing = TiledDrawing(type: type.type, tiles: Tiles(maxSize: .zero, maxTileSize: type.type.defaultUnitSize, scale: scale))
-    return TiledDrawingUIView(tiledDrawing: tiledDrawing, unitSize: type.type.defaultUnitSize, scale: scale)
+    return TiledDrawingUIView(tiledDrawing: tiledDrawing)
   }
 
   func updateUIView(_ view: TiledDrawingUIView, context: Context) {
-    view.panelView.unitSize = unitSize
+    view.panelView.tiledDrawing.tiles = Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
+
     view.panelView.tiledDrawing.foregroundColor = foregroundColor
     view.panelView.tiledDrawing.backgroundColor = backgroundColor
     view.panelView.tiledDrawing.type = type.type
     view.panelView.tiledDrawing.updateVariations()
     view.panelView.setNeedsDisplay()
-    view.panelView.maxSize = viewSize
+
+    view.panelView.tiledDrawing.tiles = Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
+
     let panelSize = view.panelView.tiledDrawing.tiles.size
     view.panelWidthConstraint.constant = panelSize.width
     view.panelHeightConstraint.constant = panelSize.height
@@ -56,8 +59,8 @@ final class TiledDrawingUIView: UIView {
   let panelWidthConstraint: NSLayoutConstraint
   let panelHeightConstraint: NSLayoutConstraint
 
-  init(tiledDrawing: TiledDrawing, unitSize: CGFloat, scale: CGFloat) {
-    panelView = DrawingPanelView(tiledDrawing: tiledDrawing, unitSize: unitSize, scale: scale)
+  init(tiledDrawing: TiledDrawing) {
+    panelView = DrawingPanelView(tiledDrawing: tiledDrawing)
     panelWidthConstraint = panelView.widthAnchor.constraint(equalToConstant: 0)
     panelHeightConstraint = panelView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: .zero)
@@ -81,28 +84,10 @@ final class TiledDrawingUIView: UIView {
 }
 
 final class DrawingPanelView: UIView {
-  var unitSize: CGFloat {
-    didSet {
-      guard unitSize != oldValue else { return }
-      tiledDrawing.tiles = Tiles(maxSize: maxSize, maxTileSize: unitSize, scale: scale)
-    }
-  }
-
-  var maxSize: CGSize {
-    get { tiledDrawing.tiles.maxSize }
-    set {
-      guard maxSize != newValue else { return }
-      tiledDrawing.tiles = Tiles(maxSize: newValue, maxTileSize: unitSize, scale: scale)
-    }
-  }
-
   var tiledDrawing: TiledDrawing
-  private let scale: CGFloat
   private var lastSize: CGSize = .zero
 
-  init(tiledDrawing: TiledDrawing, unitSize: CGFloat, scale: CGFloat) {
-    self.scale = scale
-    self.unitSize = unitSize
+  init(tiledDrawing: TiledDrawing) {
     self.tiledDrawing = tiledDrawing
     super.init(frame: .zero)
   }
