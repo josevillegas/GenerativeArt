@@ -12,6 +12,8 @@ enum DrawingType: Hashable, Identifiable {
     case let .tile(type): type.title
     }
   }
+
+  static let defaultType: DrawingType = .tile(.triangles)
 }
 
 enum PaintingStyle {

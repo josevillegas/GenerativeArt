@@ -3,7 +3,7 @@ import Combine
 
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  @State private var selectedDrawingType: DrawingType? = DrawingNavigationView.defaultDrawingType
+  @State private var selectedDrawingType: DrawingType? = .defaultType
   @State private var drawingID = UUID()
   @State private var foregroundColor: Color = .red
   @State private var backgroundColor: Color = .white
