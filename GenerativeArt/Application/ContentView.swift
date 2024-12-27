@@ -4,8 +4,9 @@ import Combine
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State private var selectedDrawingType: DrawingType? = DrawingNavigationView.defaultDrawingType
-  @State private var tiledDrawingType = TiledDrawingTypeWrapper(type: .triangles)
+  @State private var tiledDrawingType: TiledDrawingType = .triangles
   @State private var mondrianDrawing = MondrianDrawing()
+  @State private var drawingID = UUID()
   @State private var foregroundColor: Color = .red
   @State private var backgroundColor: Color = .white
   @State private var tileSize: CGFloat = 0.5 // A value from zero to one.
@@ -17,7 +18,7 @@ struct ContentView: View {
   private let timerDuration: TimeInterval = 2
 
   var body: some View {
-    DrawingNavigationView(selectedDrawingType: $selectedDrawingType, splitViewVisibility: $splitViewVisibility,
+    DrawingNavigationView(drawingID: drawingID, selectedDrawingType: $selectedDrawingType, splitViewVisibility: $splitViewVisibility,
                           tiledDrawingType: tiledDrawingType, mondrianDrawing: mondrianDrawing, foregroundColor: $foregroundColor,
                           backgroundColor: $backgroundColor, tileSize: $tileSize, isPlaying: $isPlaying, perform: update)
     .onChange(of: selectedDrawingType) { _, _ in updateForDrawingType() }
@@ -28,16 +29,8 @@ struct ContentView: View {
 
   private func update(action: ToolbarAction) {
     switch action {
-    case .next: next()
+    case .next: drawingID = UUID()
     case .toggleSidebar: toggleSidebar()
-    }
-  }
-
-  private func next() {
-    switch selectedDrawingType {
-    case .none: break
-    case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
-    case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }
 
@@ -63,7 +56,7 @@ struct ContentView: View {
   private func updateDrawing() {
     switch selectedDrawingType {
     case .none: break
-    case let .tile(type): tiledDrawingType = TiledDrawingTypeWrapper(type: type)
+    case let .tile(type): tiledDrawingType = type
     case .paintingStyle(.mondrian): mondrianDrawing = MondrianDrawing()
     }
   }

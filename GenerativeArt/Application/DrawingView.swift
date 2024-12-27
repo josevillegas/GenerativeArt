@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct DrawingView: View {
+  let drawingID: UUID
   let drawingType: DrawingType
-  let tiledDrawingType: TiledDrawingTypeWrapper
+  let tiledDrawingType: TiledDrawingType
   let mondrianDrawing: MondrianDrawing
   let foregroundColor: Color
   let backgroundColor: Color
@@ -33,6 +34,7 @@ struct DrawingView: View {
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
+    .onChange(of: drawingID) { _, _ in updateTiledDrawing() }
     .onChange(of: tiledDrawingType) { _, _ in updateTiledDrawing() }
     .onChange(of: foregroundColor) { _, _ in updateTiledDrawing() }
     .onChange(of: backgroundColor) { _, _ in updateTiledDrawing() }
@@ -48,7 +50,7 @@ struct DrawingView: View {
   }
 
   private func updateTiledDrawing() {
-    tiledDrawing = TiledDrawing(type: tiledDrawingType.type, tiles: tiles)
+    tiledDrawing = TiledDrawing(type: tiledDrawingType, tiles: tiles)
     tiledDrawing.foregroundColor = foregroundColor
     tiledDrawing.backgroundColor = backgroundColor
     tiledDrawing.updateVariations()

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct MondrianDrawing {
-  private let id = UUID() // This will make every drawing unique.
   private let colors: [Color] = [.red, .yellow, .blue]
 
   func paths(frame: CGRect) -> [GAPath] {
