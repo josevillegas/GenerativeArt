@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DrawingCanvas: View {
   let paths: [GAPath]
+  let backgroundColor: Color
 
   var body: some View {
     Canvas { context, size in
@@ -15,6 +16,16 @@ struct DrawingCanvas: View {
         }
       }
     }
-    .background(.white, ignoresSafeAreaEdges: Edge.Set())
+    .background(backgroundColor, ignoresSafeAreaEdges: Edge.Set())
+  }
+}
+
+struct TiledDrawingCanvas: View {
+  let tiledDrawing: TiledDrawing
+  let backgroundColor: Color
+
+  var body: some View {
+    DrawingCanvas(paths: tiledDrawing.paths, backgroundColor: backgroundColor)
+      .frame(width: tiledDrawing.tiles.size.width, height: tiledDrawing.tiles.size.height)
   }
 }

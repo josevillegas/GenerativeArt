@@ -1,14 +1,5 @@
 import SwiftUI
 
-struct TiledDrawingCanvas: View {
-  let tiledDrawing: TiledDrawing
-
-  var body: some View {
-    DrawingCanvas(paths: tiledDrawing.paths)
-      .frame(width: tiledDrawing.tiles.size.width, height: tiledDrawing.tiles.size.height)
-  }
-}
-
 struct DrawingView: View {
   let drawingID: UUID
   let drawingType: DrawingType
@@ -27,12 +18,12 @@ struct DrawingView: View {
       Group {
         switch drawingType {
         case .paintingStyle(.mondrian):
-          DrawingCanvas(paths: MondrianDrawing().paths(frame: CGRect(origin: .zero, size: viewSize)))
+          DrawingCanvas(paths: MondrianDrawing().paths(frame: CGRect(origin: .zero, size: viewSize)), backgroundColor: .white)
             .padding(24)
             .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
 
         case let .tile(type):
-          TiledDrawingCanvas(tiledDrawing: tiledDrawing(type: type))
+          TiledDrawingCanvas(tiledDrawing: tiledDrawing(type: type), backgroundColor: backgroundColor)
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)

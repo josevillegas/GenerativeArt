@@ -8,8 +8,8 @@ enum ToolbarAction {
 struct ToolbarModifier: ViewModifier {
   let type: DrawingType
   @Binding var foregroundColor: Color
-  @Binding var  backgroundColor: Color
-  @Binding var  tileSize: CGFloat
+  @Binding var backgroundColor: Color
+  @Binding var tileSize: CGFloat
   @Binding var isPlaying: Bool
   let perform: (ToolbarAction) -> Void
 
@@ -31,14 +31,12 @@ struct ToolbarModifier: ViewModifier {
                 ColorPickerView(selectedColor: foregroundColor, horizontalSizeClass: horizontalSizeClass) { foregroundColor = $0 }
                   .presentationCompactAdaptation(.popover)
               }
-            if showBackgroundColorOption {
-              Spacer()
-              Button("Back") { isBackgroundColorPopoverPresented = true }
-                .popover(isPresented: $isBackgroundColorPopoverPresented) {
-                  ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { backgroundColor = $0 }
-                    .presentationCompactAdaptation(.popover)
-                }
-            }
+            Spacer()
+            Button("Back") { isBackgroundColorPopoverPresented = true }
+              .popover(isPresented: $isBackgroundColorPopoverPresented) {
+                ColorPickerView(selectedColor: backgroundColor, horizontalSizeClass: horizontalSizeClass) { backgroundColor = $0 }
+                  .presentationCompactAdaptation(.popover)
+              }
           }
           if showSizeOption {
             Spacer()
@@ -61,21 +59,14 @@ struct ToolbarModifier: ViewModifier {
   private var showColorOptions: Bool {
     switch type {
     case .tile(.concentricShapes), .paintingStyle(.mondrian): false
-    case .tile(_): true
-    }
-  }
-
-  private var showBackgroundColorOption: Bool {
-    switch type {
-    case .tile(.scribbles), .paintingStyle(.mondrian): false
     case .tile: true
     }
   }
 
   private var showSizeOption: Bool {
     switch type {
-    case .tile: true
     case .paintingStyle(.mondrian): false
+    case .tile: true
     }
   }
 
