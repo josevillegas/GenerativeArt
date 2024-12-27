@@ -17,22 +17,18 @@ struct DrawingView: View {
     GeometryReader { proxy in
       Group {
         switch drawingType {
+        case let .tile(type): TiledDrawingCanvas(tiledDrawing: tiledDrawing(type: type), backgroundColor: backgroundColor)
         case .paintingStyle(.mondrian):
-          DrawingCanvas(paths: MondrianDrawing().paths(frame: CGRect(origin: .zero, size: viewSize)), backgroundColor: .white)
+          DrawingCanvas(paths: MondrianDrawing().paths(size: viewSize), backgroundColor: .white)
             .padding(24)
             .background(Color(white: 0.9), ignoresSafeAreaEdges: Edge.Set())
-
-        case let .tile(type):
-          TiledDrawingCanvas(tiledDrawing: tiledDrawing(type: type), backgroundColor: backgroundColor)
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
-    .onChange(of: tileSize) { _, _ in
-      unitSize = tileSizeControl.widthForValue(tileSize)
-    }
+    .onChange(of: tileSize) { _, _ in unitSize = tileSizeControl.widthForValue(tileSize) }
     .onChange(of: viewSize) { _, _ in
       tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
       unitSize = tileSizeControl.widthForValue(tileSize)

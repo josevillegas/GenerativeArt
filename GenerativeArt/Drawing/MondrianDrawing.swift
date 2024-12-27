@@ -3,9 +3,9 @@ import SwiftUI
 struct MondrianDrawing {
   private let colors: [Color] = [.red, .yellow, .blue]
 
-  func paths(frame: CGRect) -> [GAPath] {
+  func paths(size: CGSize) -> [GAPath] {
     let count = Int.random(in: 4...10)
-    let (frames, lines) = reduce(frames: [frame], lines: [], count: count)
+    let (frames, lines) = reduce(frames: [CGRect(origin: .zero, size: size)], lines: [], count: count)
     let linePaths: [GAPath] = lines.map {
       let width = Bool.random() ? 7 : 8
       return GAPath(fillColor: nil, strokeColor: .black, lineWidth: CGFloat(width), commands: [
