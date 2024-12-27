@@ -7,7 +7,6 @@ struct DrawingView: View {
   let backgroundColor: Color
   let tileSize: CGFloat
 
-  @State private var tileSizeControl: TileSizeControl = .empty
   @State private var viewSize: CGSize = .zero
   @State private var unitSize: CGFloat = 30
 
@@ -28,11 +27,8 @@ struct DrawingView: View {
       .preference(key: DrawingViewSizePreferenceKey.self, value: proxy.size)
     }
     .onPreferenceChange(DrawingViewSizePreferenceKey.self) { newSize in viewSize = newSize }
-    .onChange(of: tileSize) { _, _ in unitSize = tileSizeControl.widthForValue(tileSize) }
-    .onChange(of: viewSize) { _, _ in
-      tileSizeControl = TileSizeControl(boundsSize: viewSize, minWidth: 20)
-      unitSize = tileSizeControl.widthForValue(tileSize)
-    }
+    .onChange(of: tileSize) { _, _ in updateUnitSize() }
+    .onChange(of: viewSize) { _, _ in updateUnitSize() }
   }
 
   private func tiledDrawing(type: TiledDrawingType) -> TiledDrawing {
@@ -45,6 +41,10 @@ struct DrawingView: View {
 
   private var tiles: Tiles {
     Tiles(maxSize: viewSize, maxTileSize: unitSize, scale: scale)
+  }
+
+  private func updateUnitSize() {
+    unitSize = TileSizeControl.widthForValue(tileSize, viewSize: viewSize)
   }
 }
 
